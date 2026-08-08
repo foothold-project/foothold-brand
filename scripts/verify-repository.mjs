@@ -3,6 +3,7 @@ import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { normalizeTextForDigest } from "./canonical-text.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const failures = [];
@@ -16,11 +17,15 @@ const required = [
   "tokens/foothold.tokens.json", "tokens/foothold.tokens.css",
   "assets/exports/v1/manifest.json", "figma/plugin/manifest.template.json",
   "figma/plugin/src/code.js", "figma/plugin/code.generated.js", "figma/plugin/ui.html",
-  "figma/handoff.schema.json"
+  "figma/handoff.schema.json", "scripts/canonical-text.mjs"
 ];
 for (const relative of required) if (!exists(relative)) fail(`Missing required file: ${relative}`);
 
 const tokens = JSON.parse(read("tokens/foothold.tokens.json"));
+const lfDigest = crypto.createHash("sha256").update(normalizeTextForDigest("alpha\nbeta\n")).digest("hex");
+const crlfDigest = crypto.createHash("sha256").update(normalizeTextForDigest("alpha\r\nbeta\r\n")).digest("hex");
+const crDigest = crypto.createHash("sha256").update(normalizeTextForDigest("alpha\rbeta\r")).digest("hex");
+if (lfDigest !== crlfDigest || lfDigest !== crDigest) fail("Canonical text digest must be independent of line endings");
 function leafCount(node) {
   if (node && Object.prototype.hasOwnProperty.call(node, "$value")) return 1;
   return Object.entries(node || {}).filter(([key, value]) => !key.startsWith("$") && value && typeof value === "object").reduce((sum, [, value]) => sum + leafCount(value), 0);

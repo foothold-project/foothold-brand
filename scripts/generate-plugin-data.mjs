@@ -3,6 +3,7 @@ import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { normalizeTextForDigest } from "./canonical-text.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const read = (relative) => fs.readFileSync(path.join(root, relative), "utf8");
@@ -59,7 +60,7 @@ const canonicalFiles = [
 const digest = crypto.createHash("sha256");
 for (const relative of canonicalFiles) {
   digest.update(relative);
-  digest.update(fs.readFileSync(path.join(root, relative)));
+  digest.update(normalizeTextForDigest(read(relative)));
 }
 
 const data = {
