@@ -411,9 +411,11 @@ async function createModule(module) {
   frame.name = `${module.id} / ${module.name}`;
   setOwned(frame, `module/${module.id}`);
   frame.layoutMode = "VERTICAL";
-  frame.primaryAxisSizingMode = "AUTO";
   frame.counterAxisSizingMode = "FIXED";
   frame.resize(1280, 240);
+  frame.primaryAxisSizingMode = "AUTO";
+  frame.minHeight = 240;
+  frame.clipsContent = false;
   frame.paddingTop = frame.paddingBottom = 32;
   frame.paddingLeft = frame.paddingRight = 36;
   frame.itemSpacing = 14;
@@ -449,9 +451,11 @@ async function createMasterBoard(page) {
   }
   board.name = "FOOTHOLD / Visual Master Board";
   board.layoutMode = "VERTICAL";
-  board.primaryAxisSizingMode = "AUTO";
   board.counterAxisSizingMode = "FIXED";
   board.resize(1440, 1000);
+  board.primaryAxisSizingMode = "AUTO";
+  board.minHeight = 1000;
+  board.clipsContent = false;
   board.paddingTop = board.paddingBottom = 80;
   board.paddingLeft = board.paddingRight = 80;
   board.itemSpacing = 24;

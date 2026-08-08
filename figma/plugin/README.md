@@ -34,6 +34,7 @@ The generated `manifest.json` is intentionally ignored by Git because the develo
 - The plugin only updates objects carrying its exact `foothold.owner` key or exact canonical variable identities.
 - Foundation synchronization matches the complete canonical variable paths and can be run repeatedly without increasing the 68-variable / five-style baseline.
 - A narrowly scoped repair removes only prefix-less primitive variables or shortened text styles previously created and marked by this plugin; user-owned objects are preserved.
+- Master Board modules and the board itself use minimum heights with content-hugging vertical layout so approved lockups and M01-M10 content are not clipped.
 - It never deletes pages, variables, components, or user-owned nodes.
 - It stops rather than creating a fourth page on Starter.
 - It does not invent pending project facts.

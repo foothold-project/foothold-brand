@@ -72,6 +72,8 @@ for (const styleName of [
   if (!pluginSource.includes(styleName)) fail(`Missing canonical Figma text style: ${styleName}`);
 }
 if (!pluginSource.includes("variableNames:")) fail("Figma inspection must expose complete variable names for collision preflight");
+if (!/frame\.resize\(1280, 240\);\s*frame\.primaryAxisSizingMode = "AUTO";\s*frame\.minHeight = 240;/.test(pluginSource)) fail("Master Board modules must hug content above their 240px minimum height");
+if (!/board\.resize\(1440, 1000\);\s*board\.primaryAxisSizingMode = "AUTO";\s*board\.minHeight = 1000;/.test(pluginSource)) fail("Visual Master Board must expand beyond its 1000px minimum height");
 
 const template = JSON.parse(read("figma/plugin/manifest.template.json"));
 if (template.documentAccess !== "dynamic-page") fail("Figma manifest must use dynamic-page access");
