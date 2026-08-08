@@ -23,14 +23,38 @@ const modules = [
   ["M10", "Closing", "ready", "Use only an approved brand sentence", "VOICE_AND_MESSAGE.md"]
 ].map(([id, name, status, guidance, source]) => ({ id, name, status, guidance, source }));
 
+const assetManifest = JSON.parse(read("assets/exports/v1/manifest.json"));
+function assetCategory(relative) {
+  if (relative.startsWith("assets/logo/")) return "Core logo system";
+  if (relative.includes("/web/")) return "Web";
+  if (relative.includes("/github/")) return "GitHub";
+  if (relative.includes("/presentation/")) return "Presentation";
+  if (relative.includes("/poster/")) return "Poster";
+  if (relative.includes("/social/")) return "Social";
+  if (relative.includes("/goods/")) return "Goods";
+  return "Other";
+}
+const libraryAssets = assetManifest.assets
+  .filter((item) => !item.path.endsWith("FOOTHOLD_ASSET_PACK_V1_PREVIEW.svg"))
+  .map((item) => ({
+    path: item.path,
+    name: path.basename(item.path, ".svg"),
+    category: assetCategory(item.path),
+    theme: /(?:dark|reverse)/.test(item.path) ? "dark" : "light",
+    width: item.width,
+    height: item.height,
+    purpose: item.purpose,
+    sha256: item.sha256,
+    svg: read(item.path)
+  }));
+
 const canonicalFiles = [
   "tokens/foothold.tokens.json",
   "BRAND_BIBLE.md",
   "VOICE_AND_MESSAGE.md",
   "MASTER_BOARD_SPEC.md",
-  "assets/logo/v1/foothold-symbol-brand.svg",
-  "assets/logo/v1/foothold-lockup-primary-light.svg",
-  "assets/logo/v1/foothold-lockup-primary-dark.svg"
+  "assets/exports/v1/manifest.json",
+  ...libraryAssets.map((item) => item.path)
 ];
 const digest = crypto.createHash("sha256");
 for (const relative of canonicalFiles) {
@@ -49,6 +73,7 @@ const data = {
     subtitleEn: "TERRAIN-ADAPTIVE LOCOMOTION POLICY"
   },
   modules,
+  libraryAssets,
   svg: {
     symbolBrand: read("assets/logo/v1/foothold-symbol-brand.svg"),
     primaryLight: read("assets/logo/v1/foothold-lockup-primary-light.svg"),

@@ -331,8 +331,111 @@ async function makeText(value, size, style, color) {
   return node;
 }
 
+async function makeWrappedText(value, size, style, color, width) {
+  const node = await makeText(value, size, style, color);
+  node.resize(width, node.height);
+  node.textAutoResize = "HEIGHT";
+  return node;
+}
+
 function light(name) {
   return FOOTHOLD_DATA.tokens.primitive.color[name].$value;
+}
+
+async function createAssetCard(asset) {
+  const card = figma.createFrame();
+  card.name = `Asset / ${asset.name}`;
+  card.layoutMode = "VERTICAL";
+  card.counterAxisSizingMode = "FIXED";
+  card.resize(400, 300);
+  card.primaryAxisSizingMode = "AUTO";
+  card.minHeight = 300;
+  card.clipsContent = false;
+  card.paddingTop = card.paddingBottom = 20;
+  card.paddingLeft = card.paddingRight = 20;
+  card.itemSpacing = 12;
+  card.cornerRadius = 12;
+  card.fills = [solidPaint(light("card"))];
+  card.strokes = [solidPaint(light("rule"))];
+  card.strokeWeight = 1;
+
+  const preview = figma.createFrame();
+  preview.name = "Preview";
+  preview.layoutMode = "VERTICAL";
+  preview.resize(360, 190);
+  preview.primaryAxisSizingMode = "FIXED";
+  preview.counterAxisSizingMode = "FIXED";
+  preview.primaryAxisAlignItems = "CENTER";
+  preview.counterAxisAlignItems = "CENTER";
+  preview.clipsContent = true;
+  preview.cornerRadius = 8;
+  preview.fills = [solidPaint(asset.theme === "dark" ? light("ink") : light("paper"))];
+
+  const artwork = figma.createNodeFromSvg(asset.svg);
+  artwork.name = asset.name;
+  const scale = Math.min(328 / asset.width, 158 / asset.height);
+  artwork.resize(asset.width * scale, asset.height * scale);
+  preview.appendChild(artwork);
+  card.appendChild(preview);
+  card.appendChild(await makeWrappedText(asset.name, 13, "Semi Bold", light("ink"), 360));
+  card.appendChild(await makeWrappedText(asset.purpose, 12, "Regular", light("ink-secondary"), 360));
+  card.appendChild(await makeWrappedText(asset.path, 10, "Regular", light("ink-caption"), 360));
+  return card;
+}
+
+async function createAssetSection(name, assets) {
+  const section = figma.createFrame();
+  section.name = `Asset section / ${name}`;
+  section.layoutMode = "VERTICAL";
+  section.counterAxisSizingMode = "FIXED";
+  section.resize(1280, 200);
+  section.primaryAxisSizingMode = "AUTO";
+  section.minHeight = 200;
+  section.itemSpacing = 16;
+  section.fills = [];
+  section.clipsContent = false;
+  section.appendChild(await makeText(name.toUpperCase(), 20, "Bold", light("ink")));
+  for (let index = 0; index < assets.length; index += 3) {
+    const row = figma.createFrame();
+    row.name = `${name} / Row ${Math.floor(index / 3) + 1}`;
+    row.layoutMode = "HORIZONTAL";
+    row.primaryAxisSizingMode = "AUTO";
+    row.counterAxisSizingMode = "AUTO";
+    row.itemSpacing = 16;
+    row.fills = [];
+    for (const asset of assets.slice(index, index + 3)) row.appendChild(await createAssetCard(asset));
+    section.appendChild(row);
+  }
+  return section;
+}
+
+async function createAssetLibrary() {
+  const library = figma.createFrame();
+  library.name = "FOOTHOLD / Logo & Asset Library";
+  setOwned(library, "asset-library");
+  library.layoutMode = "VERTICAL";
+  library.counterAxisSizingMode = "FIXED";
+  library.resize(1280, 400);
+  library.primaryAxisSizingMode = "AUTO";
+  library.minHeight = 400;
+  library.itemSpacing = 28;
+  library.fills = [];
+  library.clipsContent = false;
+  library.appendChild(await makeText("LOGO & ASSET LIBRARY", 36, "Bold", light("ink")));
+  library.appendChild(await makeWrappedText(
+    `${FOOTHOLD_DATA.libraryAssets.length} approved vector assets from the Git manifest. Canonical paths remain frozen; Figma nodes are visual working copies.`,
+    14,
+    "Regular",
+    light("ink-secondary"),
+    1280
+  ));
+  const grouped = new Map();
+  for (const asset of FOOTHOLD_DATA.libraryAssets) {
+    if (!grouped.has(asset.category)) grouped.set(asset.category, []);
+    grouped.get(asset.category).push(asset);
+  }
+  for (const [name, assets] of grouped) library.appendChild(await createAssetSection(name, assets));
+  return library;
 }
 
 async function createCover(page) {
@@ -377,9 +480,11 @@ async function createFoundations(page) {
   }
   frame.name = "FOOTHOLD / Foundations";
   frame.layoutMode = "VERTICAL";
-  frame.primaryAxisSizingMode = "AUTO";
   frame.counterAxisSizingMode = "FIXED";
   frame.resize(1440, 900);
+  frame.primaryAxisSizingMode = "AUTO";
+  frame.minHeight = 900;
+  frame.clipsContent = false;
   frame.paddingTop = frame.paddingBottom = 80;
   frame.paddingLeft = frame.paddingRight = 80;
   frame.itemSpacing = 24;
@@ -403,6 +508,7 @@ async function createFoundations(page) {
   }
   frame.appendChild(row);
   frame.appendChild(await makeText("Values come from tokens/foothold.tokens.json. Do not sample this board to create new colours.", 14, "Regular", light("ink-secondary")));
+  frame.appendChild(await createAssetLibrary());
   return frame;
 }
 

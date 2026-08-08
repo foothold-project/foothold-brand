@@ -26,7 +26,7 @@ The generated `manifest.json` is intentionally ignored by Git because the develo
 
 - **Inspect file**: read-only inventory of pages, collections, complete variable names, and styles.
 - **Sync foundations**: idempotently creates or updates the five Starter-compatible variable collections and five text styles.
-- **Build Master Board skeleton**: creates or updates the three-page structure and evidence-aware M01–M10 skeleton.
+- **Build Master Board skeleton**: creates or updates the three-page structure, the 25-vector Foundations asset library, and the evidence-aware M01–M10 skeleton.
 - **Export review package**: downloads a JSON + SVG + PNG bundle. The package is a change proposal, not an automatic Git update.
 
 ## Safety

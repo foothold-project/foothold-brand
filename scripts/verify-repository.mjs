@@ -59,6 +59,18 @@ function walk(directory) {
 for (const relative of protectedRoots) walk(path.join(root, relative));
 
 const pluginSource = read("figma/plugin/src/code.js");
+const generatedPlugin = read("figma/plugin/code.generated.js");
+const dataPrefix = "const FOOTHOLD_DATA = ";
+const dataStart = generatedPlugin.indexOf(dataPrefix);
+const dataEnd = generatedPlugin.indexOf(";\n\n// SPDX-License-Identifier: MIT", dataStart);
+if (dataStart < 0 || dataEnd < 0) {
+  fail("Generated Figma plugin data payload is missing");
+} else {
+  const pluginData = JSON.parse(generatedPlugin.slice(dataStart + dataPrefix.length, dataEnd));
+  if (pluginData.libraryAssets?.length !== 25) fail(`Figma asset library must embed 25 approved vectors, got ${pluginData.libraryAssets?.length ?? 0}`);
+  if (pluginData.libraryAssets?.some((asset) => asset.path.endsWith("FOOTHOLD_ASSET_PACK_V1_PREVIEW.svg"))) fail("Composite asset-pack preview must not be nested inside the Figma asset library");
+  if (pluginData.libraryAssets?.some((asset) => /<image\b/i.test(asset.svg))) fail("Figma asset library must embed vector-only SVGs");
+}
 if (/fetch\s*\(|XMLHttpRequest|WebSocket/.test(pluginSource)) fail("Local Figma plugin must not use network APIs");
 if (!pluginSource.includes("JSON + SVG + PNG") && !read("figma/plugin/README.md").includes("JSON + SVG + PNG")) fail("Handoff contract is undocumented");
 if (!pluginSource.includes('const name = ["color", ...entry.path].join("/")')) fail("Figma primitive variables must retain the canonical color/ prefix");
