@@ -10,6 +10,23 @@ Master Board
 
 Starter files are limited to three pages. Detailed component and utility guidance stays in the repository rather than becoming extra Figma pages. Restore the full page hierarchy after upgrading to Professional.
 
+## `Foundations` frame hierarchy
+
+```text
+FOOTHOLD / Foundations
+|-- Canonical colour primitives
+`-- FOOTHOLD / Logo & Asset Library
+    |-- Core logo system
+    |-- Web
+    |-- GitHub
+    |-- Presentation
+    |-- Poster
+    |-- Social
+    `-- Goods
+```
+
+The library renders the 25 standalone approved vectors listed by the asset manifest. It excludes the composite pack-preview SVG, which is an index rather than a reusable brand asset. Git paths and hashes remain canonical; the Figma nodes are visual working copies.
+
 ## `Master Board` frame hierarchy
 
 ```text
