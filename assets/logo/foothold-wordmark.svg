@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 770 120" role="img" aria-labelledby="title" style="color:#0e7a6e">
+  <title id="title">FOOTHOLD wordmark</title>
+  <g fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="square" stroke-linejoin="miter">
+    <path d="M8 110V10h68M8 56h52"/>
+    <path d="M108 10h40l16 16v68l-16 16h-40L92 94V26z"/>
+    <path d="M208 10h40l16 16v68l-16 16h-40l-16-16V26z"/>
+    <path d="M292 10h78M331 10v100"/>
+    <path d="M394 10v100M462 10v100M394 60h68"/>
+    <path d="M510 10h40l16 16v68l-16 16h-40l-16-16V26z"/>
+    <path d="M610 10v100h68"/>
+    <path d="M702 10h30l22 20v60l-22 20h-30z"/>
+  </g>
+</svg>

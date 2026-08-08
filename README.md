@@ -1,0 +1,70 @@
+# FOOTHOLD Brand System
+
+[한국어](./README.ko.md) · English
+
+![FOOTHOLD asset preview](./assets/exports/v1/FOOTHOLD_ASSET_PACK_V1_PREVIEW.svg)
+
+FOOTHOLD is the shared visual and verbal system for a terrain-adaptive quadruped locomotion project. This repository is the canonical source for brand tokens, approved logo geometry, messaging, the ratio-independent Visual Master Board, and reusable delivery assets.
+
+> We help a robot cross terrain that a person should not have to test first.
+
+## Current status
+
+- `v1.0.1`: approved logo and SVG asset-pack baseline
+- `v1.1.0`: public, cross-platform foundation and local Figma synchronization infrastructure
+- `v1.2.0`: planned content-complete M01–M10 modules and OSMU templates
+
+The v1.1 implementation intentionally does not invent robot imagery, metrics, team roles, deployment claims, or roadmap facts that have not been verified.
+
+## Source of truth
+
+| Decision | Canonical source |
+|---|---|
+| Token values | [`tokens/foothold.tokens.json`](./tokens/foothold.tokens.json) |
+| Approved logo geometry | [`assets/logo/v1`](./assets/logo/v1/) canonical SVG paths |
+| Approved wording | [`VOICE_AND_MESSAGE.md`](./VOICE_AND_MESSAGE.md) |
+| Brand rules | [`BRAND_BIBLE.md`](./BRAND_BIBLE.md) |
+| Module structure | [`MASTER_BOARD_SPEC.md`](./MASTER_BOARD_SPEC.md) |
+| Visual composition proposals | Figma Master Board, promoted only after review |
+
+Figma is an editable visual workspace, not a second token or logo source. A Figma-only change remains a proposal until it is exported, reviewed, and promoted to this repository.
+
+## Repository map
+
+```text
+assets/          approved SVG geometry and derived exports
+concepts/        review history; never use as production assets
+figma/           mappings, Master Board specification, local plugin
+templates/       OSMU templates as they are approved
+tokens/          canonical DTCG JSON and generated CSS
+scripts/         deterministic cross-platform validation
+docs/            governance, source-of-truth, and roadmap
+```
+
+## Quick checks
+
+Node.js 20 or newer is recommended.
+
+```bash
+npm run generate
+npm test
+```
+
+The committed generated files must remain byte-for-byte current after `npm run generate`.
+
+## Figma workflow
+
+The local plugin does not consume Figma MCP calls and does not require a Professional plan. Use the Figma desktop app, create a development plugin once to obtain a plugin ID, then follow [`figma/plugin/README.md`](./figma/plugin/README.md).
+
+```text
+Git canonical source
+  -> local Figma plugin sync
+  -> visual edit and approval
+  -> JSON + SVG + PNG handoff
+  -> Codex diff and human approval
+  -> Git promotion and regeneration
+```
+
+## Licensing
+
+This is a mixed-license repository. Code and token sources use MIT; eligible brand documentation uses CC BY 4.0; FOOTHOLD names, logos, and designated brand assets are excluded from those grants. Read [`LICENSE.md`](./LICENSE.md), [`LICENSE_SCOPE.md`](./LICENSE_SCOPE.md), and [`TRADEMARKS.md`](./TRADEMARKS.md) before reuse.

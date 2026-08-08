@@ -1,0 +1,13 @@
+.DS_Store
+Thumbs.db
+Desktop.ini
+node_modules/
+dist/
+coverage/
+*.log
+figma/plugin/manifest.json
+figma/plugin/.state/
+figma/handoff/*.json
+figma/handoff/*.svg
+figma/handoff/*.png
+!figma/handoff/.gitkeep

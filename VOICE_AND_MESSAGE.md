@@ -1,0 +1,64 @@
+# FOOTHOLD Voice and Message v1
+
+## Status
+
+The project definition below is fixed by the Claude Code handoff. The team selected the English logo subtitle **Terrain-Adaptive Locomotion Policy** on 2026-08-07.
+
+## 1. Canonical project definition
+
+> 사람이 먼저 밟아볼 수 없는 땅을, 로봇이 넘어지지 않고 건너가게 만듭니다.
+
+Use it when the audience needs the project’s purpose before its technology.
+
+## 2. Supporting explanation
+
+> FOOTHOLD는 모래·자갈·계단처럼 미경험 험지를 대상으로, 4족 보행 로봇이 균형을 유지하며 이동하도록 강화학습 기반 보행 정책을 개발하고 검증하는 프로젝트입니다.
+
+Use this only with project context. It explains the work; it does not imply an already deployed commercial navigation service.
+
+## 3. Message architecture
+
+| Layer | Job | Approved text |
+|---|---|---|
+| Why | Explain why the work matters | 사람이 먼저 밟아볼 수 없는 땅을, 로봇이 넘어지지 않고 건너가게 만듭니다. |
+| What | State the project precisely | 4족 보행 로봇을 위한 강화학습 기반 험지 적응 보행 정책 |
+| How | Explain the technical route | Sim-to-Real 검증을 고려한 시뮬레이션 기반 학습과 평가 |
+
+The final sentence must be narrowed if the exact Sim-to-Real validation status is not yet verified for a particular deliverable.
+
+## 4. Logo subtitle proposals
+
+### A. Terrain-Adaptive Locomotion Policy — adopted
+
+**Why it fits:** Names the central deliverable (a policy) and the central condition (terrain adaptation) without pretending the project is a platform. It is compact enough to sit below a wordmark.
+
+**Trade-off:** Less immediately familiar to a non-technical Korean-first audience; pair it with the Korean canonical definition in presentations and posters.
+
+### B. Reinforcement Learning for Rough-Terrain Locomotion
+
+**Why it fits:** Transparent about the method and target problem. It works well in a research-poster or GitHub setting.
+
+**Trade-off:** Method-led rather than purpose-led, and long for a small logo lockup.
+
+### C. Adaptive Locomotion for Unseen Terrain
+
+**Why it fits:** Describes the desired capability in clearer language and keeps the focus on locomotion.
+
+**Trade-off:** “Unseen” needs to match the defined evaluation protocol. Do not use it where that scope has not been verified.
+
+### D. Sim-to-Real Quadruped Locomotion
+
+**Why it fits:** Makes the project’s transfer challenge visible and is concise.
+
+**Trade-off:** Can overstate successful real-world transfer. Reserve it for an output that documents that validation accurately.
+
+## 5. Approved subtitle
+
+**Terrain-Adaptive Locomotion Policy** is the default English subtitle for the FOOTHOLD logo lockup. It is a precise description of the project’s focus and does not misrepresent FOOTHOLD as a generic navigation platform.
+
+## 6. Tone of voice
+
+- State the problem before the tool.
+- Prefer precise verbs: learn, adapt, validate, recover, measure.
+- Describe a limitation plainly; do not hide it behind future-facing marketing language.
+- Avoid: platform, autonomous everywhere, proven safe, production-ready, revolutionary — unless an evidence record explicitly supports the statement.

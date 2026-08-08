@@ -1,0 +1,86 @@
+# FOOTHOLD SVG Asset Pack v1
+
+**Status:** Corrected and visually verified 2026-08-08
+**Canonical geometry:** `logo/v1/`
+**Canonical values:** `../tokens/foothold.tokens.json`
+
+All production SVGs use outlined paths. They do not depend on installed fonts, PNG/JPG assets, or gradients.
+The approved A.3 `FOOTHOLD` wordmark proportion is locked in the generator at a visible width-to-height ratio of `7.841215388`. Vectorisation and derivatives must preserve this ratio.
+
+## Core logo assets
+
+| Asset | Use |
+|---|---|
+| `logo/v1/foothold-symbol-brand.svg` | Standalone teal symbol |
+| `logo/v1/foothold-symbol-ink.svg` | One-colour print, embossing, engraving |
+| `logo/v1/foothold-symbol-reverse.svg` | Symbol on dark surfaces |
+| `logo/v1/foothold-wordmark-ink.svg` | `FOOTHOLD` wordmark only |
+| `logo/v1/foothold-wordmark-reverse.svg` | Wordmark on dark surfaces |
+| `logo/v1/foothold-lockup-primary-light.svg` | Symbol spanning wordmark and subtitle rows |
+| `logo/v1/foothold-lockup-primary-dark.svg` | Primary lockup on a dark surface |
+| `logo/v1/foothold-lockup-compact-light.svg` | One-row web and small-size lockup |
+| `logo/v1/foothold-lockup-compact-dark.svg` | Compact lockup on a dark surface |
+| `logo/v1/foothold-lockup-stacked-light.svg` | Centred and square compositions |
+| `logo/v1/foothold-lockup-stacked-dark.svg` | Stacked lockup on a dark surface |
+| `logo/v1/foothold-lockup-primary-monochrome.svg` | Single-ink production |
+| `logo/v1/foothold-favicon.svg` | Browser favicon and small app-icon source |
+| `logo/v1/foothold-contact-trail.svg` | Secondary contact sequence; never a primary logo |
+
+## Web
+
+| Asset | Use |
+|---|---|
+| `exports/v1/web/foothold-web-header-light.svg` | Light-mode brand strip |
+| `exports/v1/web/foothold-web-header-dark.svg` | Dark-mode brand strip |
+
+These files contain only the visual brand area. Keep navigation, buttons, and accessible labels as live HTML.
+
+## GitHub and README
+
+| Asset | Use |
+|---|---|
+| `exports/v1/github/foothold-readme-hero-light.svg` | README hero on a light surface |
+| `exports/v1/github/foothold-readme-hero-dark.svg` | README hero on a dark surface |
+| `exports/v1/github/foothold-github-social-preview.svg` | Repository social preview, 1280×640 |
+| `exports/v1/github/foothold-avatar-light.svg` | Light profile/avatar tile |
+| `exports/v1/github/foothold-avatar-dark.svg` | Dark profile/avatar tile |
+
+Recommended README usage:
+
+```html
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="brand/assets/exports/v1/github/foothold-readme-hero-dark.svg">
+  <img alt="FOOTHOLD — Terrain-Adaptive Locomotion Policy" src="brand/assets/exports/v1/github/foothold-readme-hero-light.svg">
+</picture>
+```
+
+## Presentation, poster, social, and goods
+
+| Asset | Use |
+|---|---|
+| `exports/v1/presentation/foothold-opening-slide-16x9.svg` | 1920×1080 opening slide |
+| `exports/v1/poster/foothold-poster-header.svg` | Poster and roll-up header module |
+| `exports/v1/social/foothold-social-square.svg` | 1080×1080 social or portfolio cover |
+| `exports/v1/goods/foothold-sticker-round.svg` | Round sticker and goods source |
+
+## Rules
+
+- Use Primary when the subtitle is present; the symbol spans both rows.
+- Use Compact without the subtitle at small sizes; its symbol receives optical oversizing.
+- Use Stacked for centred and square surfaces.
+- Do not condense, expand, or re-typeset the approved wordmark. Use the frozen canonical SVG so the locked A.3 proportion is retained.
+- Do not duplicate the complete symbol to imply footsteps. Use the contact trail instead.
+- Dark logo SVGs are transparent and expect a verified dark surface.
+- Do not recolour semantic state graphics to make the logo more decorative.
+
+## Integrity verification
+
+Run:
+
+```bash
+python assets/logo/v1/build_logo_assets.py
+```
+
+The compatibility script performs read-only verification. It does not regenerate the approved logo from installed fonts. Exact dimensions, purposes, and SHA-256 hashes are recorded in `exports/v1/manifest.json`.
+
+The visual contact sheet is `exports/v1/FOOTHOLD_ASSET_PACK_V1_PREVIEW.svg`.

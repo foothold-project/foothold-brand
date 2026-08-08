@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>FOOTHOLD Brand Sync</title>
+  <style>
+    :root{font-family:Inter,system-ui,sans-serif;color:var(--figma-color-text);background:var(--figma-color-bg)}
+    body{margin:0;padding:20px}.eyebrow{color:#0e7a6e;font-size:11px;font-weight:700;letter-spacing:.12em}
+    h1{font-size:22px;margin:8px 0 6px}.sub{font-size:12px;color:var(--figma-color-text-secondary);line-height:1.5;margin-bottom:18px}
+    .actions{display:grid;gap:8px}button{appearance:none;border:1px solid var(--figma-color-border);background:var(--figma-color-bg-secondary);color:var(--figma-color-text);padding:11px 12px;border-radius:8px;text-align:left;font-weight:600;cursor:pointer}
+    button.primary{background:#0e7a6e;color:white;border-color:#0e7a6e}button:hover{filter:brightness(.97)}
+    .rule{height:1px;background:var(--figma-color-border);margin:18px 0}.status{font-size:12px;line-height:1.5;color:var(--figma-color-text-secondary)}
+    pre{white-space:pre-wrap;word-break:break-word;max-height:210px;overflow:auto;background:var(--figma-color-bg-secondary);border:1px solid var(--figma-color-border);border-radius:8px;padding:10px;font-size:10px}
+  </style>
+</head>
+<body>
+  <div class="eyebrow">FOOTHOLD / LOCAL SYNC</div>
+  <h1>Brand Master Board</h1>
+  <div class="sub">Git is canonical. Figma edits remain proposals until exported and approved.</div>
+  <div class="actions">
+    <button data-command="inspect">1. Inspect file</button>
+    <button data-command="sync-foundations">2. Sync foundations</button>
+    <button class="primary" data-command="build-skeleton">3. Build Master Board skeleton</button>
+    <button data-command="export">4. Export JSON + SVG + PNG review package</button>
+  </div>
+  <div class="rule"></div>
+  <div id="status" class="status">Loading canonical source…</div>
+  <pre id="result" hidden></pre>
+  <script>
+    const status = document.getElementById('status');
+    const result = document.getElementById('result');
+    document.querySelectorAll('button').forEach((button) => button.onclick = () => parent.postMessage({pluginMessage:{command:button.dataset.command}}, '*'));
+    function download(file){
+      const blob = file.text !== undefined ? new Blob([file.text],{type:file.mime}) : new Blob([new Uint8Array(file.bytes)],{type:file.mime});
+      const url=URL.createObjectURL(blob);const link=document.createElement('a');link.href=url;link.download=file.name;link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+    }
+    onmessage=(event)=>{
+      const message=event.data.pluginMessage;
+      if(!message)return;
+      if(message.type==='ready')status.textContent=`Ready · v${message.payload.brandVersion} · ${message.payload.sourceDigest.slice(0,12)}`;
+      if(message.type==='status')status.textContent=message.payload.message;
+      if(message.type==='error'){status.textContent=`Error: ${message.payload.message}`;result.hidden=true;}
+      if(message.type==='result'){status.textContent=`Completed: ${message.payload.command}`;result.hidden=false;result.textContent=JSON.stringify(message.payload.result,null,2);}
+      if(message.type==='downloads')message.payload.files.forEach(download);
+    };
+  </script>
+</body>
+</html>

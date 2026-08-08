@@ -1,0 +1,12 @@
+{
+  "name": "FOOTHOLD Brand Sync",
+  "id": "__FIGMA_PLUGIN_ID__",
+  "api": "1.0.0",
+  "main": "code.generated.js",
+  "ui": "ui.html",
+  "editorType": ["figma"],
+  "documentAccess": "dynamic-page",
+  "networkAccess": {
+    "allowedDomains": ["none"]
+  }
+}

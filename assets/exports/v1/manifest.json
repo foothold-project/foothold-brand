@@ -1,0 +1,195 @@
+{
+  "name": "FOOTHOLD SVG Asset Pack",
+  "version": "1.0.1",
+  "approvedWordmarkAspect": 7.841215388,
+  "wordmarkCorrection": "Preserves the approved A.3 wordmark width-to-height proportion.",
+  "generatedFrom": [
+    "tokens/foothold.tokens.json",
+    "assets/logo/v1/*.svg canonical approved paths"
+  ],
+  "fontDependency": "None in generated SVGs; all logo and message text is outlined.",
+  "assets": [
+    {
+      "path": "assets/logo/v1/foothold-symbol-brand.svg",
+      "width": 82,
+      "height": 94,
+      "purpose": "Primary standalone FOOTHOLD symbol.",
+      "sha256": "1712f41860fb63a35df478f05314a583419e405c514a34d8113dce7682a163a2"
+    },
+    {
+      "path": "assets/logo/v1/foothold-symbol-ink.svg",
+      "width": 82,
+      "height": 94,
+      "purpose": "Single-colour symbol for print and embossing.",
+      "sha256": "9df9ced5261338af949def46a249851ef1709b1615f7f9348851dc041e9c82b3"
+    },
+    {
+      "path": "assets/logo/v1/foothold-symbol-reverse.svg",
+      "width": 82,
+      "height": 94,
+      "purpose": "Reverse symbol for dark surfaces.",
+      "sha256": "130ae063ab70bad6f40867cdbb20509fad1da3e73920a48501bdeee8374d00d8"
+    },
+    {
+      "path": "assets/logo/v1/foothold-wordmark-ink.svg",
+      "width": 713.709,
+      "height": 110,
+      "purpose": "FOOTHOLD wordmark only, outlined and font-independent.",
+      "sha256": "2f73499ce3459320a9da8bef4305736dff6ebb56a029ff1863d8671d1974bcd7"
+    },
+    {
+      "path": "assets/logo/v1/foothold-wordmark-reverse.svg",
+      "width": 713.709,
+      "height": 110,
+      "purpose": "Reverse FOOTHOLD wordmark only.",
+      "sha256": "4113d295efab4fa1893784fdc9cf70c5a9550dce16f8fbc86df00f36a1a91be0"
+    },
+    {
+      "path": "assets/logo/v1/foothold-lockup-primary-light.svg",
+      "width": 868.345,
+      "height": 180,
+      "purpose": "Primary two-row horizontal lockup for light surfaces.",
+      "sha256": "765e7a499ce11308d62c207511ace80cbeaa9861fd12dc720831119e217add08"
+    },
+    {
+      "path": "assets/logo/v1/foothold-lockup-compact-light.svg",
+      "width": 525.108,
+      "height": 96,
+      "purpose": "Compact one-row lockup for light surfaces and small sizes.",
+      "sha256": "70424d2171b0d38f6806a3ec0e119e24dd86a8b7f74eb9973c15e9d786a6f28a"
+    },
+    {
+      "path": "assets/logo/v1/foothold-lockup-stacked-light.svg",
+      "width": 600,
+      "height": 600,
+      "purpose": "Stacked lockup for square and centred compositions on light surfaces.",
+      "sha256": "1d4b6f521511a7b00f995ded312c51bb0937e7a53b4a7c60ed4297225699319b"
+    },
+    {
+      "path": "assets/logo/v1/foothold-lockup-primary-dark.svg",
+      "width": 868.345,
+      "height": 180,
+      "purpose": "Primary two-row horizontal lockup for dark surfaces.",
+      "sha256": "c988507e6584fce41b125a2440eac2697ef09b03ffa350a546a658fe3a2aa392"
+    },
+    {
+      "path": "assets/logo/v1/foothold-lockup-compact-dark.svg",
+      "width": 525.108,
+      "height": 96,
+      "purpose": "Compact one-row lockup for dark surfaces and small sizes.",
+      "sha256": "4087db2b7326375507ecd44323a6786662863c081aa1168787f0921e43ec502f"
+    },
+    {
+      "path": "assets/logo/v1/foothold-lockup-stacked-dark.svg",
+      "width": 600,
+      "height": 600,
+      "purpose": "Stacked lockup for square and centred compositions on dark surfaces.",
+      "sha256": "e10cab5e684a72e92a77a71d520980a0783add7f81154417b82324e0a7644bb4"
+    },
+    {
+      "path": "assets/logo/v1/foothold-lockup-primary-monochrome.svg",
+      "width": 868.345,
+      "height": 180,
+      "purpose": "Single-ink primary lockup for print, engraving, and embroidery.",
+      "sha256": "f9f9f6815f8b78d69cccfb15c31d528f0b904eb050ec71af75056f76133da0d4"
+    },
+    {
+      "path": "assets/logo/v1/foothold-favicon.svg",
+      "width": 96,
+      "height": 96,
+      "purpose": "Square favicon and app-icon source.",
+      "sha256": "08e237b2329d7399e1f3e006ea7764ec85233a43f2d7e50cabd63a4afc8e89db"
+    },
+    {
+      "path": "assets/logo/v1/foothold-contact-trail.svg",
+      "width": 900,
+      "height": 160,
+      "purpose": "Secondary four-contact trail; never use as the primary logo.",
+      "sha256": "cf281e220ced057b785f45ce861cc331dabe7df4c77f029048b21647a865ac1f"
+    },
+    {
+      "path": "assets/exports/v1/web/foothold-web-header-light.svg",
+      "width": 1200,
+      "height": 160,
+      "purpose": "Web header brand strip for light mode; pair with live HTML navigation.",
+      "sha256": "42865f38b3a0af16d9564dd9c8b62d4fb3c96bd6b646461721bb6f61d3f024c9"
+    },
+    {
+      "path": "assets/exports/v1/web/foothold-web-header-dark.svg",
+      "width": 1200,
+      "height": 160,
+      "purpose": "Web header brand strip for dark mode; pair with live HTML navigation.",
+      "sha256": "e571b66622ff090847a6d2ca2fcdc3c781a988b347661c285555ee24badf4399"
+    },
+    {
+      "path": "assets/exports/v1/github/foothold-readme-hero-light.svg",
+      "width": 1280,
+      "height": 440,
+      "purpose": "GitHub README hero for light mode with the canonical Korean definition.",
+      "sha256": "eb5a2b6e7b627c672db80bab2999c160655a1b4f879018aef94bca5e8b54a545"
+    },
+    {
+      "path": "assets/exports/v1/github/foothold-readme-hero-dark.svg",
+      "width": 1280,
+      "height": 440,
+      "purpose": "GitHub README hero for dark mode with the canonical Korean definition.",
+      "sha256": "61fc24bbfa7c4a67bb5d9a0a86255c1877a3ec9e95bba288eb1f7b271de74e0f"
+    },
+    {
+      "path": "assets/exports/v1/github/foothold-github-social-preview.svg",
+      "width": 1280,
+      "height": 640,
+      "purpose": "GitHub repository social preview in the FOOTHOLD dark theme.",
+      "sha256": "74cdd28bd9e79b1c4eb38b02d3897bafb855c62da07ea7a9cb623a41908de3b9"
+    },
+    {
+      "path": "assets/exports/v1/github/foothold-avatar-light.svg",
+      "width": 512,
+      "height": 512,
+      "purpose": "GitHub and profile avatar for light mode.",
+      "sha256": "50755a3f486f20df74d71a02ecf21a219b16cdf684679b75ea5b697c8d359f56"
+    },
+    {
+      "path": "assets/exports/v1/github/foothold-avatar-dark.svg",
+      "width": 512,
+      "height": 512,
+      "purpose": "GitHub and profile avatar for dark mode.",
+      "sha256": "e86bd3824bcbd1390514d10f7addf453a088a2d30ace7f647403b4cc8a97a2d0"
+    },
+    {
+      "path": "assets/exports/v1/presentation/foothold-opening-slide-16x9.svg",
+      "width": 1920,
+      "height": 1080,
+      "purpose": "16:9 FOOTHOLD opening-slide brand composition.",
+      "sha256": "39fb8a03c59b9aea578dea523850a26e09935f9a53bf1bce2fd8b24e26ab0253"
+    },
+    {
+      "path": "assets/exports/v1/poster/foothold-poster-header.svg",
+      "width": 1400,
+      "height": 460,
+      "purpose": "Poster and roll-up brand header module.",
+      "sha256": "eaa0f2873a8fc20a96c110ba96ac367ce85ec2d01d31e1e3307f8ea027631911"
+    },
+    {
+      "path": "assets/exports/v1/social/foothold-social-square.svg",
+      "width": 1080,
+      "height": 1080,
+      "purpose": "Square social and portfolio cover using the stacked lockup.",
+      "sha256": "beb4c934662a93d490ee5a49030e41f88d695c4e13861c6560d7380f768e23c9"
+    },
+    {
+      "path": "assets/exports/v1/goods/foothold-sticker-round.svg",
+      "width": 800,
+      "height": 800,
+      "purpose": "Round sticker and goods source with the stacked lockup.",
+      "sha256": "5b8a7b4b8d25e4c0a926ba46f26f4b5b3ce02dc024e3fc507dc4c7eb28e73e6a"
+    },
+    {
+      "path": "assets/exports/v1/FOOTHOLD_ASSET_PACK_V1_PREVIEW.svg",
+      "width": 2400,
+      "height": 2280,
+      "purpose": "Visual index of the complete SVG asset pack.",
+      "sha256": "91b11c55fd52669bb57d8fd4686f3684319be83dd5b450eb60564ab58e064971"
+    }
+  ]
+}

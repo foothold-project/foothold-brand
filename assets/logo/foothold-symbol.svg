@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title" style="color:#0e7a6e">
+  <title id="title">FOOTHOLD symbol</title>
+  <g fill="currentColor">
+    <path d="M64 6 118 50v20L64 28 10 70V50z"/>
+    <path d="M64 43 106 78v20L64 63 22 98V78z"/>
+    <path d="m64 93 19 16-19 16-19-16z"/>
+  </g>
+</svg>

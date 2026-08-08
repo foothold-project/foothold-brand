@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 160" role="img" aria-labelledby="title desc">
+  <title id="title">FOOTHOLD secondary contact trail</title>
+  <desc id="desc">Four lower contact motifs form a progressive path. This is secondary graphic language, not a logo.</desc>
+  <defs>
+    <symbol id="contact" viewBox="0 0 42 28">
+      <path d="m9 4 12 9L33 4l9 8-21 15L0 12z"/>
+    </symbol>
+  </defs>
+  <path d="M30 132c142-96 268 18 404-70 119-77 252 12 406-48" fill="none" stroke="#D9D6CD" stroke-width="3" stroke-dasharray="10 10"/>
+  <g fill="#0E7A6E">
+    <use href="#contact" x="22" y="100" width="70" height="47" opacity=".28"/>
+    <use href="#contact" x="238" y="56" width="78" height="52" opacity=".48"/>
+    <use href="#contact" x="486" y="78" width="86" height="57" opacity=".72"/>
+    <use href="#contact" x="758" y="10" width="98" height="65"/>
+  </g>
+</svg>

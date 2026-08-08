@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2000" height="2000" viewBox="0 0 2000 2000" role="img" aria-labelledby="title desc">
+  <title id="title">FOOTHOLD logo system v1 final review</title>
+  <desc id="desc">Final visual review of the vector symbol, primary and optically corrected compact lockups, official colours, and secondary contact trail.</desc>
+  <defs>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" fill="none" stroke="#161C26" stroke-opacity=".04" stroke-width="1"/>
+    </pattern>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="12" stdDeviation="20" flood-color="#161C26" flood-opacity=".08"/>
+    </filter>
+    <symbol id="mark" viewBox="0 0 82 94">
+      <path d="M41 8 74 33v13L41 24 8 46V33z"/>
+      <path d="m35 37-27 18v14l27-18z"/>
+      <path d="m47 37 27 18v14L47 52z"/>
+      <path d="m33 66 8 6 8-6 9 8-17 12-17-12z"/>
+    </symbol>
+    <style>
+      .ui { font-family: Inter, "Segoe UI", Arial, sans-serif; }
+      .ko { font-family: "Noto Sans KR", "Malgun Gothic", sans-serif; }
+      .technical { font-family: Consolas, "Courier New", monospace; }
+      .word { font-family: Bahnschrift, "Arial Narrow", Arial, sans-serif; font-weight: 700; font-stretch: semi-condensed; letter-spacing: 1.5px; }
+      .eyebrow { font-size: 18px; font-weight: 700; letter-spacing: 3px; }
+      .micro { font-size: 13px; font-weight: 700; letter-spacing: 1.5px; }
+      .caption { font-size: 18px; fill: #4A5566; }
+    </style>
+  </defs>
+
+  <rect width="2000" height="2000" fill="#F6F5F1"/>
+  <rect width="2000" height="2000" fill="url(#grid)"/>
+
+  <g class="ui">
+    <text x="100" y="94" class="eyebrow" fill="#0E7A6E">FOOTHOLD / LOGO SYSTEM V1 / FINAL REVIEW</text>
+    <text x="100" y="174" font-size="58" font-weight="760" fill="#161C26">One mark. Two lockups. A contact trail.</text>
+    <text x="100" y="223" class="ko" font-size="23" fill="#4A5566">선택한 심볼을 벡터로 재구성하고, 심볼이 워드마크와 소주제 두 행 전체를 묶도록 배치했습니다.</text>
+    <line x1="100" y1="268" x2="1900" y2="268" stroke="#D9D6CD" stroke-width="2"/>
+
+    <!-- PRIMARY LOCKUP -->
+    <g filter="url(#shadow)">
+      <rect x="100" y="320" width="1800" height="570" rx="24" fill="#FFFFFF" stroke="#0E7A6E" stroke-width="3"/>
+    </g>
+    <rect x="132" y="350" width="290" height="38" rx="19" fill="#E0F0ED"/>
+    <text x="154" y="376" class="micro" fill="#075E56">PRIMARY HORIZONTAL LOCKUP</text>
+
+    <g fill="#0E7A6E"><use href="#mark" x="160" y="430" width="196" height="225"/></g>
+    <line x1="390" y1="438" x2="390" y2="684" stroke="#0E7A6E" stroke-opacity=".35" stroke-width="2" stroke-dasharray="7 7"/>
+    <line x1="1140" y1="438" x2="1140" y2="684" stroke="#0E7A6E" stroke-opacity=".35" stroke-width="2" stroke-dasharray="7 7"/>
+    <g transform="translate(30 0) skewX(-3)">
+      <text x="390" y="574" class="word" font-size="132" fill="#161C26" textLength="750" lengthAdjust="spacingAndGlyphs">FOOTHOLD</text>
+    </g>
+    <text x="390" y="648" class="ui" font-size="18" font-weight="680" fill="#4A5566" textLength="750" lengthAdjust="spacing">TERRAIN-ADAPTIVE LOCOMOTION POLICY</text>
+    <text x="390" y="700" class="technical" font-size="13" fill="#7C8798">SYMBOL CONTENT HEIGHT = TWO-LINE TEXT BLOCK / ASPECT RATIO PRESERVED</text>
+
+    <!-- Enlarged geometry proof -->
+    <rect x="1340" y="370" width="470" height="440" rx="18" fill="#F6F5F1" stroke="#D9D6CD"/>
+    <text x="1376" y="410" class="micro" fill="#7C8798">VECTOR GEOMETRY / 400%</text>
+    <g fill="#0E7A6E"><use href="#mark" x="1450" y="432" width="248" height="284"/></g>
+    <text x="1376" y="764" class="technical" font-size="13" fill="#0E7A6E">APEX SEAM REMOVED / FLAT VECTOR FILL</text>
+
+    <!-- APPLICATION CHECKS -->
+    <text x="100" y="958" class="micro" fill="#7C8798">LOCKUP AND COLOUR CHECKS</text>
+
+    <g>
+      <rect x="100" y="990" width="560" height="310" rx="18" fill="#161C26"/>
+      <text x="132" y="1030" class="micro" fill="#7C8798">PRIMARY / REVERSE</text>
+      <g fill="#62BBAF"><use href="#mark" x="140" y="1074" width="92" height="106"/></g>
+      <g transform="translate(60 0) skewX(-3)">
+        <text x="260" y="1135" class="word" font-size="55" fill="#F6F5F1" textLength="330" lengthAdjust="spacingAndGlyphs">FOOTHOLD</text>
+      </g>
+      <text x="260" y="1174" class="ui" font-size="8" font-weight="680" fill="#B7C0CC" textLength="330" lengthAdjust="spacing">TERRAIN-ADAPTIVE LOCOMOTION POLICY</text>
+      <text x="132" y="1260" class="technical" font-size="12" fill="#7C8798">LIGHT TEAL + PAPER + MUTED INK</text>
+    </g>
+
+    <g>
+      <rect x="720" y="990" width="560" height="310" rx="18" fill="#FFFFFF" stroke="#D9D6CD"/>
+      <text x="752" y="1030" class="micro" fill="#7C8798">COMPACT / WEBSITE HEADER</text>
+      <image href="vector/foothold-compact-lockup-a3.svg" x="752" y="1062" width="460" height="88" preserveAspectRatio="xMinYMid meet"/>
+      <line x1="752" y1="1188" x2="1248" y2="1188" stroke="#D9D6CD"/>
+      <text x="752" y="1232" class="technical" font-size="12" fill="#7C8798">WHY / SYSTEM / EVIDENCE / TEAM</text>
+      <text x="752" y="1260" class="technical" font-size="12" fill="#0E7A6E">MASTER SVG / +18% OPTICAL SIZE / SUBTITLE OMITTED</text>
+    </g>
+
+    <g>
+      <rect x="1340" y="990" width="560" height="310" rx="18" fill="#EEECE6" stroke="#D9D6CD"/>
+      <text x="1372" y="1030" class="micro" fill="#7C8798">MONOCHROME / PRINT</text>
+      <g fill="#161C26"><use href="#mark" x="1384" y="1080" width="62" height="71"/></g>
+      <g transform="translate(59 0) skewX(-3)">
+        <text x="1460" y="1136" class="word" font-size="51" fill="#161C26" textLength="360" lengthAdjust="spacingAndGlyphs">FOOTHOLD</text>
+      </g>
+      <text x="1372" y="1260" class="technical" font-size="12" fill="#161C26">SINGLE INK / NO GRADIENT / NO EFFECT</text>
+    </g>
+
+    <!-- SECONDARY CONTACT LANGUAGE -->
+    <rect x="100" y="1360" width="1800" height="220" rx="20" fill="#EEECE6" stroke="#D9D6CD"/>
+    <text x="140" y="1412" class="micro" fill="#0E7A6E">SECONDARY CONTACT TRAIL / NOT A LOGO</text>
+    <text x="140" y="1460" font-size="25" font-weight="730" fill="#161C26">Keep the primary symbol singular. Express locomotion through contact points.</text>
+    <text x="140" y="1500" class="caption">Use the lower contact motif as a path, motion cue, diagram element, or physical-goods pattern.</text>
+    <image href="vector/foothold-contact-trail-secondary.svg" x="990" y="1375" width="810" height="144" preserveAspectRatio="xMidYMid meet"/>
+    <text x="1850" y="1540" class="technical" font-size="12" text-anchor="end" fill="#7C8798">PRIMARY LOGO REMAINS SINGLE</text>
+
+    <!-- COLOUR CONTRACT -->
+    <rect x="100" y="1640" width="1800" height="290" rx="20" fill="#FFFFFF" stroke="#D9D6CD"/>
+    <text x="140" y="1692" class="micro" fill="#0E7A6E">OFFICIAL LOGO COLOUR CONTRACT</text>
+    <g transform="translate(140 1732)">
+      <rect width="120" height="120" rx="14" fill="#0E7A6E"/>
+      <text x="146" y="34" font-size="21" font-weight="720" fill="#161C26">Symbol</text>
+      <text x="146" y="67" class="technical" font-size="15" fill="#4A5566">BRAND TEAL</text>
+      <text x="146" y="94" class="technical" font-size="15" fill="#7C8798">#0E7A6E</text>
+    </g>
+    <g transform="translate(590 1732)">
+      <rect width="120" height="120" rx="14" fill="#161C26"/>
+      <text x="146" y="34" font-size="21" font-weight="720" fill="#161C26">FOOTHOLD</text>
+      <text x="146" y="67" class="technical" font-size="15" fill="#4A5566">ENGINEERING INK</text>
+      <text x="146" y="94" class="technical" font-size="15" fill="#7C8798">#161C26</text>
+    </g>
+    <g transform="translate(1040 1732)">
+      <rect width="120" height="120" rx="14" fill="#4A5566"/>
+      <text x="146" y="34" font-size="21" font-weight="720" fill="#161C26">Subtitle</text>
+      <text x="146" y="67" class="technical" font-size="15" fill="#4A5566">SECONDARY INK</text>
+      <text x="146" y="94" class="technical" font-size="15" fill="#7C8798">#4A5566</text>
+    </g>
+    <text x="1860" y="1868" class="technical" font-size="13" text-anchor="end" fill="#A3342A">ORIGINAL NAVY GRADIENT RETIRED</text>
+
+    <text x="100" y="1970" class="technical" font-size="14" fill="#0E7A6E">FOOTHOLD BRAND SYSTEM V1</text>
+    <text x="1900" y="1970" class="technical" font-size="14" text-anchor="end" fill="#7C8798">2026-08-07 / FINAL VISUAL REVIEW</text>
+  </g>
+</svg>

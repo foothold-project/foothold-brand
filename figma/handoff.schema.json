@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/foothold-project/foothold-brand/figma/handoff.schema.json",
+  "title": "FOOTHOLD Figma review handoff",
+  "type": "object",
+  "required": ["schemaVersion", "brandVersion", "exportedAt", "sourceDigest", "file", "masterBoard"],
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "brandVersion": { "type": "string" },
+    "exportedAt": { "type": "string", "format": "date-time" },
+    "sourceDigest": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "file": {
+      "type": "object",
+      "required": ["name", "key"],
+      "properties": {
+        "name": { "type": "string" },
+        "key": { "type": "string" }
+      }
+    },
+    "masterBoard": { "$ref": "#/$defs/node" }
+  },
+  "$defs": {
+    "node": {
+      "type": "object",
+      "required": ["id", "name", "type"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "type": { "type": "string" },
+        "text": { "type": "string" },
+        "visible": { "type": "boolean" },
+        "x": { "type": "number" },
+        "y": { "type": "number" },
+        "width": { "type": "number" },
+        "height": { "type": "number" },
+        "children": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/node" }
+        }
+      },
+      "additionalProperties": true
+    }
+  }
+}
