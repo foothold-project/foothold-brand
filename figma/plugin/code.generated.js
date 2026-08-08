@@ -12,6 +12,21 @@ const COLLECTIONS = {
   darkSemantic: "FOOTHOLD / Dark Semantic",
   layout: "FOOTHOLD / Layout"
 };
+/** @type {Array<[string, number, number, string]>} */
+const TEXT_STYLE_SPECS = [
+  ["FOOTHOLD / Display / Hero", 56, 64, "Bold"],
+  ["FOOTHOLD / Heading / Section", 32, 40, "Semi Bold"],
+  ["FOOTHOLD / Body / Korean", 18, 28, "Regular"],
+  ["FOOTHOLD / Label / Technical", 13, 18, "Semi Bold"],
+  ["FOOTHOLD / Subtitle / English", 12, 18, "Regular"]
+];
+const DEPRECATED_TEXT_STYLE_NAMES = [
+  "FOOTHOLD / Display",
+  "FOOTHOLD / Heading",
+  "FOOTHOLD / Body",
+  "FOOTHOLD / Label",
+  "FOOTHOLD / Caption"
+];
 
 figma.showUI(__html__, { width: 420, height: 620, themeColors: true });
 
@@ -118,14 +133,14 @@ async function syncColorCollection(collection, sourceGroup, mode, semantic) {
   const entries = leaves(sourceGroup);
   const created = new Map();
   for (const entry of entries) {
-    const name = entry.path.join("/");
+    const name = ["color", ...entry.path].join("/");
     const css = entry.node.$extensions?.foothold?.css;
     const variable = await ensureVariable(
       collection,
       name,
       "COLOR",
       semantic ? semanticScopes(`/${name}/`) : [],
-      css ? `var(${css})` : primitiveSyntax(entry.path)
+      css ? `var(${css})` : primitiveSyntax(["color", ...entry.path])
     );
     created.set(entry.path.join("."), variable);
   }
@@ -156,7 +171,7 @@ async function syncSemanticCollection(collection, primitiveCollection, mode) {
       const reference = value.slice(1, -1);
       let target = created.get(reference);
       if (!target && reference.startsWith("primitive.color.")) {
-        const primitiveName = reference.split(".").slice(2).join("/");
+        const primitiveName = ["color", ...reference.split(".").slice(2)].join("/");
         target = primitiveVariables.get(`${primitiveCollection.id}:${primitiveName}`);
       }
       if (!target) throw new Error(`Missing variable alias target: ${reference}`);
@@ -165,6 +180,22 @@ async function syncSemanticCollection(collection, primitiveCollection, mode) {
       variable.setValueForMode(collection.defaultModeId, hexToRgba(value));
     }
   }
+}
+
+async function removeManagedPrimitiveDuplicates(collection) {
+  const variables = (await figma.variables.getLocalVariablesAsync()).filter((variable) => variable.variableCollectionId === collection.id);
+  const byName = new Map(variables.map((variable) => [variable.name, variable]));
+  let removed = 0;
+  for (const entry of leaves(FOOTHOLD_DATA.tokens.primitive.color)) {
+    const shortName = entry.path.join("/");
+    const canonicalName = ["color", ...entry.path].join("/");
+    const duplicate = byName.get(shortName);
+    if (duplicate && byName.has(canonicalName) && duplicate.getPluginData(OWNER_KEY) === OWNER_VALUE) {
+      duplicate.remove();
+      removed += 1;
+    }
+  }
+  return removed;
 }
 
 async function syncLayoutCollection(collection) {
@@ -178,26 +209,37 @@ async function syncLayoutCollection(collection) {
 }
 
 async function syncTextStyles() {
-  /** @type {Array<[string, number, number, string]>} */
-  const specs = [
-    ["FOOTHOLD / Display", 56, 64, "Bold"],
-    ["FOOTHOLD / Heading", 32, 40, "Semi Bold"],
-    ["FOOTHOLD / Body", 18, 28, "Regular"],
-    ["FOOTHOLD / Label", 13, 18, "Semi Bold"],
-    ["FOOTHOLD / Caption", 12, 18, "Regular"]
-  ];
   const existing = new Map((await figma.getLocalTextStylesAsync()).map((style) => [style.name, style]));
-  for (const [name, size, lineHeight, styleName] of specs) {
-    const fontName = { family: "Inter", style: styleName };
-    await figma.loadFontAsync(fontName);
-    const style = existing.get(name) || figma.createTextStyle();
-    style.name = name;
-    style.fontName = fontName;
-    style.fontSize = size;
-    style.lineHeight = { unit: "PIXELS", value: lineHeight };
-    style.description = `Managed by ${OWNER_VALUE}.`;
+  let removed = 0;
+  for (const name of DEPRECATED_TEXT_STYLE_NAMES) {
+    const style = existing.get(name);
+    if (style && style.description === `Managed by ${OWNER_VALUE}.`) {
+      style.remove();
+      existing.delete(name);
+      removed += 1;
+    }
   }
-  return specs.map(([name]) => name);
+  for (const [name, size, lineHeight, styleName] of TEXT_STYLE_SPECS) {
+    const fontName = { family: "Inter", style: styleName };
+    let style = existing.get(name);
+    if (!style) {
+      await figma.loadFontAsync(fontName);
+      style = figma.createTextStyle();
+      style.name = name;
+      style.fontName = fontName;
+      style.fontSize = size;
+      style.lineHeight = { unit: "PIXELS", value: lineHeight };
+      style.description = `Managed by ${OWNER_VALUE}.`;
+      style.setPluginData(OWNER_KEY, OWNER_VALUE);
+    } else if (style.getPluginData(OWNER_KEY) === OWNER_VALUE) {
+      await figma.loadFontAsync(fontName);
+      style.fontName = fontName;
+      style.fontSize = size;
+      style.lineHeight = { unit: "PIXELS", value: lineHeight };
+      style.description = `Managed by ${OWNER_VALUE}.`;
+    }
+  }
+  return { names: TEXT_STYLE_SPECS.map(([name]) => name), removed };
 }
 
 async function syncFoundations() {
@@ -211,17 +253,31 @@ async function syncFoundations() {
   await syncSemanticCollection(lightSemantic, lightPrimitive, "light");
   await syncSemanticCollection(darkSemantic, darkPrimitive, "dark");
   await syncLayoutCollection(layout);
+  const removedPrimitiveVariables =
+    (await removeManagedPrimitiveDuplicates(lightPrimitive)) +
+    (await removeManagedPrimitiveDuplicates(darkPrimitive));
   const styles = await syncTextStyles();
-  return { collections: Object.values(COLLECTIONS), styles };
+  return {
+    collections: Object.values(COLLECTIONS),
+    styles: styles.names,
+    repairs: { removedPrimitiveVariables, removedTextStyles: styles.removed }
+  };
 }
 
 async function inspectFile() {
   const collections = await figma.variables.getLocalVariableCollectionsAsync();
   const variables = await figma.variables.getLocalVariablesAsync();
+  const variableById = new Map(variables.map((variable) => [variable.id, variable]));
   return {
     file: { name: figma.root.name, key: figma.fileKey || "local" },
     pages: figma.root.children.map((page) => ({ id: page.id, name: page.name })),
-    collections: collections.map((collection) => ({ id: collection.id, name: collection.name, modes: collection.modes.map((mode) => mode.name), variables: collection.variableIds.length })),
+    collections: collections.map((collection) => ({
+      id: collection.id,
+      name: collection.name,
+      modes: collection.modes.map((mode) => mode.name),
+      variables: collection.variableIds.length,
+      variableNames: collection.variableIds.map((id) => variableById.get(id)?.name).filter(Boolean).sort()
+    })),
     variables: variables.length,
     textStyles: (await figma.getLocalTextStylesAsync()).map((style) => style.name),
     sourceDigest: FOOTHOLD_DATA.sourceDigest
@@ -358,9 +414,11 @@ async function createModule(module) {
   frame.name = `${module.id} / ${module.name}`;
   setOwned(frame, `module/${module.id}`);
   frame.layoutMode = "VERTICAL";
-  frame.primaryAxisSizingMode = "AUTO";
   frame.counterAxisSizingMode = "FIXED";
   frame.resize(1280, 240);
+  frame.primaryAxisSizingMode = "AUTO";
+  frame.minHeight = 240;
+  frame.clipsContent = false;
   frame.paddingTop = frame.paddingBottom = 32;
   frame.paddingLeft = frame.paddingRight = 36;
   frame.itemSpacing = 14;
@@ -396,9 +454,11 @@ async function createMasterBoard(page) {
   }
   board.name = "FOOTHOLD / Visual Master Board";
   board.layoutMode = "VERTICAL";
-  board.primaryAxisSizingMode = "AUTO";
   board.counterAxisSizingMode = "FIXED";
   board.resize(1440, 1000);
+  board.primaryAxisSizingMode = "AUTO";
+  board.minHeight = 1000;
+  board.clipsContent = false;
   board.paddingTop = board.paddingBottom = 80;
   board.paddingLeft = board.paddingRight = 80;
   board.itemSpacing = 24;

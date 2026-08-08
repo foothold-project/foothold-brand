@@ -61,6 +61,19 @@ for (const relative of protectedRoots) walk(path.join(root, relative));
 const pluginSource = read("figma/plugin/src/code.js");
 if (/fetch\s*\(|XMLHttpRequest|WebSocket/.test(pluginSource)) fail("Local Figma plugin must not use network APIs");
 if (!pluginSource.includes("JSON + SVG + PNG") && !read("figma/plugin/README.md").includes("JSON + SVG + PNG")) fail("Handoff contract is undocumented");
+if (!pluginSource.includes('const name = ["color", ...entry.path].join("/")')) fail("Figma primitive variables must retain the canonical color/ prefix");
+for (const styleName of [
+  "FOOTHOLD / Display / Hero",
+  "FOOTHOLD / Heading / Section",
+  "FOOTHOLD / Body / Korean",
+  "FOOTHOLD / Label / Technical",
+  "FOOTHOLD / Subtitle / English"
+]) {
+  if (!pluginSource.includes(styleName)) fail(`Missing canonical Figma text style: ${styleName}`);
+}
+if (!pluginSource.includes("variableNames:")) fail("Figma inspection must expose complete variable names for collision preflight");
+if (!/frame\.resize\(1280, 240\);\s*frame\.primaryAxisSizingMode = "AUTO";\s*frame\.minHeight = 240;/.test(pluginSource)) fail("Master Board modules must hug content above their 240px minimum height");
+if (!/board\.resize\(1440, 1000\);\s*board\.primaryAxisSizingMode = "AUTO";\s*board\.minHeight = 1000;/.test(pluginSource)) fail("Visual Master Board must expand beyond its 1000px minimum height");
 
 const template = JSON.parse(read("figma/plugin/manifest.template.json"));
 if (template.documentAccess !== "dynamic-page") fail("Figma manifest must use dynamic-page access");

@@ -14,6 +14,8 @@ The token JSON is canonical: [`../tokens/foothold.tokens.json`](../tokens/footho
 | `FOOTHOLD / Dark Semantic` | Value | `semantic.color` / dark | Alias semantic variables to dark primitives. |
 | `FOOTHOLD / Layout` | Value | `primitive.layout`, `semantic.layout` | Exactly two exposed variables, `measure` and `nav`; values resolve from primitives and carry semantic web code syntax. This is the Starter-compatible exception to the normal Figma alias pattern. |
 
+Primitive variables use the canonical `color/<token>` path inside both primitive collections (for example, `color/paper` and `color/teal-brand`). Semantic variables use `color/<role>/<name>`, and layout variables use `layout/<name>`. The local sync plugin must match these complete paths; omitting the `color/` prefix creates duplicate variables.
+
 Starter limits a collection to one variable mode. The duplicated Light/Dark local collections preserve the canonical values, but do not enable one-click mode switching. If the plan returns to Professional, migrate them to one primitive and one semantic collection with Light/Dark modes.
 
 ## Web code syntax
@@ -29,6 +31,16 @@ Starter limits a collection to one variable mode. The duplicated Light/Dark loca
 | `color/state/danger` | `var(--stop)` |
 | `layout/measure` | `var(--measure)` |
 | `layout/nav` | `var(--nav)` |
+
+## Canonical local text styles
+
+- `FOOTHOLD / Display / Hero`
+- `FOOTHOLD / Heading / Section`
+- `FOOTHOLD / Body / Korean`
+- `FOOTHOLD / Label / Technical`
+- `FOOTHOLD / Subtitle / English`
+
+The sync plugin preserves existing user-owned canonical styles. It only creates a missing style or updates a style that it previously created and marked with its ownership key.
 
 ## Required scopes
 
