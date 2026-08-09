@@ -21,7 +21,7 @@ APPROVED_WORDMARK_ASPECT = 7.841215388
 
 def main() -> None:
     manifest = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
-    if manifest.get("version") != "1.0.1":
+    if manifest.get("version") != "1.0.2":
         raise SystemExit("Unexpected approved asset-pack version")
     if manifest.get("approvedWordmarkAspect") != APPROVED_WORDMARK_ASPECT:
         raise SystemExit("Approved wordmark aspect changed")

@@ -1,11 +1,12 @@
 # FOOTHOLD SVG Asset Pack v1
 
-**Status:** Corrected and visually verified 2026-08-08
+**Status:** v1.0.2 corrected and visually verified 2026-08-09
 **Canonical geometry:** `logo/v1/`
 **Canonical values:** `../tokens/foothold.tokens.json`
 
 All production SVGs use outlined paths. They do not depend on installed fonts, PNG/JPG assets, or gradients.
 The approved A.3 `FOOTHOLD` wordmark proportion is locked in the generator at a visible width-to-height ratio of `7.841215388`. Vectorisation and derivatives must preserve this ratio.
+The Compact lockup uses a measured 25px visible symbol-to-wordmark gap at its 96px canonical height. The wordmark begins at `x=88`; do not restore the crowded v1.0.1 `x=76` placement.
 
 ## Core logo assets
 
@@ -24,9 +25,13 @@ The approved A.3 `FOOTHOLD` wordmark proportion is locked in the generator at a 
 | `logo/v1/foothold-lockup-stacked-dark.svg` | Stacked lockup on a dark surface |
 | `logo/v1/foothold-lockup-primary-monochrome.svg` | Single-ink production |
 | `logo/v1/foothold-favicon.svg` | Browser favicon and small app-icon source |
-| `logo/v1/foothold-contact-trail.svg` | Secondary contact sequence; never a primary logo |
+| `logo/v1/foothold-contact-trail.svg` | Retired v1 experiment; preserve for history, do not use in new work |
 
-## Web
+## Legacy v1 application proofs
+
+The following exports verified ratios, transparent SVG delivery, and canonical logo reuse. They are **not** finished medium-specific templates and are superseded for new production work by the v1.2 draft system. Preserve them for compatibility and history; do not copy their composition as the final Web, GitHub, presentation, poster, social, or goods design.
+
+### Web
 
 | Asset | Use |
 |---|---|
@@ -35,7 +40,7 @@ The approved A.3 `FOOTHOLD` wordmark proportion is locked in the generator at a 
 
 These files contain only the visual brand area. Keep navigation, buttons, and accessible labels as live HTML.
 
-## GitHub and README
+### GitHub and README
 
 | Asset | Use |
 |---|---|
@@ -54,7 +59,7 @@ Recommended README usage:
 </picture>
 ```
 
-## Presentation, poster, social, and goods
+### Presentation, poster, social, and goods
 
 | Asset | Use |
 |---|---|
@@ -69,7 +74,8 @@ Recommended README usage:
 - Use Compact without the subtitle at small sizes; its symbol receives optical oversizing.
 - Use Stacked for centred and square surfaces.
 - Do not condense, expand, or re-typeset the approved wordmark. Use the frozen canonical SVG so the locked A.3 proportion is retained.
-- Do not duplicate the complete symbol to imply footsteps. Use the contact trail instead.
+- Do not duplicate the complete symbol to imply footsteps.
+- The retired `foothold-contact-trail.svg` is not an approved substitute. Any future contact or gait graphic must be grounded in verified contact sequence, terrain, or gait-state evidence.
 - Dark logo SVGs are transparent and expect a verified dark surface.
 - Do not recolour semantic state graphics to make the logo more decorative.
 

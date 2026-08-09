@@ -342,7 +342,13 @@ function light(name) {
   return FOOTHOLD_DATA.tokens.primitive.color[name].$value;
 }
 
+function dark(name) {
+  return rawValue(FOOTHOLD_DATA.tokens.primitive.color[name], "dark");
+}
+
 async function createAssetCard(asset) {
+  const isSquare = asset.width / asset.height >= 0.8 && asset.width / asset.height <= 1.25;
+  const previewHeight = isSquare ? 300 : 190;
   const card = figma.createFrame();
   card.name = `Asset / ${asset.name}`;
   card.layoutMode = "VERTICAL";
@@ -362,7 +368,7 @@ async function createAssetCard(asset) {
   const preview = figma.createFrame();
   preview.name = "Preview";
   preview.layoutMode = "VERTICAL";
-  preview.resize(360, 190);
+  preview.resize(360, previewHeight);
   preview.primaryAxisSizingMode = "FIXED";
   preview.counterAxisSizingMode = "FIXED";
   preview.primaryAxisAlignItems = "CENTER";
@@ -373,10 +379,13 @@ async function createAssetCard(asset) {
 
   const artwork = figma.createNodeFromSvg(asset.svg);
   artwork.name = asset.name;
-  const scale = Math.min(328 / asset.width, 158 / asset.height);
-  artwork.resize(asset.width * scale, asset.height * scale);
+  const safeWidth = preview.width - 40;
+  const safeHeight = preview.height - 40;
+  const scale = Math.min(safeWidth / artwork.width, safeHeight / artwork.height);
+  artwork.resize(artwork.width * scale, artwork.height * scale);
   preview.appendChild(artwork);
   card.appendChild(preview);
+  card.appendChild(await makeText((asset.status || "approved").toUpperCase(), 10, "Bold", asset.status === "provisional" ? light("amber") : light("teal-brand")));
   card.appendChild(await makeWrappedText(asset.name, 13, "Semi Bold", light("ink"), 360));
   card.appendChild(await makeWrappedText(asset.purpose, 12, "Regular", light("ink-secondary"), 360));
   card.appendChild(await makeWrappedText(asset.path, 10, "Regular", light("ink-caption"), 360));
@@ -411,7 +420,7 @@ async function createAssetSection(name, assets) {
 
 async function createAssetLibrary() {
   const library = figma.createFrame();
-  library.name = "FOOTHOLD / Logo & Asset Library";
+  library.name = "FOOTHOLD / Identity & Asset Status";
   setOwned(library, "asset-library");
   library.layoutMode = "VERTICAL";
   library.counterAxisSizingMode = "FIXED";
@@ -421,9 +430,9 @@ async function createAssetLibrary() {
   library.itemSpacing = 28;
   library.fills = [];
   library.clipsContent = false;
-  library.appendChild(await makeText("LOGO & ASSET LIBRARY", 36, "Bold", light("ink")));
+  library.appendChild(await makeText("IDENTITY & ASSET STATUS", 36, "Bold", light("ink")));
   library.appendChild(await makeWrappedText(
-    `${FOOTHOLD_DATA.libraryAssets.length} approved vector assets from the Git manifest. Canonical paths remain frozen; Figma nodes are visual working copies.`,
+    `${FOOTHOLD_DATA.libraryAssets.length} approved core vectors from Git. Canonical paths remain frozen; Figma nodes are visual working copies.`,
     14,
     "Regular",
     light("ink-secondary"),
@@ -435,7 +444,306 @@ async function createAssetLibrary() {
     grouped.get(asset.category).push(asset);
   }
   for (const [name, assets] of grouped) library.appendChild(await createAssetSection(name, assets));
+  library.appendChild(await makeWrappedText(
+    `RETIRED · ${FOOTHOLD_DATA.retiredAssets.join(", ")} · preserve for history; exclude from new work.`,
+    13,
+    "Regular",
+    light("red"),
+    1280
+  ));
+  library.appendChild(await makeWrappedText(
+    `SUPERSEDED COMPOSITION PROOFS · ${FOOTHOLD_DATA.legacyApplicationAssets.length} v1 application exports remain in Git for compatibility, not as finished OSMU templates.`,
+    13,
+    "Regular",
+    light("ink-secondary"),
+    1280
+  ));
+  if (FOOTHOLD_DATA.draftAssets.length) {
+    library.appendChild(await createAssetSection("Draft applications / review required", FOOTHOLD_DATA.draftAssets));
+  }
   return library;
+}
+
+async function createLogoUsageCard(label, usage, svg, sourceWidth, sourceHeight, darkSurface = false) {
+  const card = figma.createFrame();
+  card.name = `Logo usage / ${label}`;
+  card.layoutMode = "VERTICAL";
+  card.counterAxisSizingMode = "FIXED";
+  card.resize(388, 240);
+  card.primaryAxisSizingMode = "AUTO";
+  card.minHeight = 240;
+  card.paddingTop = card.paddingBottom = 20;
+  card.paddingLeft = card.paddingRight = 20;
+  card.itemSpacing = 12;
+  card.cornerRadius = 12;
+  card.fills = [solidPaint(light("paper-secondary"))];
+  card.strokes = [solidPaint(light("rule"))];
+  card.strokeWeight = 1;
+
+  const preview = figma.createFrame();
+  preview.name = `${label} preview`;
+  preview.layoutMode = "VERTICAL";
+  preview.resize(348, 150);
+  preview.primaryAxisSizingMode = "FIXED";
+  preview.counterAxisSizingMode = "FIXED";
+  preview.primaryAxisAlignItems = "CENTER";
+  preview.counterAxisAlignItems = "CENTER";
+  preview.cornerRadius = 8;
+  preview.fills = [solidPaint(darkSurface ? dark("paper") : light("paper"))];
+  const artwork = figma.createNodeFromSvg(svg);
+  artwork.name = `${label} canonical SVG`;
+  const scale = Math.min(316 / sourceWidth, 118 / sourceHeight);
+  artwork.resize(sourceWidth * scale, sourceHeight * scale);
+  preview.appendChild(artwork);
+  card.appendChild(preview);
+  card.appendChild(await makeText(label.toUpperCase(), 13, "Semi Bold", light("ink")));
+  card.appendChild(await makeWrappedText(usage, 12, "Regular", light("ink-secondary"), 348));
+  return card;
+}
+
+async function createMessageCard(label, value, width) {
+  const card = figma.createFrame();
+  card.name = `Message / ${label}`;
+  card.layoutMode = "VERTICAL";
+  card.counterAxisSizingMode = "FIXED";
+  card.resize(width, 160);
+  card.primaryAxisSizingMode = "AUTO";
+  card.minHeight = 160;
+  card.paddingTop = card.paddingBottom = 24;
+  card.paddingLeft = card.paddingRight = 24;
+  card.itemSpacing = 12;
+  card.cornerRadius = 12;
+  card.fills = [solidPaint(light("paper-secondary"))];
+  card.appendChild(await makeText(label.toUpperCase(), 12, "Bold", light("teal-brand")));
+  card.appendChild(await makeWrappedText(value, 24, "Semi Bold", light("ink"), width - 48));
+  return card;
+}
+
+async function placeText(frame, value, size, style, color, x, y, width) {
+  const node = await makeWrappedText(value, size, style, color, width);
+  frame.appendChild(node);
+  node.x = x;
+  node.y = y;
+  return node;
+}
+
+function placeRect(frame, x, y, width, height, fill, radius = 0, opacity = 1) {
+  const node = figma.createRectangle();
+  node.resize(width, height);
+  node.x = x;
+  node.y = y;
+  node.cornerRadius = radius;
+  node.fills = [solidPaint(fill)];
+  node.opacity = opacity;
+  frame.appendChild(node);
+  return node;
+}
+
+function placeSvg(frame, svg, name, x, y, width, height, opacity = 1) {
+  const node = figma.createNodeFromSvg(svg);
+  node.name = name;
+  node.resize(width, height);
+  node.x = x;
+  node.y = y;
+  node.opacity = opacity;
+  frame.appendChild(node);
+  return node;
+}
+
+async function createMediaReviewCard(label, role, width, height, darkSurface, draw) {
+  const card = figma.createFrame();
+  card.name = `OSMU / ${label}`;
+  card.layoutMode = "VERTICAL";
+  card.counterAxisSizingMode = "FIXED";
+  card.resize(width + 40, height + 120);
+  card.primaryAxisSizingMode = "AUTO";
+  card.minHeight = height + 120;
+  card.paddingTop = card.paddingBottom = 20;
+  card.paddingLeft = card.paddingRight = 20;
+  card.itemSpacing = 12;
+  card.cornerRadius = 12;
+  card.fills = [solidPaint(light("card"))];
+  card.strokes = [solidPaint(light("rule"))];
+  card.strokeWeight = 1;
+
+  const preview = figma.createFrame();
+  preview.name = `${label} / Provisional preview`;
+  preview.resize(width, height);
+  preview.clipsContent = true;
+  preview.cornerRadius = 8;
+  preview.fills = [solidPaint(darkSurface ? dark("paper") : light("paper"))];
+  card.appendChild(preview);
+  await draw(preview);
+  card.appendChild(await makeText(`${label.toUpperCase()} · PROVISIONAL`, 12, "Bold", light("amber")));
+  card.appendChild(await makeWrappedText(role, 12, "Regular", light("ink-secondary"), width));
+  return card;
+}
+
+async function createWebHeaderReview() {
+  return createMediaReviewCard("Web header", "Navigation-first: compact identity, live controls, and restrained brand presence.", 580, 92, false, async (preview) => {
+    placeSvg(preview, FOOTHOLD_DATA.svg.compactLight, "Canonical Compact Lockup", 24, 24, 235, 42);
+    placeRect(preview, 282, 20, 1, 52, light("rule"));
+    await placeText(preview, "PROJECT     METHOD     EVIDENCE", 10, "Semi Bold", light("ink-secondary"), 310, 31, 200);
+    placeRect(preview, 508, 25, 48, 28, light("teal-soft"), 14);
+    await placeText(preview, "GIT", 10, "Bold", light("teal-ink-on-soft"), 521, 31, 28);
+    placeRect(preview, 0, 90, 580, 2, light("teal-brand"));
+  });
+}
+
+async function createReadmeHeroReview() {
+  return createMediaReviewCard("GitHub README hero", "Repository-first: project definition and technical orientation before visual spectacle.", 580, 200, false, async (preview) => {
+    placeSvg(preview, FOOTHOLD_DATA.svg.compactLight, "Canonical Compact Lockup", 24, 20, 224, 40);
+    placeSvg(preview, FOOTHOLD_DATA.svg.symbolBrand, "Canonical Symbol Watermark", 452, 18, 88, 101, 0.12);
+    await placeText(preview, FOOTHOLD_DATA.messages.closingEn, 28, "Bold", light("ink"), 24, 78, 430);
+    await placeText(preview, "Terrain-adaptive quadruped locomotion policy", 12, "Regular", light("ink-secondary"), 24, 118, 430);
+    const labels = ["01  SIMULATION", "02  POLICY LEARNING", "03  VALIDATION"];
+    for (let index = 0; index < labels.length; index += 1) {
+      const x = 24 + index * 178;
+      placeRect(preview, x, 156, 164, 24, index === 2 ? light("amber-soft") : light("paper-secondary"), 4);
+      await placeText(preview, labels[index], 9, "Semi Bold", index === 2 ? light("amber-ink-on-soft") : light("ink-secondary"), x + 10, 161, 144);
+    }
+  });
+}
+
+async function createPresentationReview() {
+  return createMediaReviewCard("Presentation opener", "Story-first: one memorable statement with enough silence for a spoken opening.", 580, 326, true, async (preview) => {
+    placeSvg(preview, FOOTHOLD_DATA.svg.primaryDark, "Canonical Primary Lockup / Dark", 34, 30, 290, 60);
+    await placeText(preview, "Find the next", 44, "Bold", dark("ink"), 34, 132, 430);
+    await placeText(preview, "foothold.", 44, "Bold", dark("ink"), 34, 184, 430);
+    placeRect(preview, 34, 276, 512, 2, dark("rule"));
+    placeRect(preview, 420, 94, 190, 18, dark("teal-brand"), 0, 0.18);
+    placeRect(preview, 452, 122, 190, 18, dark("teal-brand"), 0, 0.32);
+    placeRect(preview, 484, 150, 190, 18, dark("teal-brand"), 0, 0.52);
+    await placeText(preview, "OPENING / 16:9", 10, "Semi Bold", dark("ink-secondary"), 34, 292, 160);
+  });
+}
+
+async function createPosterHeaderReview() {
+  return createMediaReviewCard("Poster header", "Evidence-first: editorial hierarchy that opens into diagrams, methods, and measured results.", 580, 214, false, async (preview) => {
+    placeRect(preview, 0, 0, 14, 214, light("teal-brand"));
+    await placeText(preview, "01 / TERRAIN-ADAPTIVE LOCOMOTION", 9, "Bold", light("teal-brand"), 34, 24, 300);
+    placeSvg(preview, FOOTHOLD_DATA.svg.primaryLight, "Canonical Primary Lockup", 34, 52, 330, 68);
+    await placeText(preview, "Reinforcement-learning policy development and validation for quadruped locomotion on rough terrain.", 13, "Regular", light("ink-secondary"), 34, 144, 410);
+    placeRect(preview, 472, 24, 82, 82, light("paper-secondary"), 8);
+    await placeText(preview, "M01", 22, "Bold", light("ink"), 488, 44, 50);
+    await placeText(preview, "CORE", 9, "Semi Bold", light("ink-caption"), 488, 76, 50);
+  });
+}
+
+async function createSocialReview() {
+  return createMediaReviewCard("Social square", "Recognition-first: one symbol, one sentence, and no unreadable micro-copy.", 360, 360, true, async (preview) => {
+    await placeText(preview, "FOOTHOLD / 01", 10, "Semi Bold", dark("ink-secondary"), 24, 22, 160);
+    placeSvg(preview, FOOTHOLD_DATA.svg.symbolBrand, "Canonical Symbol", 104, 72, 152, 174);
+    await placeText(preview, "Find the next foothold.", 24, "Bold", dark("ink"), 40, 284, 280);
+  });
+}
+
+async function createStickerReview() {
+  const asset = FOOTHOLD_DATA.draftAssets[0];
+  return createMediaReviewCard("Round sticker", "Production-first: preferred stacked lockup, thinner border, and generous cut-safe margin.", 360, 360, false, async (preview) => {
+    placeSvg(preview, asset.svg, "Provisional round sticker", 20, 20, 320, 320);
+  });
+}
+
+async function createOsmuReview(page, masterBoard) {
+  let board = findOwned(page, "osmu-review");
+  if (!board) {
+    board = figma.createFrame();
+    setOwned(board, "osmu-review");
+    page.appendChild(board);
+  } else {
+    for (const child of [...board.children]) child.remove();
+  }
+  board.name = "FOOTHOLD / OSMU Review";
+  board.layoutMode = "VERTICAL";
+  board.counterAxisSizingMode = "FIXED";
+  board.resize(1440, 1000);
+  board.primaryAxisSizingMode = "AUTO";
+  board.minHeight = 1000;
+  board.clipsContent = false;
+  board.paddingTop = board.paddingBottom = 80;
+  board.paddingLeft = board.paddingRight = 80;
+  board.itemSpacing = 24;
+  board.fills = [solidPaint(light("paper"))];
+  board.x = masterBoard.x + masterBoard.width + 160;
+  board.y = masterBoard.y;
+  board.appendChild(await makeText("FOOTHOLD / OSMU REVIEW", 48, "Bold", light("ink")));
+  board.appendChild(await makeWrappedText("Same identity, different communication job. All compositions remain provisional until exported and approved.", 18, "Regular", light("ink-secondary"), 1280));
+  for (const pair of [
+    [await createWebHeaderReview(), await createReadmeHeroReview()],
+    [await createPresentationReview(), await createPosterHeaderReview()],
+    [await createSocialReview(), await createStickerReview()]
+  ]) {
+    const row = figma.createFrame();
+    row.name = "OSMU review row";
+    row.layoutMode = "HORIZONTAL";
+    row.primaryAxisSizingMode = "AUTO";
+    row.counterAxisSizingMode = "AUTO";
+    row.itemSpacing = 16;
+    row.fills = [];
+    for (const card of pair) row.appendChild(card);
+    board.appendChild(row);
+  }
+  return board;
+}
+
+async function appendBrandCore(frame) {
+  const row = figma.createFrame();
+  row.name = "Approved lockup hierarchy";
+  row.layoutMode = "HORIZONTAL";
+  row.primaryAxisSizingMode = "AUTO";
+  row.counterAxisSizingMode = "AUTO";
+  row.itemSpacing = 16;
+  row.fills = [];
+  row.appendChild(await createLogoUsageCard("Primary", "Default two-row lockup for hero and formal identity use.", FOOTHOLD_DATA.svg.primaryLight, 868.345, 180));
+  row.appendChild(await createLogoUsageCard("Compact", "Subtitle-free lockup for constrained horizontal spaces.", FOOTHOLD_DATA.svg.compactLight, 537.108, 96));
+  row.appendChild(await createLogoUsageCard("Stacked", "Centred square lockup for avatars, stickers, and goods.", FOOTHOLD_DATA.svg.stackedLight, 600, 600));
+  frame.appendChild(row);
+  frame.appendChild(await createMessageCard("Canonical definition", FOOTHOLD_DATA.messages.projectDefinitionKo, 1208));
+  frame.appendChild(await makeWrappedText(
+    `Frozen SVG paths · approved wordmark aspect ${FOOTHOLD_DATA.approvedWordmarkAspect} · subtitle: ${FOOTHOLD_DATA.messages.subtitleEn}`,
+    13,
+    "Regular",
+    light("ink-secondary"),
+    1208
+  ));
+}
+
+async function appendHeroHierarchy(frame) {
+  const row = figma.createFrame();
+  row.name = "Slogan to scope hierarchy";
+  row.layoutMode = "HORIZONTAL";
+  row.primaryAxisSizingMode = "AUTO";
+  row.counterAxisSizingMode = "AUTO";
+  row.itemSpacing = 16;
+  row.fills = [];
+  row.appendChild(await createMessageCard("Approved slogan", FOOTHOLD_DATA.messages.closingEn, 440));
+  row.appendChild(await createMessageCard("What", FOOTHOLD_DATA.messages.whatKo, 752));
+  frame.appendChild(row);
+  frame.appendChild(await makeWrappedText("Approved English slogan · precise project scope · no platform claim", 13, "Regular", light("ink-secondary"), 1208));
+  frame.appendChild(await createMessageCard("Approved Korean slogan", FOOTHOLD_DATA.messages.sloganKo, 1208));
+}
+
+async function appendClosing(frame) {
+  const panel = figma.createFrame();
+  panel.name = "Approved closing panel / Dark";
+  panel.layoutMode = "VERTICAL";
+  panel.counterAxisSizingMode = "FIXED";
+  panel.resize(1208, 260);
+  panel.primaryAxisSizingMode = "AUTO";
+  panel.minHeight = 260;
+  panel.paddingTop = panel.paddingBottom = 32;
+  panel.paddingLeft = panel.paddingRight = 32;
+  panel.itemSpacing = 24;
+  panel.cornerRadius = 16;
+  panel.fills = [solidPaint(dark("paper"))];
+  const lockup = figma.createNodeFromSvg(FOOTHOLD_DATA.svg.compactDark);
+  lockup.name = "Canonical Compact Lockup / Dark";
+  lockup.resize(403, 72);
+  panel.appendChild(lockup);
+  panel.appendChild(await makeText(FOOTHOLD_DATA.messages.closingEn, 36, "Semi Bold", dark("ink")));
+  panel.appendChild(await makeText("APPROVED · Source: VOICE_AND_MESSAGE.md", 12, "Regular", dark("ink-secondary")));
+  frame.appendChild(panel);
 }
 
 async function createCover(page) {
@@ -462,7 +770,8 @@ async function createCover(page) {
   lockup.name = "Canonical Primary Lockup";
   lockup.resize(868.345, 180);
   frame.appendChild(lockup);
-  frame.appendChild(await makeText(FOOTHOLD_DATA.messages.whyKo, 36, "Semi Bold", light("ink")));
+  frame.appendChild(await makeText(FOOTHOLD_DATA.messages.closingEn, 48, "Semi Bold", light("ink")));
+  frame.appendChild(await makeWrappedText(FOOTHOLD_DATA.messages.projectDefinitionKo, 24, "Regular", light("ink-secondary"), 1120));
   frame.appendChild(await makeText(`Brand ${FOOTHOLD_DATA.brandVersion} · Source ${FOOTHOLD_DATA.sourceDigest.slice(0, 12)} · Git is canonical`, 14, "Regular", light("ink-secondary")));
   return frame;
 }
@@ -533,14 +842,9 @@ async function createModule(module) {
   frame.appendChild(await makeText(`${module.id}  ${module.name.toUpperCase()}`, 14, "Bold", module.status === "ready" ? light("teal-brand") : light("amber")));
   frame.appendChild(await makeText(module.guidance, 24, "Semi Bold", light("ink")));
   frame.appendChild(await makeText(`${module.status.toUpperCase()} · Source: ${module.source}`, 13, "Regular", light("ink-secondary")));
-  if (module.id === "M01") {
-    const lockup = figma.createNodeFromSvg(FOOTHOLD_DATA.svg.primaryLight);
-    lockup.name = "Canonical Primary Lockup";
-    lockup.resize(579, 120);
-    frame.appendChild(lockup);
-  }
-  if (module.id === "M02") frame.appendChild(await makeText(FOOTHOLD_DATA.messages.whyKo, 28, "Semi Bold", light("ink")));
-  if (module.id === "M10") frame.appendChild(await makeText("Find the next foothold.", 28, "Semi Bold", light("ink")));
+  if (module.id === "M01") await appendBrandCore(frame);
+  if (module.id === "M02") await appendHeroHierarchy(frame);
+  if (module.id === "M10") await appendClosing(frame);
   return frame;
 }
 
@@ -579,8 +883,9 @@ async function buildSkeleton() {
   const cover = await createCover(pages.get("Cover & Guide"));
   const foundations = await createFoundations(pages.get("Foundations"));
   const board = await createMasterBoard(pages.get("Master Board"));
-  figma.viewport.scrollAndZoomIntoView([board]);
-  return { pages: PAGE_NAMES, nodes: [cover.id, foundations.id, board.id], modules: FOOTHOLD_DATA.modules.length };
+  const osmuReview = await createOsmuReview(pages.get("Master Board"), board);
+  figma.viewport.scrollAndZoomIntoView([osmuReview]);
+  return { pages: PAGE_NAMES, nodes: [cover.id, foundations.id, board.id, osmuReview.id], modules: FOOTHOLD_DATA.modules.length, osmuPreviews: 6 };
 }
 
 function serializeNode(node) {
@@ -601,24 +906,31 @@ async function exportReviewPackage() {
   await page.loadAsync();
   const board = findOwned(page, "master-board");
   if (!board) throw new Error("FOOTHOLD Master Board frame does not exist.");
+  const osmuReview = findOwned(page, "osmu-review");
+  if (!osmuReview) throw new Error("FOOTHOLD OSMU Review frame does not exist.");
   const handoff = {
     schemaVersion: "1.0.0",
     brandVersion: FOOTHOLD_DATA.brandVersion,
     exportedAt: new Date().toISOString(),
     sourceDigest: FOOTHOLD_DATA.sourceDigest,
     file: { name: figma.root.name, key: figma.fileKey || "local" },
-    masterBoard: serializeNode(board)
+    masterBoard: serializeNode(board),
+    osmuReview: serializeNode(osmuReview)
   };
   const svg = await board.exportAsync({ format: "SVG_STRING", svgOutlineText: true, svgIdAttribute: true });
   const png = await board.exportAsync({ format: "PNG", constraint: { type: "SCALE", value: 1 } });
+  const osmuSvg = await osmuReview.exportAsync({ format: "SVG_STRING", svgOutlineText: true, svgIdAttribute: true });
+  const osmuPng = await osmuReview.exportAsync({ format: "PNG", constraint: { type: "SCALE", value: 1 } });
   post("downloads", {
     files: [
       { name: "foothold-handoff.json", mime: "application/json", text: JSON.stringify(handoff, null, 2) },
       { name: "foothold-master-board.svg", mime: "image/svg+xml", text: svg },
-      { name: "foothold-master-board.png", mime: "image/png", bytes: Array.from(png) }
+      { name: "foothold-master-board.png", mime: "image/png", bytes: Array.from(png) },
+      { name: "foothold-osmu-review.svg", mime: "image/svg+xml", text: osmuSvg },
+      { name: "foothold-osmu-review.png", mime: "image/png", bytes: Array.from(osmuPng) }
     ]
   });
-  return { files: 3, sourceDigest: FOOTHOLD_DATA.sourceDigest };
+  return { files: 5, sourceDigest: FOOTHOLD_DATA.sourceDigest };
 }
 
 figma.ui.onmessage = async (message) => {

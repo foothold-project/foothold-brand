@@ -5,10 +5,10 @@
   "description": "Canonical FOOTHOLD brand tokens, SVG assets, and local Figma synchronization tooling.",
   "type": "module",
   "scripts": {
-    "generate": "node scripts/generate-plugin-data.mjs",
-    "generate:check": "node scripts/generate-plugin-data.mjs --check",
+    "generate": "node scripts/update-compact-spacing.mjs && node scripts/generate-draft-assets.mjs && node scripts/generate-plugin-data.mjs",
+    "generate:check": "node scripts/update-compact-spacing.mjs --check && node scripts/generate-draft-assets.mjs --check && node scripts/generate-plugin-data.mjs --check",
     "typecheck": "tsc --project figma/plugin/tsconfig.json",
-    "test": "node scripts/verify-repository.mjs && node scripts/generate-plugin-data.mjs --check && npm run typecheck"
+    "test": "node scripts/verify-repository.mjs && npm run generate:check && npm run typecheck"
   },
   "engines": {
     "node": ">=20"

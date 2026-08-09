@@ -1,8 +1,9 @@
 # Roadmap
 
-## v1.0.1 — approved baseline
+## v1.0.2 — approved baseline
 
 - approved symbol, wordmark proportions, subtitle, and lockups;
+- corrected Compact symbol-to-wordmark spacing without modifying either canonical path;
 - 26-item SVG manifest and review preview;
 - canonical token and message foundations.
 

@@ -26,8 +26,8 @@
 
 - **Inspect file**: 페이지, 컬렉션, 변수와 스타일을 변경 없이 조사합니다.
 - **Sync foundations**: Starter 호환 변수 컬렉션 5개와 텍스트 스타일 5개를 중복 없이 생성·갱신합니다.
-- **Build Master Board skeleton**: 3페이지와 근거 상태가 표시된 M01–M10 골격을 생성·갱신합니다.
-- **Export review package**: JSON, SVG, PNG를 내려받습니다. 이 묶음은 변경 제안이며 Git 자동 수정이 아닙니다.
+- **Build Master Board skeleton**: 3페이지 구조, 승인 코어 벡터 13개, 분리된 초안 검토 영역, 근거 상태가 표시된 M01–M10 보드와 매체별 OSMU 미리보기 6개를 생성·갱신합니다.
+- **Export review package**: JSON 인수인계 파일 1개와 Master Board·OSMU Review의 SVG/PNG를 내려받습니다. 총 5개 파일은 변경 제안이며 Git 자동 수정이 아닙니다.
 
 ## 안전 규칙
 
