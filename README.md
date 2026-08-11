@@ -6,11 +6,11 @@
 
 FOOTHOLD is the shared visual and verbal system for a terrain-adaptive quadruped locomotion project. This repository is the canonical source for brand tokens, approved logo geometry, messaging, the ratio-independent Visual Master Board, and reusable delivery assets.
 
-> We help a robot cross terrain that a person should not have to test first.
+> Find the next foothold.
 
 ## Current status
 
-- `v1.0.1`: approved logo and SVG asset-pack baseline
+- `v1.0.2`: approved logo geometry with SVG sources and reproducible PNG derivatives, including the Compact spacing correction
 - `v1.1.0`: public, cross-platform foundation and local Figma synchronization infrastructure
 - `v1.2.0`: planned content-complete M01–M10 modules and OSMU templates
 
@@ -25,6 +25,7 @@ The v1.1 implementation intentionally does not invent robot imagery, metrics, te
 | Approved wording | [`VOICE_AND_MESSAGE.md`](./VOICE_AND_MESSAGE.md) |
 | Brand rules | [`BRAND_BIBLE.md`](./BRAND_BIBLE.md) |
 | Module structure | [`MASTER_BOARD_SPEC.md`](./MASTER_BOARD_SPEC.md) |
+| Project-content evidence | [`content/master-board-evidence.json`](./content/master-board-evidence.json) |
 | Visual composition proposals | Figma Master Board, promoted only after review |
 
 Figma is an editable visual workspace, not a second token or logo source. A Figma-only change remains a proposal until it is exported, reviewed, and promoted to this repository.
@@ -32,8 +33,9 @@ Figma is an editable visual workspace, not a second token or logo source. A Figm
 ## Repository map
 
 ```text
-assets/          approved SVG geometry and derived exports
+assets/          approved SVG geometry, reproducible PNG derivatives, and delivery exports
 concepts/        review history; never use as production assets
+content/         machine-readable evidence gates for project-specific claims
 figma/           mappings, Master Board specification, local plugin
 templates/       OSMU templates as they are approved
 tokens/          canonical DTCG JSON and generated CSS
@@ -51,6 +53,14 @@ npm test
 ```
 
 The committed generated files must remain byte-for-byte current after `npm run generate`.
+
+## Ready-to-use asset packs
+
+- [`FOOTHOLD_SVG_ASSET_PACK_V1.zip`](./assets/FOOTHOLD_SVG_ASSET_PACK_V1.zip): SVG-only vector package.
+- [`FOOTHOLD_ASSET_PACK_V1.zip`](./assets/FOOTHOLD_ASSET_PACK_V1.zip): combined SVG + PNG package.
+- [`assets/raster/v1/manifest.json`](./assets/raster/v1/manifest.json): source mapping, pixel dimensions, alpha policy, status, and hashes for every PNG derivative.
+
+SVG remains canonical. PNG logo files keep a transparent RGBA canvas; application PNGs preserve the canvas defined by their source SVG. Legacy and provisional outputs remain explicitly labelled and must not be mistaken for approved OSMU templates.
 
 ## Figma workflow
 

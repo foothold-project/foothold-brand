@@ -6,11 +6,13 @@
 
 FOOTHOLD는 험지 적응형 4족 보행 프로젝트를 위한 공통 시각·언어 시스템입니다. 이 저장소는 브랜드 토큰, 승인된 로고 형상, 메시지, 비율에 종속되지 않는 Visual Master Board와 재사용 가능한 산출물의 공식 원본입니다.
 
-> 사람이 먼저 밟아볼 수 없는 땅을, 로봇이 넘어지지 않고 건너가게 만듭니다.
+> 불확실한 지형에서도, 다음 걸음을 이어갑니다.
+
+English: **Find the next foothold.**
 
 ## 현재 상태
 
-- `v1.0.1`: 승인된 로고 및 SVG Asset Pack 기준선
+- `v1.0.2`: Compact 간격 보정을 포함한 승인 로고 형상, SVG 원본 및 재현 가능한 PNG 파생본 기준선
 - `v1.1.0`: 공개·크로스플랫폼 기반과 로컬 Figma 동기화 인프라
 - `v1.2.0`: M01–M10 실제 콘텐츠와 전체 OSMU 템플릿 예정
 
@@ -25,6 +27,7 @@ v1.1에서는 검증되지 않은 로봇 이미지, 지표, 팀 역할, 적용 �
 | 승인 문구 | [`VOICE_AND_MESSAGE.md`](./VOICE_AND_MESSAGE.md) |
 | 브랜드 규칙 | [`BRAND_BIBLE.md`](./BRAND_BIBLE.md) |
 | 모듈 구조 | [`MASTER_BOARD_SPEC.md`](./MASTER_BOARD_SPEC.md) |
+| 프로젝트 콘텐츠 근거 | [`content/master-board-evidence.json`](./content/master-board-evidence.json) |
 | 시각 조합 제안 | 검토 후 승격되는 Figma Master Board |
 
 Figma는 수정 가능한 시각 작업 공간이지 두 번째 토큰·로고 원본이 아닙니다. Figma에서만 수정된 내용은 내보내기, 비교, 사람의 승인을 거쳐 이 저장소에 반영되기 전까지 제안 상태입니다.
@@ -39,6 +42,14 @@ npm test
 ```
 
 `npm run generate` 후 커밋된 생성 파일에 차이가 없어야 합니다.
+
+## 바로 사용하는 에셋 묶음
+
+- [`FOOTHOLD_SVG_ASSET_PACK_V1.zip`](./assets/FOOTHOLD_SVG_ASSET_PACK_V1.zip): SVG 전용 벡터 묶음
+- [`FOOTHOLD_ASSET_PACK_V1.zip`](./assets/FOOTHOLD_ASSET_PACK_V1.zip): SVG + PNG 통합 묶음
+- [`assets/raster/v1/manifest.json`](./assets/raster/v1/manifest.json): 모든 PNG 파생본의 SVG 원본 경로, 픽셀 크기, 알파 정책, 상태, 해시
+
+공식 원본은 계속 SVG입니다. PNG 로고는 투명 RGBA 배경을 유지하며, 매체용 PNG는 원본 SVG에 정의된 캔버스를 보존합니다. `legacy`와 `provisional` 출력은 승인된 OSMU 템플릿으로 오해하지 않도록 명시적으로 분리합니다.
 
 ## Figma 작업 흐름
 

@@ -1,0 +1,171 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schemaVersion": "1.0.0",
+  "auditedAt": "2026-08-09",
+  "projectWorkspace": "MAI_UNIVERSE/03_PROJECTS/doyak-final",
+  "authority": [
+    "01_research/mvp-install-log.md",
+    "00_meetings/260806_미팅보고서.md",
+    "04_plan/PLAN.md",
+    "02_team/team-assets-and-roles.md"
+  ],
+  "rules": {
+    "primaryEvidenceWins": true,
+    "proposalIsNotFact": true,
+    "pendingContentMustRemainVisible": true,
+    "noPrivateCommercialTerms": true
+  },
+  "modules": {
+    "M03": {
+      "status": "blocked-missing-media",
+      "title": "Robot and terrain visual",
+      "approvedFacts": [
+        "An official pretrained Unitree Go2 rough-terrain checkpoint was replayed in the team's Isaac Lab environment.",
+        "The primary run log records a 200-step MP4 capture."
+      ],
+      "prohibitedClaims": [
+        "The pictured policy was trained by FOOTHOLD.",
+        "The pictured terrain is the team's final target terrain."
+      ],
+      "requiredEvidence": [
+        "Copy the original run capture from AI-WS01 into an approved project-media location.",
+        "Record media provenance, capture date, task name, and license before Figma import."
+      ],
+      "sources": [
+        "01_research/mvp-install-log.md#6-산출물-실재-확인"
+      ]
+    },
+    "M04": {
+      "status": "partial",
+      "title": "Sim-to-Real flow",
+      "approvedFacts": [
+        "Verified: official checkpoint download, replay, and automatic ONNX/PT export in the recorded environment.",
+        "Planned: custom terrain, automated evaluation, training, sim2sim, alignment checks, and Go2 deployment."
+      ],
+      "prohibitedClaims": [
+        "FOOTHOLD has completed sim-to-real deployment.",
+        "The exported ONNX policy has been validated on a physical Go2."
+      ],
+      "requiredEvidence": [
+        "Show verified and planned stages with different semantic states.",
+        "Promote each planned stage only after a reproducible run record exists."
+      ],
+      "sources": [
+        "01_research/mvp-install-log.md#4-검증된-사실-조사-문서-교차확인",
+        "01_research/mvp-install-log.md#7-아직-안-해본-것-다음-세션",
+        "04_plan/PLAN.md#3-퀘스트-보드-게임처럼-쉬운-것부터-보스전까지"
+      ]
+    },
+    "M05": {
+      "status": "partial",
+      "title": "Why FOOTHOLD",
+      "approvedFacts": [
+        "The approved brand problem statement may be used.",
+        "The project scope is a terrain-adaptive quadruped locomotion policy, not a navigation platform."
+      ],
+      "prohibitedClaims": [
+        "Formal deployment partners or field operations exist.",
+        "The project already protects people in deployed environments."
+      ],
+      "requiredEvidence": [
+        "Approve one concrete use context without naming an unconfirmed partner.",
+        "Separate intended benefit from demonstrated outcome."
+      ],
+      "sources": [
+        "VOICE_AND_MESSAGE.md",
+        "05_deliverables/CODEX_START_PROMPT.md"
+      ]
+    },
+    "M06": {
+      "status": "partial-no-performance-metric",
+      "title": "Evidence",
+      "approvedFacts": [
+        "Isaac Sim 5.1.0.0 and Isaac Lab v2.3.2 were run on AI-WS01.",
+        "Four built-in Go2 tasks and the official pretrained checkpoint were verified.",
+        "The official checkpoint was replayed and vector deployment formats were exported.",
+        "Training, project-specific success rate, and sim-to-real performance have not been measured."
+      ],
+      "prohibitedClaims": [
+        "21,385 steps/s is a measured training result.",
+        "1,500 training iterations take approximately 113 minutes in the verified setup.",
+        "Any terrain success rate, improvement, or physical deployment result."
+      ],
+      "requiredEvidence": [
+        "Run Q3 automated baseline evaluation and preserve its configuration and raw output.",
+        "Run training before publishing training throughput or duration."
+      ],
+      "sources": [
+        "01_research/mvp-install-log.md#4-검증된-사실-조사-문서-교차확인",
+        "01_research/mvp-install-log.md#7-아직-안-해본-것-다음-세션",
+        "04_plan/PLAN.md#2-이야기로-풀기---어-되네-그럼-그다음은"
+      ],
+      "conflicts": [
+        {
+          "proposal": "04_plan/PLAN.md presents 21,385 steps/s and 1,500 iterations in approximately 113 minutes as current evidence.",
+          "primaryRecord": "01_research/mvp-install-log.md says training was not run and actual training steps/s was not measured.",
+          "resolution": "Exclude both numbers until a reproducible training log verifies them."
+        }
+      ]
+    },
+    "M07": {
+      "status": "pending-team-approval",
+      "title": "Team",
+      "approvedFacts": [
+        "The project has five team members.",
+        "Work should use overlapping primary and secondary ownership rather than isolated silos."
+      ],
+      "prohibitedClaims": [
+        "The role allocation draft is final.",
+        "A missing team member's role may be inferred from background notes."
+      ],
+      "requiredEvidence": [
+        "Obtain a dated five-person approval record for names, primary ownership, and secondary ownership.",
+        "Record public-display consent for names and profile details."
+      ],
+      "sources": [
+        "02_team/team-assets-and-roles.md#3-2-배치-초안-확정-아님---워크숍에서-각자-확인",
+        "00_meetings/260806_미팅보고서.md#7-팀-역량---회의에서-드러난-것"
+      ]
+    },
+    "M08": {
+      "status": "partial-proposal",
+      "title": "Roadmap",
+      "approvedFacts": [
+        "Completed: Q0 development environment setup and Q2 official checkpoint replay.",
+        "Next proposed gate: Q3 automated baseline evaluation.",
+        "Q4 through the physical-robot boss stage remain planned or equipment-blocked."
+      ],
+      "prohibitedClaims": [
+        "Draft dates and future quests are committed delivery dates.",
+        "Planned training, sim2sim, ROS2, or physical deployment is complete."
+      ],
+      "requiredEvidence": [
+        "Show completed, next, planned, and blocked states explicitly.",
+        "Confirm the official milestone calendar before publishing dates."
+      ],
+      "sources": [
+        "04_plan/PLAN.md#1-전체-지도---7단계",
+        "04_plan/PLAN.md#3-퀘스트-보드-게임처럼-쉬운-것부터-보스전까지"
+      ]
+    },
+    "M09": {
+      "status": "pending-context-approval",
+      "title": "Application contexts",
+      "approvedFacts": [
+        "Rough terrain and reduced human exposure are approved narrative themes."
+      ],
+      "prohibitedClaims": [
+        "Chosun University or an unnamed commissioning company is a deployment partner.",
+        "FOOTHOLD has completed industrial, disaster-response, inspection, or field deployment."
+      ],
+      "requiredEvidence": [
+        "Approve two or three clearly hypothetical application contexts.",
+        "Label every context as intended, candidate, or demonstrated."
+      ],
+      "sources": [
+        "VOICE_AND_MESSAGE.md",
+        "00_meetings/260806_미팅보고서.md#4-발주-기업-조선대-관계---재정의됨"
+      ]
+    }
+  }
+}

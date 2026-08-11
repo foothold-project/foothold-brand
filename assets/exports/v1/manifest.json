@@ -1,6 +1,6 @@
 {
   "name": "FOOTHOLD SVG Asset Pack",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "approvedWordmarkAspect": 7.841215388,
   "wordmarkCorrection": "Preserves the approved A.3 wordmark width-to-height proportion.",
   "generatedFrom": [
@@ -53,10 +53,10 @@
     },
     {
       "path": "assets/logo/v1/foothold-lockup-compact-light.svg",
-      "width": 525.108,
+      "width": 537.108,
       "height": 96,
       "purpose": "Compact one-row lockup for light surfaces and small sizes.",
-      "sha256": "70424d2171b0d38f6806a3ec0e119e24dd86a8b7f74eb9973c15e9d786a6f28a"
+      "sha256": "c424ca2b8a95ac110dafef38e6502c26202b8516ad8b67ad980b5d12edfe8bec"
     },
     {
       "path": "assets/logo/v1/foothold-lockup-stacked-light.svg",
@@ -74,10 +74,10 @@
     },
     {
       "path": "assets/logo/v1/foothold-lockup-compact-dark.svg",
-      "width": 525.108,
+      "width": 537.108,
       "height": 96,
       "purpose": "Compact one-row lockup for dark surfaces and small sizes.",
-      "sha256": "4087db2b7326375507ecd44323a6786662863c081aa1168787f0921e43ec502f"
+      "sha256": "cc261bdc4af9445f88a32f1736be900297029acf2f4c3f49b5c848f24c3d67b4"
     },
     {
       "path": "assets/logo/v1/foothold-lockup-stacked-dark.svg",
@@ -112,14 +112,14 @@
       "width": 1200,
       "height": 160,
       "purpose": "Web header brand strip for light mode; pair with live HTML navigation.",
-      "sha256": "42865f38b3a0af16d9564dd9c8b62d4fb3c96bd6b646461721bb6f61d3f024c9"
+      "sha256": "f613d84937c420adaad5b16031c78a53d8edc237a4577e9622235f983d85b251"
     },
     {
       "path": "assets/exports/v1/web/foothold-web-header-dark.svg",
       "width": 1200,
       "height": 160,
       "purpose": "Web header brand strip for dark mode; pair with live HTML navigation.",
-      "sha256": "e571b66622ff090847a6d2ca2fcdc3c781a988b347661c285555ee24badf4399"
+      "sha256": "de23e57ec3a073b070955f6f8423c0a640049371051da3636a8c57b3cbc010cc"
     },
     {
       "path": "assets/exports/v1/github/foothold-readme-hero-light.svg",

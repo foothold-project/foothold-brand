@@ -9,9 +9,19 @@ FOOTHOLD is the identity for a five-person Physical AI project that develops a r
 
 **Canonical one-line definition**
 
-> 사람이 먼저 밟아볼 수 없는 땅을, 로봇이 넘어지지 않고 건너가게 만듭니다.
+> FOOTHOLD는 4족 보행 로봇의 험지 적응을 위한 강화학습 기반 보행 정책을 개발하고 검증하는 프로젝트입니다.
 
 This is a project identity, not a claim that FOOTHOLD is already a deployed navigation platform or a completed field-operations product.
+
+**Primary brand slogan — approved**
+
+> Find the next foothold.
+
+**Korean brand slogan — approved**
+
+> 불확실한 지형에서도, 다음 걸음을 이어갑니다.
+
+This is the Korean counterpart to the English slogan, not a literal translation; see [`VOICE_AND_MESSAGE.md`](./VOICE_AND_MESSAGE.md).
 
 ## 2. Positioning
 
@@ -71,7 +81,7 @@ The current logo system lives in [`assets/logo/v1`](./assets/logo/v1/); its deri
 - `foothold-lockup-primary-*.svg`: the symbol spans the wordmark and subtitle rows.
 - `foothold-lockup-compact-*.svg`: the subtitle is omitted and the symbol is optically sized to the wordmark row.
 - `foothold-lockup-stacked-*.svg`: centred use for square formats and goods.
-- `foothold-contact-trail.svg`: secondary locomotion language built from the lower contact motif; it is not a logo.
+- `foothold-contact-trail.svg`: retired v1 visual experiment. Preserve it for history, but do not use it in new work or present it as an approved secondary graphic.
 
 Approved v1 SVGs are font-independent and raster-independent. Their canonical geometry is the frozen path data in `assets/logo/v1/*.svg`; do not regenerate the wordmark or subtitle from a system font and do not manually fork the geometry in derived outputs. The compatibility script `assets/logo/v1/build_logo_assets.py` now verifies hashes only.
 The approved A.3 wordmark silhouette is a fixed logo property: its visible width-to-height ratio is `7.841215388`. Do not replace it with the typeface's natural width or alter that proportion in any derivative.

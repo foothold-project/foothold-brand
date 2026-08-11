@@ -1,0 +1,21 @@
+{
+  "name": "FOOTHOLD v1.2 Draft Assets",
+  "version": "1.2.0-draft.1",
+  "status": "provisional",
+  "generatedFrom": [
+    "tokens/foothold.tokens.json",
+    "assets/logo/v1/foothold-symbol-brand.svg"
+  ],
+  "assets": [
+    {
+      "path": "assets/drafts/v1.2/goods/foothold-sticker-round.svg",
+      "width": 800,
+      "height": 800,
+      "category": "Goods draft",
+      "theme": "light",
+      "status": "provisional",
+      "purpose": "Stacked-lockup round sticker draft with a thinner true-vector border and larger cut-safe margin.",
+      "sha256": "659431a3670428279ba3e6a5372f744e2d0be1dc377d6d4630dd51d0213e635f"
+    }
+  ]
+}

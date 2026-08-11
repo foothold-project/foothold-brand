@@ -10,10 +10,11 @@ const read = (relative) => fs.readFileSync(path.join(root, relative), "utf8");
 const tokensText = read("tokens/foothold.tokens.json");
 const tokens = JSON.parse(tokensText);
 const version = read("VERSION").trim();
+const evidence = JSON.parse(read("content/master-board-evidence.json"));
 
 const modules = [
   ["M01", "Brand Core", "ready", "Symbol, wordmark, approved definition", "BRAND_BIBLE.md"],
-  ["M02", "Hero Statement", "ready", "Why to What hierarchy", "VOICE_AND_MESSAGE.md"],
+  ["M02", "Hero Statement", "ready", "Approved English and Korean slogans with precise project scope", "VOICE_AND_MESSAGE.md"],
   ["M03", "Robot and Terrain Visual", "pending", "Illustration direction only; verified source visual required", "MASTER_BOARD_SPEC.md"],
   ["M04", "Sim-to-Real Flow", "pending", "Use only verified labels and capabilities", "MASTER_BOARD_SPEC.md"],
   ["M05", "Why FOOTHOLD", "pending", "Do not imply deployed operations", "MASTER_BOARD_SPEC.md"],
@@ -25,8 +26,11 @@ const modules = [
 ].map(([id, name, status, guidance, source]) => ({ id, name, status, guidance, source }));
 
 const assetManifest = JSON.parse(read("assets/exports/v1/manifest.json"));
+const draftManifest = JSON.parse(read("assets/drafts/v1.2/manifest.json"));
 function assetCategory(relative) {
-  if (relative.startsWith("assets/logo/")) return "Core logo system";
+  if (/foothold-symbol-|foothold-favicon/.test(relative)) return "Symbols";
+  if (/foothold-wordmark-/.test(relative)) return "Wordmarks";
+  if (/foothold-lockup-/.test(relative)) return "Lockups";
   if (relative.includes("/web/")) return "Web";
   if (relative.includes("/github/")) return "GitHub";
   if (relative.includes("/presentation/")) return "Presentation";
@@ -36,7 +40,7 @@ function assetCategory(relative) {
   return "Other";
 }
 const libraryAssets = assetManifest.assets
-  .filter((item) => !item.path.endsWith("FOOTHOLD_ASSET_PACK_V1_PREVIEW.svg"))
+  .filter((item) => item.path.startsWith("assets/logo/v1/") && !item.path.endsWith("foothold-contact-trail.svg"))
   .map((item) => ({
     path: item.path,
     name: path.basename(item.path, ".svg"),
@@ -48,14 +52,22 @@ const libraryAssets = assetManifest.assets
     sha256: item.sha256,
     svg: read(item.path)
   }));
+const draftAssets = draftManifest.assets.map((item) => ({
+  ...item,
+  name: path.basename(item.path, ".svg"),
+  svg: read(item.path)
+}));
 
 const canonicalFiles = [
   "tokens/foothold.tokens.json",
   "BRAND_BIBLE.md",
   "VOICE_AND_MESSAGE.md",
   "MASTER_BOARD_SPEC.md",
+  "content/master-board-evidence.json",
   "assets/exports/v1/manifest.json",
-  ...libraryAssets.map((item) => item.path)
+  "assets/drafts/v1.2/manifest.json",
+  ...libraryAssets.map((item) => item.path),
+  ...draftAssets.map((item) => item.path)
 ];
 const digest = crypto.createHash("sha256");
 for (const relative of canonicalFiles) {
@@ -69,16 +81,29 @@ const data = {
   sourceDigest: digest.digest("hex"),
   tokens,
   messages: {
-    whyKo: "사람이 먼저 밟아볼 수 없는 땅을, 로봇이 넘어지지 않고 건너가게 만듭니다.",
+    projectDefinitionKo: "FOOTHOLD는 4족 보행 로봇의 험지 적응을 위한 강화학습 기반 보행 정책을 개발하고 검증하는 프로젝트입니다.",
     whatKo: "4족 보행 로봇을 위한 강화학습 기반 험지 적응 보행 정책",
-    subtitleEn: "TERRAIN-ADAPTIVE LOCOMOTION POLICY"
+    subtitleEn: "TERRAIN-ADAPTIVE LOCOMOTION POLICY",
+    closingEn: "Find the next foothold.",
+    sloganKo: "불확실한 지형에서도, 다음 걸음을 이어갑니다.",
+    koreanSloganStatus: "approved"
   },
   modules,
+  evidence: evidence.modules,
+  approvedWordmarkAspect: assetManifest.approvedWordmarkAspect,
   libraryAssets,
+  draftAssets,
+  retiredAssets: ["assets/logo/v1/foothold-contact-trail.svg"],
+  legacyApplicationAssets: assetManifest.assets
+    .filter((item) => item.path.startsWith("assets/exports/v1/") && !item.path.endsWith("FOOTHOLD_ASSET_PACK_V1_PREVIEW.svg"))
+    .map((item) => item.path),
   svg: {
     symbolBrand: read("assets/logo/v1/foothold-symbol-brand.svg"),
     primaryLight: read("assets/logo/v1/foothold-lockup-primary-light.svg"),
-    primaryDark: read("assets/logo/v1/foothold-lockup-primary-dark.svg")
+    primaryDark: read("assets/logo/v1/foothold-lockup-primary-dark.svg"),
+    compactLight: read("assets/logo/v1/foothold-lockup-compact-light.svg"),
+    compactDark: read("assets/logo/v1/foothold-lockup-compact-dark.svg"),
+    stackedLight: read("assets/logo/v1/foothold-lockup-stacked-light.svg")
   }
 };
 
