@@ -14,7 +14,7 @@ FOOTHOLD is the shared visual and verbal system for a terrain-adaptive quadruped
 
 - `v1.0.2`: approved logo geometry with SVG sources and reproducible PNG derivatives, including the Compact spacing correction
 - `v1.1.0`: public, cross-platform foundation and local Figma synchronization infrastructure
-- `v1.2.0`: planned content-complete M01–M10 modules and OSMU templates
+- `v1.2.0`: approved six-medium OSMU baseline; project-specific M03–M09 evidence remains progressively gated
 
 The v1.1 implementation intentionally does not invent robot imagery, metrics, team roles, deployment claims, or roadmap facts that have not been verified.
 
@@ -35,7 +35,7 @@ Figma is an editable visual workspace, not a second token or logo source. A Figm
 ## Repository map
 
 ```text
-assets/          approved SVG geometry, reproducible PNG/JPG derivatives, and delivery exports
+assets/          approved logo and OSMU SVG sources, reproducible PNG/JPG derivatives, and delivery exports
 concepts/        review history; never use as production assets
 content/         machine-readable evidence gates for project-specific claims
 figma/           mappings, Master Board specification, local plugin
@@ -60,10 +60,14 @@ The committed generated files must remain byte-for-byte current after `npm run g
 
 - [`FOOTHOLD_SVG_ASSET_PACK_V1.zip`](./assets/FOOTHOLD_SVG_ASSET_PACK_V1.zip): SVG-only vector package.
 - [`FOOTHOLD_ASSET_PACK_V1.zip`](./assets/FOOTHOLD_ASSET_PACK_V1.zip): combined SVG + PNG + background-filled JPG package.
+- [`FOOTHOLD_OSMU_V1_2.zip`](./assets/FOOTHOLD_OSMU_V1_2.zip): current approved Web, GitHub, presentation, poster, social, and sticker SVG/PNG/JPG assets.
+- [`assets/osmu/v1.2/manifest.json`](./assets/osmu/v1.2/manifest.json): approval provenance, dimensions, lifecycle, and hashes for the current OSMU baseline.
 - [`assets/raster/v1/manifest.json`](./assets/raster/v1/manifest.json): source mapping, pixel dimensions, alpha policy, status, and hashes for every PNG derivative.
 - [`assets/raster/v1/jpeg/manifest.json`](./assets/raster/v1/jpeg/manifest.json): lifecycle, exact canvas, background, and hashes for every JPG derivative.
 
 SVG remains canonical. PNG logo files keep a transparent RGBA canvas. JPG companions flatten that same canvas onto exact brand paper `#F6F5F1` or engineering dark `#12161D`, without added padding; favicon is intentionally excluded. Legacy, retired, and provisional outputs remain in separate lifecycle directories and must not be mistaken for approved OSMU templates.
+
+Current approved OSMU sources live only in [`assets/osmu/v1.2`](./assets/osmu/v1.2/). Files under `assets/exports/v1` and their raster companions are preserved legacy composition proofs, not the approved current designs.
 
 ## Figma workflow
 

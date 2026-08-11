@@ -16,7 +16,7 @@ English: **Find the next foothold.**
 
 - `v1.0.2`: Compact 간격 보정을 포함한 승인 로고 형상, SVG 원본 및 재현 가능한 PNG 파생본 기준선
 - `v1.1.0`: 공개·크로스플랫폼 기반과 로컬 Figma 동기화 인프라
-- `v1.2.0`: M01–M10 실제 콘텐츠와 전체 OSMU 템플릿 예정
+- `v1.2.0`: 6개 매체 OSMU 기준 디자인 승인; 프로젝트별 M03–M09 근거 콘텐츠는 단계적으로 검증 중
 
 v1.1에서는 검증되지 않은 로봇 이미지, 지표, 팀 역할, 적용 실적 또는 로드맵 사실을 임의로 만들지 않습니다.
 
@@ -49,10 +49,14 @@ npm test
 
 - [`FOOTHOLD_SVG_ASSET_PACK_V1.zip`](./assets/FOOTHOLD_SVG_ASSET_PACK_V1.zip): SVG 전용 벡터 묶음
 - [`FOOTHOLD_ASSET_PACK_V1.zip`](./assets/FOOTHOLD_ASSET_PACK_V1.zip): SVG + PNG + 배경 포함 JPG 통합 묶음
+- [`FOOTHOLD_OSMU_V1_2.zip`](./assets/FOOTHOLD_OSMU_V1_2.zip): 현재 승인된 Web, GitHub, 발표, 포스터, 소셜, 스티커 SVG·PNG·JPG 묶음
+- [`assets/osmu/v1.2/manifest.json`](./assets/osmu/v1.2/manifest.json): 현재 OSMU의 승인 근거, 크기, 상태, 해시
 - [`assets/raster/v1/manifest.json`](./assets/raster/v1/manifest.json): 모든 PNG 파생본의 SVG 원본 경로, 픽셀 크기, 알파 정책, 상태, 해시
 - [`assets/raster/v1/jpeg/manifest.json`](./assets/raster/v1/jpeg/manifest.json): 모든 JPG 파생본의 상태, 원본 캔버스, 배경색, 해시
 
 공식 원본은 계속 SVG입니다. PNG 로고는 투명 RGBA 배경을 유지합니다. JPG는 같은 캔버스를 여백 추가 없이 브랜드 페이퍼 `#F6F5F1` 또는 엔지니어링 다크 `#12161D`에 합성하며 favicon은 제외합니다. `approved`, `retired`, `legacy`, `provisional` 출력은 서로 다른 경로에 분리합니다.
+
+현재 승인된 OSMU 원본은 [`assets/osmu/v1.2`](./assets/osmu/v1.2/)에만 있습니다. `assets/exports/v1`과 그 raster 파생본은 호환성을 위해 보존한 과거 composition proof이며 현재 승인 디자인이 아닙니다.
 
 ## Figma 작업 흐름
 

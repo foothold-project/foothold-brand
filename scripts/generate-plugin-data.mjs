@@ -27,6 +27,7 @@ const modules = [
 
 const assetManifest = JSON.parse(read("assets/exports/v1/manifest.json"));
 const draftManifest = JSON.parse(read("assets/drafts/v1.2/manifest.json"));
+const approvedOsmuManifest = JSON.parse(read("assets/osmu/v1.2/manifest.json"));
 function assetCategory(relative) {
   if (/foothold-symbol-|foothold-favicon/.test(relative)) return "Symbols";
   if (/foothold-wordmark-/.test(relative)) return "Wordmarks";
@@ -57,6 +58,14 @@ const draftAssets = draftManifest.assets.map((item) => ({
   name: path.basename(item.path, ".svg"),
   svg: read(item.path)
 }));
+const approvedOsmuAssets = approvedOsmuManifest.assets.map((item) => ({
+  name: item.name,
+  medium: item.medium,
+  theme: item.theme,
+  path: item.svg.path,
+  sha256: item.svg.sha256,
+  svg: read(item.svg.path)
+}));
 
 const canonicalFiles = [
   "tokens/foothold.tokens.json",
@@ -66,8 +75,11 @@ const canonicalFiles = [
   "content/master-board-evidence.json",
   "assets/exports/v1/manifest.json",
   "assets/drafts/v1.2/manifest.json",
+  "assets/osmu/v1.2/APPROVAL.json",
+  "assets/osmu/v1.2/manifest.json",
   ...libraryAssets.map((item) => item.path),
-  ...draftAssets.map((item) => item.path)
+  ...draftAssets.map((item) => item.path),
+  ...approvedOsmuAssets.map((item) => item.path)
 ];
 const digest = crypto.createHash("sha256");
 for (const relative of canonicalFiles) {
@@ -82,6 +94,7 @@ const data = {
   tokens,
   messages: {
     projectDefinitionKo: "FOOTHOLD는 4족 보행 로봇의 험지 적응을 위한 강화학습 기반 보행 정책을 개발하고 검증하는 프로젝트입니다.",
+    coverDescriptorKo: "4족 보행 로봇의 험지 적응을 위한 강화학습 기반 보행 정책을 개발하고 검증하는 프로젝트",
     whatKo: "4족 보행 로봇을 위한 강화학습 기반 험지 적응 보행 정책",
     subtitleEn: "TERRAIN-ADAPTIVE LOCOMOTION POLICY",
     closingEn: "Find the next foothold.",
@@ -95,6 +108,7 @@ const data = {
   approvedWordmarkAspect: assetManifest.approvedWordmarkAspect,
   libraryAssets,
   draftAssets,
+  approvedOsmuAssets,
   retiredAssets: ["assets/logo/v1/foothold-contact-trail.svg"],
   legacyApplicationAssets: assetManifest.assets
     .filter((item) => item.path.startsWith("assets/exports/v1/") && !item.path.endsWith("FOOTHOLD_ASSET_PACK_V1_PREVIEW.svg"))

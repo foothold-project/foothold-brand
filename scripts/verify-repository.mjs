@@ -19,10 +19,11 @@ const required = [
   "assets/exports/v1/manifest.json", "assets/drafts/v1.2/manifest.json",
   "assets/drafts/v1.2/goods/foothold-sticker-round.svg", "figma/plugin/manifest.template.json",
   "assets/raster/README.md", "assets/raster/v1/manifest.json", "assets/raster/v1/jpeg/manifest.json",
-  "assets/FOOTHOLD_SVG_ASSET_PACK_V1.zip", "assets/FOOTHOLD_ASSET_PACK_V1.zip",
+  "assets/osmu/v1.2/APPROVAL.json", "assets/osmu/v1.2/manifest.json", "assets/osmu/v1.2/README.md",
+  "assets/FOOTHOLD_SVG_ASSET_PACK_V1.zip", "assets/FOOTHOLD_ASSET_PACK_V1.zip", "assets/FOOTHOLD_OSMU_V1_2.zip",
   "figma/plugin/src/code.js", "figma/plugin/code.generated.js", "figma/plugin/ui.html",
   "figma/handoff.schema.json", "scripts/canonical-text.mjs", "scripts/generate-draft-assets.mjs",
-  "scripts/generate-raster-assets.mjs", "scripts/update-compact-spacing.mjs", "scripts/build_asset_pack.py"
+  "scripts/generate-raster-assets.mjs", "scripts/generate-approved-osmu-assets.mjs", "scripts/update-compact-spacing.mjs", "scripts/build_asset_pack.py"
 ];
 for (const relative of required) if (!exists(relative)) fail(`Missing required file: ${relative}`);
 
@@ -86,6 +87,14 @@ if (jpegManifest.assets?.some((item) => item.source.endsWith("foothold-favicon.s
 if (jpegManifest.policy?.lightBackground !== "#F6F5F1" || jpegManifest.policy?.darkBackground !== "#12161D") fail("JPEG backgrounds must use exact approved light and dark surfaces");
 if (jpegManifest.policy?.canvas !== "preserve source aspect ratio and raster profile; add no padding") fail("JPEG derivatives must preserve the source canvas without padding");
 
+const osmuApproval = JSON.parse(read("assets/osmu/v1.2/APPROVAL.json"));
+const osmuManifest = JSON.parse(read("assets/osmu/v1.2/manifest.json"));
+if (osmuApproval.status !== "approved" || osmuManifest.status !== "approved") fail("OSMU v1.2 must retain explicit human-approved status");
+if (osmuApproval.figmaSourceDigest !== osmuManifest.figmaSourceDigest) fail("OSMU approval and generated manifest must retain the same Figma source digest");
+if (!Array.isArray(osmuManifest.assets) || osmuManifest.assets.length !== 6) fail("Approved OSMU manifest must contain six medium-specific assets");
+const expectedOsmuMedia = "web,github,presentation,poster,social,goods";
+if ((osmuManifest.assets || []).map((item) => item.medium).join(",") !== expectedOsmuMedia) fail("Approved OSMU media order or membership changed");
+
 const evidence = JSON.parse(read("content/master-board-evidence.json"));
 const evidenceModuleIds = Object.keys(evidence.modules || {});
 if (evidenceModuleIds.join(",") !== "M03,M04,M05,M06,M07,M08,M09") fail("Evidence matrix must gate exactly M03 through M09 in order");
@@ -133,8 +142,22 @@ for (const item of jpegManifest.assets || []) {
   const sourceHash = crypto.createHash("sha256").update(fs.readFileSync(path.join(root, item.source))).digest("hex");
   if (sourceHash !== item.sourceSha256) fail(`JPEG source hash is stale: ${item.path}`);
 }
+for (const item of osmuManifest.assets || []) {
+  const svgPath = path.join(root, item.svg.path);
+  const pngPath = path.join(root, item.png.path);
+  const jpgPath = path.join(root, item.jpg.path);
+  for (const [kind, full] of [["SVG", svgPath], ["PNG", pngPath], ["JPG", jpgPath]]) if (!fs.existsSync(full)) fail(`Approved OSMU ${kind} missing: ${path.relative(root, full)}`);
+  if (!fs.existsSync(svgPath) || !fs.existsSync(pngPath) || !fs.existsSync(jpgPath)) continue;
+  const svg = fs.readFileSync(svgPath, "utf8");
+  if (/<text\b|<image\b/i.test(svg)) fail(`Approved OSMU SVG must be outlined and self-contained: ${item.svg.path}`);
+  if (crypto.createHash("sha256").update(Buffer.from(svg)).digest("hex") !== item.svg.sha256) fail(`Approved OSMU SVG hash mismatch: ${item.svg.path}`);
+  const png = fs.readFileSync(pngPath);
+  if (crypto.createHash("sha256").update(png).digest("hex") !== item.png.sha256 || png.readUInt8(25) !== 6) fail(`Approved OSMU PNG integrity mismatch: ${item.png.path}`);
+  const jpg = fs.readFileSync(jpgPath);
+  if (crypto.createHash("sha256").update(jpg).digest("hex") !== item.jpg.sha256 || jpg.subarray(0, 3).toString("hex") !== "ffd8ff") fail(`Approved OSMU JPG integrity mismatch: ${item.jpg.path}`);
+}
 
-const protectedRoots = ["assets/logo/v1", "tokens", "scripts", "figma/plugin"];
+const protectedRoots = ["assets/logo/v1", "assets/osmu/v1.2", "tokens", "scripts", "figma/plugin"];
 function walk(directory) {
   for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
     const full = path.join(directory, entry.name);
@@ -161,6 +184,8 @@ if (dataStart < 0 || dataEnd < 0) {
   if (pluginData.libraryAssets?.some((asset) => asset.path.endsWith("FOOTHOLD_ASSET_PACK_V1_PREVIEW.svg"))) fail("Composite asset-pack preview must not be nested inside the Figma asset library");
   if (pluginData.libraryAssets?.some((asset) => /<image\b/i.test(asset.svg))) fail("Figma asset library must embed vector-only SVGs");
   if (pluginData.draftAssets?.length !== 1 || pluginData.draftAssets[0]?.status !== "provisional") fail("Figma payload must separate the provisional sticker draft from approved assets");
+  if (pluginData.approvedOsmuAssets?.length !== 6) fail("Figma payload must embed all six frozen approved OSMU SVGs");
+  if (pluginData.approvedOsmuAssets?.some((asset) => /<text\b|<image\b/i.test(asset.svg))) fail("Figma approved OSMU assets must remain outlined and self-contained");
   if (pluginData.approvedWordmarkAspect !== manifest.approvedWordmarkAspect) fail("Figma payload must retain the approved wordmark aspect");
   if (pluginData.messages?.closingEn !== "Find the next foothold.") fail("Figma payload must retain the approved closing statement");
   if (pluginData.messages?.koreanSloganStatus !== "approved") fail("Korean slogan must remain approved");
@@ -168,6 +193,7 @@ if (dataStart < 0 || dataEnd < 0) {
   if (pluginData.messages?.whyNorthStarKo !== "시뮬레이터에서 천 번 넘어지고, 현장에서는 넘어지지 않는다.") fail("Figma payload must retain the approved Why FOOTHOLD target vision");
   if (pluginData.messages?.whyNorthStarStatus !== "target-vision") fail("Figma target vision must remain distinct from a verified outcome");
   if (pluginData.messages?.projectDefinitionKo !== "FOOTHOLD는 4족 보행 로봇의 험지 적응을 위한 강화학습 기반 보행 정책을 개발하고 검증하는 프로젝트입니다.") fail("Figma payload must retain the approved Korean project definition");
+  if (pluginData.messages?.coverDescriptorKo !== "4족 보행 로봇의 험지 적응을 위한 강화학습 기반 보행 정책을 개발하고 검증하는 프로젝트") fail("Figma Cover must use the approved compact Korean descriptor");
   if (Object.values(pluginData.messages || {}).some((value) => typeof value === "string" && value.includes("사람이 먼저 밟아볼 수 없는 땅을"))) fail("Retired Korean draft must not enter the production Figma payload");
   for (const key of ["primaryLight", "compactLight", "compactDark", "stackedLight"]) {
     if (!pluginData.svg?.[key]?.includes("<svg")) fail(`Figma payload is missing canonical SVG: ${key}`);
@@ -178,6 +204,11 @@ if (/fetch\s*\(|XMLHttpRequest|WebSocket/.test(pluginSource)) fail("Local Figma 
 for (const exportName of ["foothold-handoff.json", "foothold-master-board.svg", "foothold-master-board.png", "foothold-osmu-review.svg", "foothold-osmu-review.png"]) {
   if (!pluginSource.includes(exportName)) fail(`Figma handoff contract is missing export: ${exportName}`);
 }
+for (const exportName of ["foothold-web-header", "foothold-readme-hero", "foothold-presentation-opener-16x9", "foothold-poster-header", "foothold-social-square", "foothold-sticker-round"]) {
+  if (!pluginSource.includes(`\"${exportName}\"`)) fail(`Figma handoff contract is missing approved OSMU export: ${exportName}`);
+}
+if (!pluginSource.includes("approvedOsmuAssets: approvedPreviews.length")) fail("Figma export must report the approved OSMU asset count");
+if (!pluginSource.includes("foothold-approved-osmu-v1.2.zip") || !read("figma/plugin/ui.html").includes("zipStore")) fail("Figma export must bundle approved OSMU assets into one ZIP to avoid WebView download loss");
 if (!pluginSource.includes('const name = ["color", ...entry.path].join("/")')) fail("Figma primitive variables must retain the canonical color/ prefix");
 for (const styleName of [
   "FOOTHOLD / Display / Hero",
@@ -197,6 +228,9 @@ for (const readyModuleHelper of ["appendBrandCore", "appendHeroHierarchy", "appe
 }
 if (pluginSource.includes("async function createCandidateStrip") || pluginSource.includes("KOREAN SLOGAN REVIEW · PROVISIONAL")) fail("Approved Korean slogan must replace the provisional candidate review UI");
 if (!pluginSource.includes('createMessageCard("Approved Korean slogan", FOOTHOLD_DATA.messages.sloganKo, 1208)')) fail("M02 must present the approved Korean slogan in a full-width card");
+if (!pluginSource.includes('FOOTHOLD_DATA.messages.coverDescriptorKo, 24, "Regular", light("ink-secondary"), 1248')) fail("Cover descriptor must use the approved text at the full 1248px content width");
+if (!pluginSource.includes("APPROVED V1.2 BASELINE") || pluginSource.includes("All compositions remain provisional")) fail("Current OSMU review cards must display their approved v1.2 baseline state");
+if (!pluginSource.includes('approvedOsmu("foothold-readme-hero")') || !pluginSource.includes('approvedOsmu("foothold-sticker-round")')) fail("Figma OSMU review must consume frozen approved Git SVGs instead of rebuilding the designs");
 if (!pluginSource.includes("INTENDED OUTCOME · Not a verified zero-fall field result")) fail("M05 must show the target-vision evidence disclaimer in Figma");
 for (const reviewHelper of ["createWebHeaderReview", "createReadmeHeroReview", "createPresentationReview", "createPosterHeaderReview", "createSocialReview", "createStickerReview", "createOsmuReview"]) {
   if (!pluginSource.includes(`async function ${reviewHelper}`)) fail(`Missing medium-specific OSMU review helper: ${reviewHelper}`);
@@ -213,4 +247,4 @@ if (failures.length) {
   console.error(failures.map((message) => `FAIL: ${message}`).join("\n"));
   process.exit(1);
 }
-console.log(`Verified ${manifest.assets.length} frozen SVGs, ${rasterManifest.assets.length}+${rasterManifest.provisionalAssets.length} PNG derivatives, ${jpegManifest.assets.length} JPEG derivatives, ${expectedFigmaColors}+2 Figma variables, canonical tokens, license map, and local plugin policy.`);
+console.log(`Verified ${manifest.assets.length} frozen logo/legacy SVGs, ${osmuManifest.assets.length} approved OSMU SVG/PNG/JPG sets, ${rasterManifest.assets.length}+${rasterManifest.provisionalAssets.length} compatibility PNG derivatives, ${jpegManifest.assets.length} compatibility JPEG derivatives, ${expectedFigmaColors}+2 Figma variables, canonical tokens, license map, and local plugin policy.`);

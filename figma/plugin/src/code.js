@@ -567,81 +567,57 @@ async function createMediaReviewCard(label, role, width, height, darkSurface, dr
   card.strokeWeight = 1;
 
   const preview = figma.createFrame();
-  preview.name = `${label} / Provisional preview`;
+  preview.name = `${label} / Approved v1.2 preview`;
   preview.resize(width, height);
   preview.clipsContent = true;
   preview.cornerRadius = 8;
   preview.fills = [solidPaint(darkSurface ? dark("paper") : light("paper"))];
   card.appendChild(preview);
   await draw(preview);
-  card.appendChild(await makeText(`${label.toUpperCase()} · PROVISIONAL`, 12, "Bold", light("amber")));
+  card.appendChild(await makeText(`${label.toUpperCase()} · APPROVED V1.2 BASELINE`, 12, "Bold", light("teal-brand")));
   card.appendChild(await makeWrappedText(role, 12, "Regular", light("ink-secondary"), width));
   return card;
 }
 
+function approvedOsmu(name) {
+  const asset = FOOTHOLD_DATA.approvedOsmuAssets.find((item) => item.name === name);
+  if (!asset) throw new Error(`Missing approved OSMU asset: ${name}`);
+  return asset;
+}
+
 async function createWebHeaderReview() {
   return createMediaReviewCard("Web header", "Navigation-first: compact identity, live controls, and restrained brand presence.", 580, 92, false, async (preview) => {
-    placeSvg(preview, FOOTHOLD_DATA.svg.compactLight, "Canonical Compact Lockup", 24, 24, 235, 42);
-    placeRect(preview, 282, 20, 1, 52, light("rule"));
-    await placeText(preview, "PROJECT     METHOD     EVIDENCE", 10, "Semi Bold", light("ink-secondary"), 310, 31, 200);
-    placeRect(preview, 508, 25, 48, 28, light("teal-soft"), 14);
-    await placeText(preview, "GIT", 10, "Bold", light("teal-ink-on-soft"), 521, 31, 28);
-    placeRect(preview, 0, 90, 580, 2, light("teal-brand"));
+    placeSvg(preview, approvedOsmu("foothold-web-header").svg, "Approved Web Header / Canonical", 0, 0, 580, 92);
   });
 }
 
 async function createReadmeHeroReview() {
   return createMediaReviewCard("GitHub README hero", "Repository-first: project definition and technical orientation before visual spectacle.", 580, 200, false, async (preview) => {
-    placeSvg(preview, FOOTHOLD_DATA.svg.compactLight, "Canonical Compact Lockup", 24, 20, 224, 40);
-    placeSvg(preview, FOOTHOLD_DATA.svg.symbolBrand, "Canonical Symbol Watermark", 452, 18, 88, 101, 0.12);
-    await placeText(preview, FOOTHOLD_DATA.messages.closingEn, 28, "Bold", light("ink"), 24, 78, 430);
-    await placeText(preview, "Terrain-adaptive quadruped locomotion policy", 12, "Regular", light("ink-secondary"), 24, 118, 430);
-    const labels = ["01  SIMULATION", "02  POLICY LEARNING", "03  VALIDATION"];
-    for (let index = 0; index < labels.length; index += 1) {
-      const x = 24 + index * 178;
-      placeRect(preview, x, 156, 164, 24, index === 2 ? light("amber-soft") : light("paper-secondary"), 4);
-      await placeText(preview, labels[index], 9, "Semi Bold", index === 2 ? light("amber-ink-on-soft") : light("ink-secondary"), x + 10, 161, 144);
-    }
+    placeSvg(preview, approvedOsmu("foothold-readme-hero").svg, "Approved README Hero / Canonical", 0, 0, 580, 200);
   });
 }
 
 async function createPresentationReview() {
   return createMediaReviewCard("Presentation opener", "Story-first: one memorable statement with enough silence for a spoken opening.", 580, 326, true, async (preview) => {
-    placeSvg(preview, FOOTHOLD_DATA.svg.primaryDark, "Canonical Primary Lockup / Dark", 34, 30, 290, 60);
-    await placeText(preview, "Find the next", 44, "Bold", dark("ink"), 34, 132, 430);
-    await placeText(preview, "foothold.", 44, "Bold", dark("ink"), 34, 184, 430);
-    placeRect(preview, 34, 276, 512, 2, dark("rule"));
-    placeRect(preview, 420, 94, 190, 18, dark("teal-brand"), 0, 0.18);
-    placeRect(preview, 452, 122, 190, 18, dark("teal-brand"), 0, 0.32);
-    placeRect(preview, 484, 150, 190, 18, dark("teal-brand"), 0, 0.52);
-    await placeText(preview, "OPENING / 16:9", 10, "Semi Bold", dark("ink-secondary"), 34, 292, 160);
+    placeSvg(preview, approvedOsmu("foothold-presentation-opener-16x9").svg, "Approved Presentation Opener / Canonical", 0, 0, 580, 326);
   });
 }
 
 async function createPosterHeaderReview() {
   return createMediaReviewCard("Poster header", "Evidence-first: editorial hierarchy that opens into diagrams, methods, and measured results.", 580, 214, false, async (preview) => {
-    placeRect(preview, 0, 0, 14, 214, light("teal-brand"));
-    await placeText(preview, "01 / TERRAIN-ADAPTIVE LOCOMOTION", 9, "Bold", light("teal-brand"), 34, 24, 300);
-    placeSvg(preview, FOOTHOLD_DATA.svg.primaryLight, "Canonical Primary Lockup", 34, 52, 330, 68);
-    await placeText(preview, "Reinforcement-learning policy development and validation for quadruped locomotion on rough terrain.", 13, "Regular", light("ink-secondary"), 34, 144, 410);
-    placeRect(preview, 472, 24, 82, 82, light("paper-secondary"), 8);
-    await placeText(preview, "M01", 22, "Bold", light("ink"), 488, 44, 50);
-    await placeText(preview, "CORE", 9, "Semi Bold", light("ink-caption"), 488, 76, 50);
+    placeSvg(preview, approvedOsmu("foothold-poster-header").svg, "Approved Poster Header / Canonical", 0, 0, 580, 214);
   });
 }
 
 async function createSocialReview() {
   return createMediaReviewCard("Social square", "Recognition-first: one symbol, one sentence, and no unreadable micro-copy.", 360, 360, true, async (preview) => {
-    await placeText(preview, "FOOTHOLD / 01", 10, "Semi Bold", dark("ink-secondary"), 24, 22, 160);
-    placeSvg(preview, FOOTHOLD_DATA.svg.symbolBrand, "Canonical Symbol", 104, 72, 152, 174);
-    await placeText(preview, "Find the next foothold.", 24, "Bold", dark("ink"), 40, 284, 280);
+    placeSvg(preview, approvedOsmu("foothold-social-square").svg, "Approved Social Square / Canonical", 0, 0, 360, 360);
   });
 }
 
 async function createStickerReview() {
-  const asset = FOOTHOLD_DATA.draftAssets[0];
   return createMediaReviewCard("Round sticker", "Production-first: preferred stacked lockup, thinner border, and generous cut-safe margin.", 360, 360, false, async (preview) => {
-    placeSvg(preview, asset.svg, "Provisional round sticker", 20, 20, 320, 320);
+    placeSvg(preview, approvedOsmu("foothold-sticker-round").svg, "Approved Round Sticker / Canonical", 0, 0, 360, 360);
   });
 }
 
@@ -668,7 +644,7 @@ async function createOsmuReview(page, masterBoard) {
   board.x = masterBoard.x + masterBoard.width + 160;
   board.y = masterBoard.y;
   board.appendChild(await makeText("FOOTHOLD / OSMU REVIEW", 48, "Bold", light("ink")));
-  board.appendChild(await makeWrappedText("Same identity, different communication job. All compositions remain provisional until exported and approved.", 18, "Regular", light("ink-secondary"), 1280));
+  board.appendChild(await makeWrappedText("Same identity, different communication job. Approved v1.2 baseline; Git exports remain canonical.", 18, "Regular", light("ink-secondary"), 1280));
   for (const pair of [
     [await createWebHeaderReview(), await createReadmeHeroReview()],
     [await createPresentationReview(), await createPosterHeaderReview()],
@@ -796,7 +772,7 @@ async function createCover(page) {
   lockup.resize(868.345, 180);
   frame.appendChild(lockup);
   frame.appendChild(await makeText(FOOTHOLD_DATA.messages.closingEn, 48, "Semi Bold", light("ink")));
-  frame.appendChild(await makeWrappedText(FOOTHOLD_DATA.messages.projectDefinitionKo, 24, "Regular", light("ink-secondary"), 1120));
+  frame.appendChild(await makeWrappedText(FOOTHOLD_DATA.messages.coverDescriptorKo, 24, "Regular", light("ink-secondary"), 1248));
   frame.appendChild(await makeText(`Brand ${FOOTHOLD_DATA.brandVersion} · Source ${FOOTHOLD_DATA.sourceDigest.slice(0, 12)} · Git is canonical`, 14, "Regular", light("ink-secondary")));
   return frame;
 }
@@ -947,6 +923,28 @@ async function exportReviewPackage() {
   const png = await board.exportAsync({ format: "PNG", constraint: { type: "SCALE", value: 1 } });
   const osmuSvg = await osmuReview.exportAsync({ format: "SVG_STRING", svgOutlineText: true, svgIdAttribute: true });
   const osmuPng = await osmuReview.exportAsync({ format: "PNG", constraint: { type: "SCALE", value: 1 } });
+  const osmuExportNames = {
+    "Web header": "foothold-web-header",
+    "GitHub README hero": "foothold-readme-hero",
+    "Presentation opener": "foothold-presentation-opener-16x9",
+    "Poster header": "foothold-poster-header",
+    "Social square": "foothold-social-square",
+    "Round sticker": "foothold-sticker-round"
+  };
+  const approvedPreviews = osmuReview.findAll((node) => node.type === "FRAME" && node.name.endsWith("/ Approved v1.2 preview"));
+  if (approvedPreviews.length !== 6) throw new Error(`Expected 6 approved OSMU previews, found ${approvedPreviews.length}. Rebuild the Master Board first.`);
+  const approvedFiles = [];
+  for (const preview of approvedPreviews) {
+    const label = preview.name.replace(" / Approved v1.2 preview", "");
+    const baseName = osmuExportNames[label];
+    if (!baseName) throw new Error(`Missing approved OSMU export name: ${label}`);
+    const previewSvg = await preview.exportAsync({ format: "SVG_STRING", svgOutlineText: true, svgIdAttribute: true });
+    const previewPng = await preview.exportAsync({ format: "PNG", constraint: { type: "SCALE", value: 2 } });
+    approvedFiles.push(
+      { name: `${baseName}.svg`, mime: "image/svg+xml", text: previewSvg },
+      { name: `${baseName}.png`, mime: "image/png", bytes: Array.from(previewPng) }
+    );
+  }
   post("downloads", {
     files: [
       { name: "foothold-handoff.json", mime: "application/json", text: JSON.stringify(handoff, null, 2) },
@@ -954,9 +952,12 @@ async function exportReviewPackage() {
       { name: "foothold-master-board.png", mime: "image/png", bytes: Array.from(png) },
       { name: "foothold-osmu-review.svg", mime: "image/svg+xml", text: osmuSvg },
       { name: "foothold-osmu-review.png", mime: "image/png", bytes: Array.from(osmuPng) }
+    ],
+    bundles: [
+      { name: "foothold-approved-osmu-v1.2.zip", files: approvedFiles }
     ]
   });
-  return { files: 5, sourceDigest: FOOTHOLD_DATA.sourceDigest };
+  return { files: 6, bundledFiles: approvedFiles.length, approvedOsmuAssets: approvedPreviews.length, sourceDigest: FOOTHOLD_DATA.sourceDigest };
 }
 
 figma.ui.onmessage = async (message) => {

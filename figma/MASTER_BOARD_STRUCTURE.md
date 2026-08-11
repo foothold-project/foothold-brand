@@ -63,7 +63,7 @@ No output becomes authoritative until its module source, semantic token bindings
 
 ## `OSMU Review` frame
 
-The `Master Board` page also contains a separate `FOOTHOLD / OSMU Review` frame because Starter permits only three pages. It compares six provisional applications without treating them as approved exports:
+The `Master Board` page also contains a separate `FOOTHOLD / OSMU Review` frame because Starter permits only three pages. The six compositions are the human-approved v1.2 baseline, while Git-exported SVG/PNG/JPG files remain the canonical delivery assets:
 
 | Medium | Communication job |
 |---|---|
@@ -76,4 +76,4 @@ The `Master Board` page also contains a separate `FOOTHOLD / OSMU Review` frame 
 
 These previews intentionally differ in information density, hierarchy, and composition. They reuse the same canonical logo geometry, but they are not one generic logo panel resized six times.
 
-**Review note — 2026-08-09:** the Poster Header is currently the strongest OSMU direction in human review. Treat its editorial hierarchy as the leading reference for the next refinement, but keep it provisional until the remaining media are reviewed alongside it.
+**Approval note — 2026-08-11:** the six current compositions are the approved v1.2 baseline. The Poster Header remains the leading editorial reference for later refinements. Any future Figma-only change returns to proposal state until exported and promoted to Git.
