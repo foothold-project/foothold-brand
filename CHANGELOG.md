@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Promoted the six human-approved Figma OSMU compositions to canonical outlined SVGs with reproducible PNG/JPG derivatives and a dedicated download pack.
+- Corrected the Cover descriptor while preserving the formal Canonical Definition, and made the Figma OSMU review consume frozen Git assets after approval.
+- Kept all v1 application proofs explicitly legacy instead of presenting them as current approved exports.
 - Approved `시뮬레이터에서 천 번 넘어지고, 현장에서는 넘어지지 않는다.` as a clearly labelled target vision, not a verified field result.
 - Added 25 background-filled JPG companions with exact light/dark brand surfaces, unchanged canvases, lifecycle-separated paths, and a hashed manifest; favicon remains excluded.
 - Approved the Korean slogan and refined the Figma Master Board review compositions.

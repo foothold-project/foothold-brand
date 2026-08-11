@@ -12,7 +12,8 @@ ROOT = Path(__file__).resolve().parents[1]
 ASSETS = ROOT / "assets"
 SVG_OUTPUT = ASSETS / "FOOTHOLD_SVG_ASSET_PACK_V1.zip"
 COMBINED_OUTPUT = ASSETS / "FOOTHOLD_ASSET_PACK_V1.zip"
-FIXED_TIME = (2026, 8, 9, 0, 0, 0)
+OSMU_OUTPUT = ASSETS / "FOOTHOLD_OSMU_V1_2.zip"
+FIXED_TIME = (2026, 8, 11, 0, 0, 0)
 
 
 def svg_source_files() -> list[Path]:
@@ -24,9 +25,17 @@ def svg_source_files() -> list[Path]:
 
 def combined_source_files() -> list[Path]:
     files = svg_source_files()
+    files.extend(path for path in (ASSETS / "osmu" / "v1.2").rglob("*") if path.is_file() and path.suffix in {".svg", ".json", ".md"})
     files.append(ASSETS / "raster" / "README.md")
     files.extend(path for path in (ASSETS / "raster" / "v1").rglob("*") if path.is_file() and path.suffix in {".png", ".jpg", ".json"})
+    files.extend(path for path in (ASSETS / "raster" / "v1.2").rglob("*") if path.is_file() and path.suffix in {".png", ".jpg", ".json"})
     files.append(ASSETS / "exports" / "v1" / "FOOTHOLD_ASSET_PACK_V1_PREVIEW.png")
+    return sorted(files, key=lambda path: path.relative_to(ASSETS).as_posix())
+
+
+def osmu_source_files() -> list[Path]:
+    files = [path for path in (ASSETS / "osmu" / "v1.2").rglob("*") if path.is_file() and path.suffix in {".svg", ".json", ".md"}]
+    files.extend(path for path in (ASSETS / "raster" / "v1.2" / "osmu").rglob("*") if path.is_file() and path.suffix in {".png", ".jpg"})
     return sorted(files, key=lambda path: path.relative_to(ASSETS).as_posix())
 
 
@@ -49,12 +58,13 @@ def main() -> None:
     archives = [
         (SVG_OUTPUT, svg_source_files()),
         (COMBINED_OUTPUT, combined_source_files()),
+        (OSMU_OUTPUT, osmu_source_files()),
     ]
     if args.check:
         stale = [output.name for output, files in archives if not output.is_file() or output.read_bytes() != build_bytes(files)]
         if stale:
             raise SystemExit(f"Asset-pack ZIP is stale: {', '.join(stale)}. Run python scripts/build_asset_pack.py")
-        print("SVG-only and combined asset-pack ZIPs are current.")
+        print("SVG-only, combined, and approved OSMU asset-pack ZIPs are current.")
         return
     for output, files in archives:
         output.write_bytes(build_bytes(files))

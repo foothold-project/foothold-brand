@@ -10,4 +10,5 @@ figma/plugin/.state/
 figma/handoff/*.json
 figma/handoff/*.svg
 figma/handoff/*.png
+figma/handoff/*.zip
 !figma/handoff/.gitkeep

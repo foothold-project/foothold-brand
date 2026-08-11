@@ -22,6 +22,10 @@ Lifecycle is physical, not merely descriptive:
 
 Exact source mapping, dimensions, background, lifecycle, source hash, and JPG hash live in `v1/jpeg/manifest.json`.
 
+## Approved OSMU v1.2 raster outputs
+
+`v1.2/osmu/` contains the current approved six-medium PNG and JPG derivatives generated from `assets/osmu/v1.2`. These are the current Web, GitHub, presentation, poster, social, and sticker designs. Same-named files under `v1/` remain legacy proofs.
+
 The exact source path, pixel dimensions, status (`approved`, `retired`, `legacy`, or `provisional`), alpha policy, and SHA-256 hash are recorded in `v1/manifest.json`.
 
 Regenerate and verify on Windows, macOS, or Linux with:
