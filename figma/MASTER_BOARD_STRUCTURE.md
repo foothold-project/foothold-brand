@@ -47,8 +47,9 @@ Each module is an auto-layout frame with a description that identifies its appro
 
 - `M01 Brand Core` presents the canonical Primary, Compact, and Stacked SVG lockups, the approved definition, the frozen wordmark aspect, and the approved subtitle. It never reconstructs the wordmark from a font.
 - `M02 Hero Statement` presents the approved English and Korean slogans with the precise project scope. It does not add an unqualified `How` claim before its project evidence is verified.
+- `M05 Why FOOTHOLD` presents `시뮬레이터에서 천 번 넘어지고, 현장에서는 넘어지지 않는다.` as an approved `TARGET VISION`, never as a verified zero-fall field result. Concrete use contexts and demonstrated benefits remain evidence-gated.
 - `M10 Closing` uses the canonical reverse Compact lockup and the approved sentence `Find the next foothold.` on the dark semantic surface.
-- `M03` through `M09` remain visibly pending until their named repository sources contain verified content.
+- `M03`, `M04`, and `M06` through `M09` remain visibly pending or partial until their named repository sources contain verified content. M05's target vision is approved, while its outcome evidence remains gated.
 
 ## Required review states
 

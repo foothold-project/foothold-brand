@@ -10,6 +10,8 @@ FOOTHOLD는 험지 적응형 4족 보행 프로젝트를 위한 공통 시각·�
 
 English: **Find the next foothold.**
 
+**TARGET VISION** — `시뮬레이터에서 천 번 넘어지고, 현장에서는 넘어지지 않는다.` 이는 목표로 하는 Sim-to-Real 결과이며, 현재 검증된 현장 무낙상 성과가 아닙니다.
+
 ## 현재 상태
 
 - `v1.0.2`: Compact 간격 보정을 포함한 승인 로고 형상, SVG 원본 및 재현 가능한 PNG 파생본 기준선
@@ -34,7 +36,7 @@ Figma는 수정 가능한 시각 작업 공간이지 두 번째 토큰·로고 �
 
 ## 빠른 검사
 
-Node.js 20 이상을 권장합니다.
+Node.js 20.9 이상이 필요합니다.
 
 ```bash
 npm run generate
@@ -46,10 +48,11 @@ npm test
 ## 바로 사용하는 에셋 묶음
 
 - [`FOOTHOLD_SVG_ASSET_PACK_V1.zip`](./assets/FOOTHOLD_SVG_ASSET_PACK_V1.zip): SVG 전용 벡터 묶음
-- [`FOOTHOLD_ASSET_PACK_V1.zip`](./assets/FOOTHOLD_ASSET_PACK_V1.zip): SVG + PNG 통합 묶음
+- [`FOOTHOLD_ASSET_PACK_V1.zip`](./assets/FOOTHOLD_ASSET_PACK_V1.zip): SVG + PNG + 배경 포함 JPG 통합 묶음
 - [`assets/raster/v1/manifest.json`](./assets/raster/v1/manifest.json): 모든 PNG 파생본의 SVG 원본 경로, 픽셀 크기, 알파 정책, 상태, 해시
+- [`assets/raster/v1/jpeg/manifest.json`](./assets/raster/v1/jpeg/manifest.json): 모든 JPG 파생본의 상태, 원본 캔버스, 배경색, 해시
 
-공식 원본은 계속 SVG입니다. PNG 로고는 투명 RGBA 배경을 유지하며, 매체용 PNG는 원본 SVG에 정의된 캔버스를 보존합니다. `legacy`와 `provisional` 출력은 승인된 OSMU 템플릿으로 오해하지 않도록 명시적으로 분리합니다.
+공식 원본은 계속 SVG입니다. PNG 로고는 투명 RGBA 배경을 유지합니다. JPG는 같은 캔버스를 여백 추가 없이 브랜드 페이퍼 `#F6F5F1` 또는 엔지니어링 다크 `#12161D`에 합성하며 favicon은 제외합니다. `approved`, `retired`, `legacy`, `provisional` 출력은 서로 다른 경로에 분리합니다.
 
 ## Figma 작업 흐름
 

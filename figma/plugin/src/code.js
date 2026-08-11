@@ -724,6 +724,31 @@ async function appendHeroHierarchy(frame) {
   frame.appendChild(await createMessageCard("Approved Korean slogan", FOOTHOLD_DATA.messages.sloganKo, 1208));
 }
 
+async function appendWhyNorthStar(frame) {
+  const panel = figma.createFrame();
+  panel.name = "Why FOOTHOLD / Target Vision";
+  panel.layoutMode = "VERTICAL";
+  panel.counterAxisSizingMode = "FIXED";
+  panel.resize(1208, 260);
+  panel.primaryAxisSizingMode = "AUTO";
+  panel.minHeight = 260;
+  panel.paddingTop = panel.paddingBottom = 32;
+  panel.paddingLeft = panel.paddingRight = 36;
+  panel.itemSpacing = 18;
+  panel.cornerRadius = 16;
+  panel.fills = [solidPaint(dark("paper"))];
+  panel.appendChild(await makeText("TARGET VISION / NORTH STAR", 13, "Bold", dark("teal-brand")));
+  panel.appendChild(await makeWrappedText(FOOTHOLD_DATA.messages.whyNorthStarKo, 36, "Semi Bold", dark("ink"), 1136));
+  panel.appendChild(await makeWrappedText(
+    "INTENDED OUTCOME · Not a verified zero-fall field result · Source: VOICE_AND_MESSAGE.md",
+    13,
+    "Regular",
+    dark("ink-secondary"),
+    1136
+  ));
+  frame.appendChild(panel);
+}
+
 async function appendClosing(frame) {
   const panel = figma.createFrame();
   panel.name = "Approved closing panel / Dark";
@@ -844,6 +869,7 @@ async function createModule(module) {
   frame.appendChild(await makeText(`${module.status.toUpperCase()} · Source: ${module.source}`, 13, "Regular", light("ink-secondary")));
   if (module.id === "M01") await appendBrandCore(frame);
   if (module.id === "M02") await appendHeroHierarchy(frame);
+  if (module.id === "M05") await appendWhyNorthStar(frame);
   if (module.id === "M10") await appendClosing(frame);
   return frame;
 }
@@ -872,7 +898,7 @@ async function createMasterBoard(page) {
   board.fills = [solidPaint(light("paper"))];
   board.setSharedPluginData("foothold", "description", `Ratio-independent module source. Brand ${FOOTHOLD_DATA.brandVersion}; Git digest ${FOOTHOLD_DATA.sourceDigest}.`);
   board.appendChild(await makeText("FOOTHOLD / VISUAL MASTER BOARD", 48, "Bold", light("ink")));
-  board.appendChild(await makeText("Why → What → How → Evidence · Pending facts stay visibly pending", 18, "Regular", light("ink-secondary")));
+  board.appendChild(await makeText("Why → What → How → Evidence · Target vision leads; evidence states stay explicit", 18, "Regular", light("ink-secondary")));
   for (const module of FOOTHOLD_DATA.modules) board.appendChild(await createModule(module));
   return board;
 }

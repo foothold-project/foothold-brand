@@ -8,6 +8,8 @@ FOOTHOLD is the shared visual and verbal system for a terrain-adaptive quadruped
 
 > Find the next foothold.
 
+**TARGET VISION** — `시뮬레이터에서 천 번 넘어지고, 현장에서는 넘어지지 않는다.` This is the intended Sim-to-Real outcome, not a verified zero-fall field result.
+
 ## Current status
 
 - `v1.0.2`: approved logo geometry with SVG sources and reproducible PNG derivatives, including the Compact spacing correction
@@ -33,7 +35,7 @@ Figma is an editable visual workspace, not a second token or logo source. A Figm
 ## Repository map
 
 ```text
-assets/          approved SVG geometry, reproducible PNG derivatives, and delivery exports
+assets/          approved SVG geometry, reproducible PNG/JPG derivatives, and delivery exports
 concepts/        review history; never use as production assets
 content/         machine-readable evidence gates for project-specific claims
 figma/           mappings, Master Board specification, local plugin
@@ -45,7 +47,7 @@ docs/            governance, source-of-truth, and roadmap
 
 ## Quick checks
 
-Node.js 20 or newer is recommended.
+Node.js 20.9 or newer is required.
 
 ```bash
 npm run generate
@@ -57,10 +59,11 @@ The committed generated files must remain byte-for-byte current after `npm run g
 ## Ready-to-use asset packs
 
 - [`FOOTHOLD_SVG_ASSET_PACK_V1.zip`](./assets/FOOTHOLD_SVG_ASSET_PACK_V1.zip): SVG-only vector package.
-- [`FOOTHOLD_ASSET_PACK_V1.zip`](./assets/FOOTHOLD_ASSET_PACK_V1.zip): combined SVG + PNG package.
+- [`FOOTHOLD_ASSET_PACK_V1.zip`](./assets/FOOTHOLD_ASSET_PACK_V1.zip): combined SVG + PNG + background-filled JPG package.
 - [`assets/raster/v1/manifest.json`](./assets/raster/v1/manifest.json): source mapping, pixel dimensions, alpha policy, status, and hashes for every PNG derivative.
+- [`assets/raster/v1/jpeg/manifest.json`](./assets/raster/v1/jpeg/manifest.json): lifecycle, exact canvas, background, and hashes for every JPG derivative.
 
-SVG remains canonical. PNG logo files keep a transparent RGBA canvas; application PNGs preserve the canvas defined by their source SVG. Legacy and provisional outputs remain explicitly labelled and must not be mistaken for approved OSMU templates.
+SVG remains canonical. PNG logo files keep a transparent RGBA canvas. JPG companions flatten that same canvas onto exact brand paper `#F6F5F1` or engineering dark `#12161D`, without added padding; favicon is intentionally excluded. Legacy, retired, and provisional outputs remain in separate lifecycle directories and must not be mistaken for approved OSMU templates.
 
 ## Figma workflow
 
