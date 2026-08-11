@@ -23,6 +23,12 @@ This is a project identity, not a claim that FOOTHOLD is already a deployed navi
 
 This is the Korean counterpart to the English slogan, not a literal translation; see [`VOICE_AND_MESSAGE.md`](./VOICE_AND_MESSAGE.md).
 
+**Why FOOTHOLD / North Star — approved target vision**
+
+> 시뮬레이터에서 천 번 넘어지고, 현장에서는 넘어지지 않는다.
+
+This line defines the desired Sim-to-Real outcome. Label it `TARGET VISION`; do not present it as a verified zero-fall field result until reproducible physical evidence supports that claim.
+
 ## 2. Positioning
 
 FOOTHOLD makes the gap between controlled simulation and uneven physical terrain legible. The brand should feel like a verified field notebook: deliberate, clear, and technically grounded.

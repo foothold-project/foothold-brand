@@ -18,7 +18,7 @@ const required = [
   "tokens/foothold.tokens.json", "tokens/foothold.tokens.css",
   "assets/exports/v1/manifest.json", "assets/drafts/v1.2/manifest.json",
   "assets/drafts/v1.2/goods/foothold-sticker-round.svg", "figma/plugin/manifest.template.json",
-  "assets/raster/README.md", "assets/raster/v1/manifest.json",
+  "assets/raster/README.md", "assets/raster/v1/manifest.json", "assets/raster/v1/jpeg/manifest.json",
   "assets/FOOTHOLD_SVG_ASSET_PACK_V1.zip", "assets/FOOTHOLD_ASSET_PACK_V1.zip",
   "figma/plugin/src/code.js", "figma/plugin/code.generated.js", "figma/plugin/ui.html",
   "figma/handoff.schema.json", "scripts/canonical-text.mjs", "scripts/generate-draft-assets.mjs",
@@ -71,11 +71,27 @@ if (rasterStatusCounts.approved !== 13 || rasterStatusCounts.retired !== 1 || ra
 if (rasterManifest.policy?.canonicalFormat !== "SVG" || rasterManifest.policy?.logoBackground !== "transparent") fail("Raster policy must preserve SVG authority and transparent logo canvases");
 const packageJson = JSON.parse(read("package.json"));
 if (packageJson.devDependencies?.["@resvg/resvg-js"] !== "2.6.2") fail("Raster renderer must remain exactly pinned for reproducible output");
+if (packageJson.devDependencies?.sharp !== "0.35.3") fail("JPEG renderer must remain exactly pinned at sharp 0.35.3");
+
+const jpegManifest = JSON.parse(read("assets/raster/v1/jpeg/manifest.json"));
+if (!Array.isArray(jpegManifest.assets) || jpegManifest.assets.length !== 25) fail("JPEG manifest must contain 25 background-filled derivatives");
+const jpegStatusCounts = (jpegManifest.assets || []).reduce((counts, item) => {
+  counts[item.status] = (counts[item.status] ?? 0) + 1;
+  return counts;
+}, {});
+if (jpegStatusCounts.approved !== 12 || jpegStatusCounts.retired !== 1 || jpegStatusCounts.legacy !== 11 || jpegStatusCounts.provisional !== 1) {
+  fail("JPEG lifecycle contract must retain 12 approved, 1 retired, 11 legacy, and 1 provisional derivative");
+}
+if (jpegManifest.assets?.some((item) => item.source.endsWith("foothold-favicon.svg"))) fail("Favicon must remain excluded from JPEG derivatives");
+if (jpegManifest.policy?.lightBackground !== "#F6F5F1" || jpegManifest.policy?.darkBackground !== "#12161D") fail("JPEG backgrounds must use exact approved light and dark surfaces");
+if (jpegManifest.policy?.canvas !== "preserve source aspect ratio and raster profile; add no padding") fail("JPEG derivatives must preserve the source canvas without padding");
 
 const evidence = JSON.parse(read("content/master-board-evidence.json"));
 const evidenceModuleIds = Object.keys(evidence.modules || {});
 if (evidenceModuleIds.join(",") !== "M03,M04,M05,M06,M07,M08,M09") fail("Evidence matrix must gate exactly M03 through M09 in order");
 if (!evidence.rules?.primaryEvidenceWins || !evidence.rules?.proposalIsNotFact) fail("Evidence authority rules must remain explicit");
+if (evidence.modules?.M05?.status !== "target-vision-approved") fail("M05 must distinguish the approved target vision from verified results");
+if (!evidence.modules?.M05?.prohibitedClaims?.some((claim) => claim.includes("zero-fall"))) fail("M05 must explicitly prohibit treating the target vision as a verified zero-fall result");
 if (!evidence.modules?.M06?.prohibitedClaims?.some((claim) => claim.includes("21,385 steps/s"))) fail("Known training-throughput conflict must remain blocked");
 if (!evidence.modules?.M07?.status?.startsWith("pending")) fail("Team roles must remain pending until five-person approval exists");
 
@@ -105,6 +121,17 @@ for (const item of [...(rasterManifest.assets || []), ...(rasterManifest.provisi
   if (png.readUInt32BE(16) !== item.width || png.readUInt32BE(20) !== item.height) fail(`PNG dimensions differ from raster manifest: ${item.path}`);
   if (png.readUInt8(25) !== 6) fail(`PNG must retain an RGBA alpha channel: ${item.path}`);
   if (item.source.startsWith("assets/logo/v1/") && item.alphaPolicy !== "transparent-canvas") fail(`Logo PNG must declare a transparent canvas: ${item.path}`);
+}
+for (const item of jpegManifest.assets || []) {
+  const full = path.join(root, item.path);
+  if (!fs.existsSync(full)) { fail(`JPEG derivative missing: ${item.path}`); continue; }
+  const bytes = fs.readFileSync(full);
+  const hash = crypto.createHash("sha256").update(bytes).digest("hex");
+  if (hash !== item.sha256) fail(`JPEG manifest hash mismatch: ${item.path}`);
+  if (bytes.subarray(0, 3).toString("hex") !== "ffd8ff") fail(`Invalid JPEG signature: ${item.path}`);
+  if (item.canvasPolicy !== "preserve-source-aspect-and-raster-profile; no-added-padding") fail(`JPEG canvas policy changed: ${item.path}`);
+  const sourceHash = crypto.createHash("sha256").update(fs.readFileSync(path.join(root, item.source))).digest("hex");
+  if (sourceHash !== item.sourceSha256) fail(`JPEG source hash is stale: ${item.path}`);
 }
 
 const protectedRoots = ["assets/logo/v1", "tokens", "scripts", "figma/plugin"];
@@ -138,6 +165,8 @@ if (dataStart < 0 || dataEnd < 0) {
   if (pluginData.messages?.closingEn !== "Find the next foothold.") fail("Figma payload must retain the approved closing statement");
   if (pluginData.messages?.koreanSloganStatus !== "approved") fail("Korean slogan must remain approved");
   if (pluginData.messages?.sloganKo !== "불확실한 지형에서도, 다음 걸음을 이어갑니다.") fail("Figma payload must retain the approved Korean slogan");
+  if (pluginData.messages?.whyNorthStarKo !== "시뮬레이터에서 천 번 넘어지고, 현장에서는 넘어지지 않는다.") fail("Figma payload must retain the approved Why FOOTHOLD target vision");
+  if (pluginData.messages?.whyNorthStarStatus !== "target-vision") fail("Figma target vision must remain distinct from a verified outcome");
   if (pluginData.messages?.projectDefinitionKo !== "FOOTHOLD는 4족 보행 로봇의 험지 적응을 위한 강화학습 기반 보행 정책을 개발하고 검증하는 프로젝트입니다.") fail("Figma payload must retain the approved Korean project definition");
   if (Object.values(pluginData.messages || {}).some((value) => typeof value === "string" && value.includes("사람이 먼저 밟아볼 수 없는 땅을"))) fail("Retired Korean draft must not enter the production Figma payload");
   for (const key of ["primaryLight", "compactLight", "compactDark", "stackedLight"]) {
@@ -163,11 +192,12 @@ if (!pluginSource.includes("variableNames:")) fail("Figma inspection must expose
 if (!/frame\.resize\(1280, 240\);\s*frame\.primaryAxisSizingMode = "AUTO";\s*frame\.minHeight = 240;/.test(pluginSource)) fail("Master Board modules must hug content above their 240px minimum height");
 if (!/board\.resize\(1440, 1000\);\s*board\.primaryAxisSizingMode = "AUTO";\s*board\.minHeight = 1000;/.test(pluginSource)) fail("Visual Master Board must expand beyond its 1000px minimum height");
 if (!pluginSource.includes("safeWidth / artwork.width") || !pluginSource.includes("safeHeight / artwork.height")) fail("Figma asset previews must scale from imported vector bounds with a safe area");
-for (const readyModuleHelper of ["appendBrandCore", "appendHeroHierarchy", "appendClosing"]) {
+for (const readyModuleHelper of ["appendBrandCore", "appendHeroHierarchy", "appendWhyNorthStar", "appendClosing"]) {
   if (!pluginSource.includes(`async function ${readyModuleHelper}`)) fail(`Missing approved Master Board helper: ${readyModuleHelper}`);
 }
 if (pluginSource.includes("async function createCandidateStrip") || pluginSource.includes("KOREAN SLOGAN REVIEW · PROVISIONAL")) fail("Approved Korean slogan must replace the provisional candidate review UI");
 if (!pluginSource.includes('createMessageCard("Approved Korean slogan", FOOTHOLD_DATA.messages.sloganKo, 1208)')) fail("M02 must present the approved Korean slogan in a full-width card");
+if (!pluginSource.includes("INTENDED OUTCOME · Not a verified zero-fall field result")) fail("M05 must show the target-vision evidence disclaimer in Figma");
 for (const reviewHelper of ["createWebHeaderReview", "createReadmeHeroReview", "createPresentationReview", "createPosterHeaderReview", "createSocialReview", "createStickerReview", "createOsmuReview"]) {
   if (!pluginSource.includes(`async function ${reviewHelper}`)) fail(`Missing medium-specific OSMU review helper: ${reviewHelper}`);
 }
@@ -183,4 +213,4 @@ if (failures.length) {
   console.error(failures.map((message) => `FAIL: ${message}`).join("\n"));
   process.exit(1);
 }
-console.log(`Verified ${manifest.assets.length} frozen SVGs, ${rasterManifest.assets.length}+${rasterManifest.provisionalAssets.length} PNG derivatives, ${expectedFigmaColors}+2 Figma variables, canonical tokens, license map, and local plugin policy.`);
+console.log(`Verified ${manifest.assets.length} frozen SVGs, ${rasterManifest.assets.length}+${rasterManifest.provisionalAssets.length} PNG derivatives, ${jpegManifest.assets.length} JPEG derivatives, ${expectedFigmaColors}+2 Figma variables, canonical tokens, license map, and local plugin policy.`);

@@ -17,7 +17,7 @@ When sources conflict, the more direct record wins. A proposal never upgrades it
 |---|---|---|---|
 | M03 Robot / terrain visual | Blocked: media missing | Captioned statement that the official Go2 checkpoint replay was recorded | The original run capture must be copied from AI-WS01 and provenance-checked |
 | M04 Sim-to-Real flow | Partial | Verified checkpoint → replay → ONNX/PT export, followed by clearly labelled planned stages | Custom terrain, training, sim2sim, alignment, and physical deployment |
-| M05 Why FOOTHOLD | Partial | Approved problem statement and policy scope | Concrete public use context and any demonstrated benefit |
+| M05 Why FOOTHOLD | Target vision approved | `시뮬레이터에서 천 번 넘어지고, 현장에서는 넘어지지 않는다.` with an explicit `TARGET VISION` label; approved problem statement and policy scope | Any zero-fall result, concrete public use context, or demonstrated field benefit |
 | M06 Evidence | Partial, no performance metric | Environment versions, built-in task verification, checkpoint replay, exported formats | Training throughput, success rate, improvement, and physical results |
 | M07 Team | Pending approval | Five-person team and overlapping ownership model | Final names-to-role matrix and public-display consent |
 | M08 Roadmap | Partial proposal | Q0 and Q2 completed; Q3 next; later gates visibly planned or blocked | Committed dates and completion claims for future gates |

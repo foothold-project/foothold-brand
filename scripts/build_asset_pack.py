@@ -25,7 +25,7 @@ def svg_source_files() -> list[Path]:
 def combined_source_files() -> list[Path]:
     files = svg_source_files()
     files.append(ASSETS / "raster" / "README.md")
-    files.extend(path for path in (ASSETS / "raster" / "v1").rglob("*") if path.is_file() and path.suffix in {".png", ".json"})
+    files.extend(path for path in (ASSETS / "raster" / "v1").rglob("*") if path.is_file() and path.suffix in {".png", ".jpg", ".json"})
     files.append(ASSETS / "exports" / "v1" / "FOOTHOLD_ASSET_PACK_V1_PREVIEW.png")
     return sorted(files, key=lambda path: path.relative_to(ASSETS).as_posix())
 

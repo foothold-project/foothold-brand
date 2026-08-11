@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Approved `시뮬레이터에서 천 번 넘어지고, 현장에서는 넘어지지 않는다.` as a clearly labelled target vision, not a verified field result.
+- Added 25 background-filled JPG companions with exact light/dark brand surfaces, unchanged canvases, lifecycle-separated paths, and a hashed manifest; favicon remains excluded.
 - Approved the Korean slogan and refined the Figma Master Board review compositions.
 - Corrected Compact lockup spacing without changing the approved symbol or wordmark paths.
 - Added deterministic, cross-platform PNG derivatives with transparent logo canvases and a hashed raster manifest.

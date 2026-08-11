@@ -17,7 +17,7 @@ const modules = [
   ["M02", "Hero Statement", "ready", "Approved English and Korean slogans with precise project scope", "VOICE_AND_MESSAGE.md"],
   ["M03", "Robot and Terrain Visual", "pending", "Illustration direction only; verified source visual required", "MASTER_BOARD_SPEC.md"],
   ["M04", "Sim-to-Real Flow", "pending", "Use only verified labels and capabilities", "MASTER_BOARD_SPEC.md"],
-  ["M05", "Why FOOTHOLD", "pending", "Do not imply deployed operations", "MASTER_BOARD_SPEC.md"],
+  ["M05", "Why FOOTHOLD", "target", "Approved north star; do not present it as a verified field result", "VOICE_AND_MESSAGE.md"],
   ["M06", "Evidence", "pending", "Metrics, conditions, and source links required", "MASTER_BOARD_SPEC.md"],
   ["M07", "Team", "pending", "Five names and roles require verified source", "MASTER_BOARD_SPEC.md"],
   ["M08", "Roadmap", "pending", "Completed, current, and next must be explicit", "MASTER_BOARD_SPEC.md"],
@@ -86,7 +86,9 @@ const data = {
     subtitleEn: "TERRAIN-ADAPTIVE LOCOMOTION POLICY",
     closingEn: "Find the next foothold.",
     sloganKo: "불확실한 지형에서도, 다음 걸음을 이어갑니다.",
-    koreanSloganStatus: "approved"
+    koreanSloganStatus: "approved",
+    whyNorthStarKo: "시뮬레이터에서 천 번 넘어지고, 현장에서는 넘어지지 않는다.",
+    whyNorthStarStatus: "target-vision"
   },
   modules,
   evidence: evidence.modules,

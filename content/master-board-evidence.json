@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "schemaVersion": "1.0.0",
-  "auditedAt": "2026-08-09",
+  "auditedAt": "2026-08-11",
   "projectWorkspace": "MAI_UNIVERSE/03_PROJECTS/doyak-final",
   "authority": [
     "01_research/mvp-install-log.md",
@@ -57,19 +57,23 @@
       ]
     },
     "M05": {
-      "status": "partial",
+      "status": "target-vision-approved",
       "title": "Why FOOTHOLD",
       "approvedFacts": [
         "The approved brand problem statement may be used.",
-        "The project scope is a terrain-adaptive quadruped locomotion policy, not a navigation platform."
+        "The project scope is a terrain-adaptive quadruped locomotion policy, not a navigation platform.",
+        "시뮬레이터에서 천 번 넘어지고, 현장에서는 넘어지지 않는다. is approved as the target vision for the intended Sim-to-Real outcome.",
+        "The target vision must remain explicitly labelled TARGET VISION until reproducible physical-field evidence supports promotion."
       ],
       "prohibitedClaims": [
         "Formal deployment partners or field operations exist.",
-        "The project already protects people in deployed environments."
+        "The project already protects people in deployed environments.",
+        "The target-vision sentence is a current verified zero-fall result or a measured field-performance claim."
       ],
       "requiredEvidence": [
         "Approve one concrete use context without naming an unconfirmed partner.",
-        "Separate intended benefit from demonstrated outcome."
+        "Separate intended benefit from demonstrated outcome.",
+        "Preserve reproducible physical test conditions and fall-rate results before changing TARGET VISION to a verified outcome."
       ],
       "sources": [
         "VOICE_AND_MESSAGE.md",
