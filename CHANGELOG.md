@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+- Approved the Korean slogan and refined the Figma Master Board review compositions.
+- Corrected Compact lockup spacing without changing the approved symbol or wordmark paths.
+- Added deterministic, cross-platform PNG derivatives with transparent logo canvases and a hashed raster manifest.
+- Added separate SVG-only and combined SVG + PNG downloadable archives.
+- Kept legacy, retired, and provisional outputs visibly separated from approved core assets.
+
 ## 1.1.0 — 2026-08-08
 
 - Established the public, cross-platform brand-system repository.

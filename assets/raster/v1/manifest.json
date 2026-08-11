@@ -1,0 +1,255 @@
+{
+  "name": "FOOTHOLD PNG Derivatives",
+  "version": "1.0.2",
+  "generatedFrom": [
+    "assets/exports/v1/manifest.json",
+    "assets/drafts/v1.2/manifest.json",
+    "canonical SVG paths only"
+  ],
+  "renderer": "@resvg/resvg-js 2.6.2",
+  "policy": {
+    "canonicalFormat": "SVG",
+    "logoBackground": "transparent",
+    "applicationBackground": "preserve source SVG canvas",
+    "colourEncoding": "8-bit RGBA values interpreted as sRGB; no embedded ICC profile",
+    "scaling": "fixed pixel profiles; never redraw or re-typeset"
+  },
+  "assets": [
+    {
+      "source": "assets/logo/v1/foothold-symbol-brand.svg",
+      "path": "assets/raster/v1/logo/foothold-symbol-brand.png",
+      "width": 512,
+      "height": 587,
+      "alphaPolicy": "transparent-canvas",
+      "status": "approved",
+      "sha256": "a2f555a4fab67d4e2ba46c0ca8625d857d672ee88347098cafb7b7aa8c01ef7d"
+    },
+    {
+      "source": "assets/logo/v1/foothold-symbol-ink.svg",
+      "path": "assets/raster/v1/logo/foothold-symbol-ink.png",
+      "width": 512,
+      "height": 587,
+      "alphaPolicy": "transparent-canvas",
+      "status": "approved",
+      "sha256": "8c09b0c98b530ec737f147128df8457f76cb914f9ec6de3e3cb3f956a390254a"
+    },
+    {
+      "source": "assets/logo/v1/foothold-symbol-reverse.svg",
+      "path": "assets/raster/v1/logo/foothold-symbol-reverse.png",
+      "width": 512,
+      "height": 587,
+      "alphaPolicy": "transparent-canvas",
+      "status": "approved",
+      "sha256": "ac85f0c06e80f36079bbefd41a672bb57e51c6abe94acc76aa861eebaf98c722"
+    },
+    {
+      "source": "assets/logo/v1/foothold-wordmark-ink.svg",
+      "path": "assets/raster/v1/logo/foothold-wordmark-ink.png",
+      "width": 2400,
+      "height": 370,
+      "alphaPolicy": "transparent-canvas",
+      "status": "approved",
+      "sha256": "da0005c6183ac98c4f5f316513f9f44cb0a5904b474223827dd8aca5135d386f"
+    },
+    {
+      "source": "assets/logo/v1/foothold-wordmark-reverse.svg",
+      "path": "assets/raster/v1/logo/foothold-wordmark-reverse.png",
+      "width": 2400,
+      "height": 370,
+      "alphaPolicy": "transparent-canvas",
+      "status": "approved",
+      "sha256": "0b3f4bc615253e76c98eef5a2f7b3589dd16cc2cf0bb9f973e785fcf12541643"
+    },
+    {
+      "source": "assets/logo/v1/foothold-lockup-primary-light.svg",
+      "path": "assets/raster/v1/logo/foothold-lockup-primary-light.png",
+      "width": 2400,
+      "height": 497,
+      "alphaPolicy": "transparent-canvas",
+      "status": "approved",
+      "sha256": "32b5772eea099aaddf613401e4fe7b7f2ba874756231133b21f0db7aba30f1a4"
+    },
+    {
+      "source": "assets/logo/v1/foothold-lockup-compact-light.svg",
+      "path": "assets/raster/v1/logo/foothold-lockup-compact-light.png",
+      "width": 1600,
+      "height": 286,
+      "alphaPolicy": "transparent-canvas",
+      "status": "approved",
+      "sha256": "1e2ca9924264cc37fd06184d13469f3baa29ae59b207b7d22913d801d54f776a"
+    },
+    {
+      "source": "assets/logo/v1/foothold-lockup-stacked-light.svg",
+      "path": "assets/raster/v1/logo/foothold-lockup-stacked-light.png",
+      "width": 1600,
+      "height": 1600,
+      "alphaPolicy": "transparent-canvas",
+      "status": "approved",
+      "sha256": "8efd030c4a5040a90f6312eac66210ddfe509952aae373ff2701029742f14995"
+    },
+    {
+      "source": "assets/logo/v1/foothold-lockup-primary-dark.svg",
+      "path": "assets/raster/v1/logo/foothold-lockup-primary-dark.png",
+      "width": 2400,
+      "height": 497,
+      "alphaPolicy": "transparent-canvas",
+      "status": "approved",
+      "sha256": "544482e2b1cd1937106d318431d83e46b4748d30eaa1b0fe45bb83561ef7f5b4"
+    },
+    {
+      "source": "assets/logo/v1/foothold-lockup-compact-dark.svg",
+      "path": "assets/raster/v1/logo/foothold-lockup-compact-dark.png",
+      "width": 1600,
+      "height": 286,
+      "alphaPolicy": "transparent-canvas",
+      "status": "approved",
+      "sha256": "21c5b75cafd1990b5815ff428bc9f06d8896572dd03fd27237a84949742ad36b"
+    },
+    {
+      "source": "assets/logo/v1/foothold-lockup-stacked-dark.svg",
+      "path": "assets/raster/v1/logo/foothold-lockup-stacked-dark.png",
+      "width": 1600,
+      "height": 1600,
+      "alphaPolicy": "transparent-canvas",
+      "status": "approved",
+      "sha256": "c48336dfeabe2c4d02c6b88f63eb6eb39c223bff791ff3bd14450a5bdd0803c8"
+    },
+    {
+      "source": "assets/logo/v1/foothold-lockup-primary-monochrome.svg",
+      "path": "assets/raster/v1/logo/foothold-lockup-primary-monochrome.png",
+      "width": 2400,
+      "height": 497,
+      "alphaPolicy": "transparent-canvas",
+      "status": "approved",
+      "sha256": "288674c19f5f2630edb997b2acf9ee12a70d5cf8294f4139b661bf3e7df35a8f"
+    },
+    {
+      "source": "assets/logo/v1/foothold-favicon.svg",
+      "path": "assets/raster/v1/logo/foothold-favicon.png",
+      "width": 512,
+      "height": 512,
+      "alphaPolicy": "transparent-canvas",
+      "status": "approved",
+      "sha256": "fdfa03e1841ac819eed6edb61ab946978198c729fd826fc9bfd372deb7a945d7"
+    },
+    {
+      "source": "assets/logo/v1/foothold-contact-trail.svg",
+      "path": "assets/raster/v1/logo/foothold-contact-trail.png",
+      "width": 1800,
+      "height": 320,
+      "alphaPolicy": "transparent-canvas",
+      "status": "retired",
+      "sha256": "7107269f49491eb3a3cbdb29500c426b595b666670daf05e53e2c5164940e99c"
+    },
+    {
+      "source": "assets/exports/v1/web/foothold-web-header-light.svg",
+      "path": "assets/raster/v1/web/foothold-web-header-light.png",
+      "width": 1200,
+      "height": 160,
+      "alphaPolicy": "source-defined",
+      "status": "legacy",
+      "sha256": "72ff76a30756d042760a95be5e0930f00af2a92a416156522d966b57f6289697"
+    },
+    {
+      "source": "assets/exports/v1/web/foothold-web-header-dark.svg",
+      "path": "assets/raster/v1/web/foothold-web-header-dark.png",
+      "width": 1200,
+      "height": 160,
+      "alphaPolicy": "source-defined",
+      "status": "legacy",
+      "sha256": "7e283bdbdb22a6082caf997a54addb78629f8bad85af66da406fa54ec2807fc3"
+    },
+    {
+      "source": "assets/exports/v1/github/foothold-readme-hero-light.svg",
+      "path": "assets/raster/v1/github/foothold-readme-hero-light.png",
+      "width": 1280,
+      "height": 440,
+      "alphaPolicy": "source-defined",
+      "status": "legacy",
+      "sha256": "83d0fa5820ca476fbe648ca30e6168cedd8b44865a17fda98c27353fb7bc36b6"
+    },
+    {
+      "source": "assets/exports/v1/github/foothold-readme-hero-dark.svg",
+      "path": "assets/raster/v1/github/foothold-readme-hero-dark.png",
+      "width": 1280,
+      "height": 440,
+      "alphaPolicy": "source-defined",
+      "status": "legacy",
+      "sha256": "2552eae658e9dad0f6597dbeb40b5e80cdbcf8ec3e07bf7c5c3f73620122f8b7"
+    },
+    {
+      "source": "assets/exports/v1/github/foothold-github-social-preview.svg",
+      "path": "assets/raster/v1/github/foothold-github-social-preview.png",
+      "width": 1280,
+      "height": 640,
+      "alphaPolicy": "source-defined",
+      "status": "legacy",
+      "sha256": "73d1f5e4bd003b660b799a2404fe15d2ebfa68682cf8d3ba0b2925dca30456b2"
+    },
+    {
+      "source": "assets/exports/v1/github/foothold-avatar-light.svg",
+      "path": "assets/raster/v1/github/foothold-avatar-light.png",
+      "width": 512,
+      "height": 512,
+      "alphaPolicy": "source-defined",
+      "status": "legacy",
+      "sha256": "828c0e4702673570be873dab9eabbe4eab29b0c3c99ad6126f4dda6153e0e6aa"
+    },
+    {
+      "source": "assets/exports/v1/github/foothold-avatar-dark.svg",
+      "path": "assets/raster/v1/github/foothold-avatar-dark.png",
+      "width": 512,
+      "height": 512,
+      "alphaPolicy": "source-defined",
+      "status": "legacy",
+      "sha256": "50a3aa46d32699fefa01a473c09c3f88be8bc1107240edfb24efc4414a0bc356"
+    },
+    {
+      "source": "assets/exports/v1/presentation/foothold-opening-slide-16x9.svg",
+      "path": "assets/raster/v1/presentation/foothold-opening-slide-16x9.png",
+      "width": 1920,
+      "height": 1080,
+      "alphaPolicy": "source-defined",
+      "status": "legacy",
+      "sha256": "1ae5bd0fe9490824979c4b20bd2d03215505fd814e9e10bd404e2ec2644abc83"
+    },
+    {
+      "source": "assets/exports/v1/poster/foothold-poster-header.svg",
+      "path": "assets/raster/v1/poster/foothold-poster-header.png",
+      "width": 1400,
+      "height": 460,
+      "alphaPolicy": "source-defined",
+      "status": "legacy",
+      "sha256": "11faff46c6a249c7552e063da1a6d6468f995f7741794aa5ba35c1aa6d66a4bf"
+    },
+    {
+      "source": "assets/exports/v1/social/foothold-social-square.svg",
+      "path": "assets/raster/v1/social/foothold-social-square.png",
+      "width": 1080,
+      "height": 1080,
+      "alphaPolicy": "source-defined",
+      "status": "legacy",
+      "sha256": "5bc2b9050346d89c671f70151d5d69774fcd372d9247de85d7d348a2c8d972f1"
+    },
+    {
+      "source": "assets/exports/v1/goods/foothold-sticker-round.svg",
+      "path": "assets/raster/v1/goods/foothold-sticker-round.png",
+      "width": 800,
+      "height": 800,
+      "alphaPolicy": "source-defined",
+      "status": "legacy",
+      "sha256": "42b51d4431ca7e563b202fd291b1feedff4ddb88fa450a2b8e99d90ae367f721"
+    }
+  ],
+  "provisionalAssets": [
+    {
+      "source": "assets/drafts/v1.2/goods/foothold-sticker-round.svg",
+      "path": "assets/raster/drafts/v1.2/goods/foothold-sticker-round.png",
+      "width": 2400,
+      "height": 2400,
+      "alphaPolicy": "source-defined-transparent-outside-cut-line",
+      "status": "provisional",
+      "sha256": "ec047a4959cbdf392cad1800a28a095d249244c63e8e428d833170af9518fc23"
+    }
+  ]
+}

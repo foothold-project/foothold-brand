@@ -12,7 +12,7 @@ English: **Find the next foothold.**
 
 ## 현재 상태
 
-- `v1.0.2`: Compact 간격 보정을 포함한 승인 로고 및 SVG Asset Pack 기준선
+- `v1.0.2`: Compact 간격 보정을 포함한 승인 로고 형상, SVG 원본 및 재현 가능한 PNG 파생본 기준선
 - `v1.1.0`: 공개·크로스플랫폼 기반과 로컬 Figma 동기화 인프라
 - `v1.2.0`: M01–M10 실제 콘텐츠와 전체 OSMU 템플릿 예정
 
@@ -42,6 +42,14 @@ npm test
 ```
 
 `npm run generate` 후 커밋된 생성 파일에 차이가 없어야 합니다.
+
+## 바로 사용하는 에셋 묶음
+
+- [`FOOTHOLD_SVG_ASSET_PACK_V1.zip`](./assets/FOOTHOLD_SVG_ASSET_PACK_V1.zip): SVG 전용 벡터 묶음
+- [`FOOTHOLD_ASSET_PACK_V1.zip`](./assets/FOOTHOLD_ASSET_PACK_V1.zip): SVG + PNG 통합 묶음
+- [`assets/raster/v1/manifest.json`](./assets/raster/v1/manifest.json): 모든 PNG 파생본의 SVG 원본 경로, 픽셀 크기, 알파 정책, 상태, 해시
+
+공식 원본은 계속 SVG입니다. PNG 로고는 투명 RGBA 배경을 유지하며, 매체용 PNG는 원본 SVG에 정의된 캔버스를 보존합니다. `legacy`와 `provisional` 출력은 승인된 OSMU 템플릿으로 오해하지 않도록 명시적으로 분리합니다.
 
 ## Figma 작업 흐름
 

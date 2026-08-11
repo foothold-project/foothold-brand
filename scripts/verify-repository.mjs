@@ -18,9 +18,11 @@ const required = [
   "tokens/foothold.tokens.json", "tokens/foothold.tokens.css",
   "assets/exports/v1/manifest.json", "assets/drafts/v1.2/manifest.json",
   "assets/drafts/v1.2/goods/foothold-sticker-round.svg", "figma/plugin/manifest.template.json",
+  "assets/raster/README.md", "assets/raster/v1/manifest.json",
+  "assets/FOOTHOLD_SVG_ASSET_PACK_V1.zip", "assets/FOOTHOLD_ASSET_PACK_V1.zip",
   "figma/plugin/src/code.js", "figma/plugin/code.generated.js", "figma/plugin/ui.html",
   "figma/handoff.schema.json", "scripts/canonical-text.mjs", "scripts/generate-draft-assets.mjs",
-  "scripts/update-compact-spacing.mjs", "scripts/build_asset_pack.py"
+  "scripts/generate-raster-assets.mjs", "scripts/update-compact-spacing.mjs", "scripts/build_asset_pack.py"
 ];
 for (const relative of required) if (!exists(relative)) fail(`Missing required file: ${relative}`);
 
@@ -55,6 +57,21 @@ const draftManifest = JSON.parse(read("assets/drafts/v1.2/manifest.json"));
 if (draftManifest.status !== "provisional") fail("v1.2 draft manifest must remain provisional until human approval");
 if (!Array.isArray(draftManifest.assets) || draftManifest.assets.length !== 1) fail("v1.2 draft manifest must contain the current sticker review asset");
 
+const rasterManifest = JSON.parse(read("assets/raster/v1/manifest.json"));
+if (rasterManifest.version !== manifest.version) fail("PNG derivatives must retain the canonical SVG asset version");
+if (!Array.isArray(rasterManifest.assets) || rasterManifest.assets.length !== 25) fail("Raster manifest must contain 25 v1 derivatives; the composite preview remains a review artifact");
+if (!Array.isArray(rasterManifest.provisionalAssets) || rasterManifest.provisionalAssets.length !== 1) fail("Raster manifest must contain one provisional v1.2 derivative");
+const rasterStatusCounts = rasterManifest.assets.reduce((counts, item) => {
+  counts[item.status] = (counts[item.status] ?? 0) + 1;
+  return counts;
+}, {});
+if (rasterStatusCounts.approved !== 13 || rasterStatusCounts.retired !== 1 || rasterStatusCounts.legacy !== 11) {
+  fail("Raster lifecycle contract must retain 13 approved core assets, 1 retired trail, and 11 legacy application proofs");
+}
+if (rasterManifest.policy?.canonicalFormat !== "SVG" || rasterManifest.policy?.logoBackground !== "transparent") fail("Raster policy must preserve SVG authority and transparent logo canvases");
+const packageJson = JSON.parse(read("package.json"));
+if (packageJson.devDependencies?.["@resvg/resvg-js"] !== "2.6.2") fail("Raster renderer must remain exactly pinned for reproducible output");
+
 const evidence = JSON.parse(read("content/master-board-evidence.json"));
 const evidenceModuleIds = Object.keys(evidence.modules || {});
 if (evidenceModuleIds.join(",") !== "M03,M04,M05,M06,M07,M08,M09") fail("Evidence matrix must gate exactly M03 through M09 in order");
@@ -77,6 +94,17 @@ for (const item of draftManifest.assets || []) {
   if (item.status !== "provisional") fail(`Draft asset must remain provisional: ${item.path}`);
   if (/<text\b/i.test(read(item.path))) fail(`Draft sticker must remain outlined and font-independent: ${item.path}`);
   if (!read(item.path).includes('stroke-width="6"') || !read(item.path).includes('transform="translate(100 92)"')) fail(`Draft sticker must retain the stacked lockup with the approved thin-border review geometry: ${item.path}`);
+}
+for (const item of [...(rasterManifest.assets || []), ...(rasterManifest.provisionalAssets || [])]) {
+  const full = path.join(root, item.path);
+  if (!fs.existsSync(full)) { fail(`Raster asset missing: ${item.path}`); continue; }
+  const png = fs.readFileSync(full);
+  const hash = crypto.createHash("sha256").update(png).digest("hex");
+  if (hash !== item.sha256) fail(`Raster manifest hash mismatch: ${item.path}`);
+  if (png.subarray(0, 8).toString("hex") !== "89504e470d0a1a0a") fail(`Invalid PNG signature: ${item.path}`);
+  if (png.readUInt32BE(16) !== item.width || png.readUInt32BE(20) !== item.height) fail(`PNG dimensions differ from raster manifest: ${item.path}`);
+  if (png.readUInt8(25) !== 6) fail(`PNG must retain an RGBA alpha channel: ${item.path}`);
+  if (item.source.startsWith("assets/logo/v1/") && item.alphaPolicy !== "transparent-canvas") fail(`Logo PNG must declare a transparent canvas: ${item.path}`);
 }
 
 const protectedRoots = ["assets/logo/v1", "tokens", "scripts", "figma/plugin"];
@@ -144,6 +172,8 @@ for (const reviewHelper of ["createWebHeaderReview", "createReadmeHeroReview", "
   if (!pluginSource.includes(`async function ${reviewHelper}`)) fail(`Missing medium-specific OSMU review helper: ${reviewHelper}`);
 }
 if (!pluginSource.includes("foothold-osmu-review.svg") || !pluginSource.includes("foothold-osmu-review.png")) fail("Figma review export must include OSMU SVG and PNG previews");
+const rasterGenerator = read("scripts/generate-raster-assets.mjs");
+if (!rasterGenerator.includes('font: { loadSystemFonts: false }')) fail("Raster generation must not depend on installed system fonts");
 
 const template = JSON.parse(read("figma/plugin/manifest.template.json"));
 if (template.documentAccess !== "dynamic-page") fail("Figma manifest must use dynamic-page access");
@@ -153,4 +183,4 @@ if (failures.length) {
   console.error(failures.map((message) => `FAIL: ${message}`).join("\n"));
   process.exit(1);
 }
-console.log(`Verified ${manifest.assets.length} frozen v1 assets, ${draftManifest.assets.length} provisional v1.2 asset, ${expectedFigmaColors}+2 Figma variables, canonical tokens, license map, and local plugin policy.`);
+console.log(`Verified ${manifest.assets.length} frozen SVGs, ${rasterManifest.assets.length}+${rasterManifest.provisionalAssets.length} PNG derivatives, ${expectedFigmaColors}+2 Figma variables, canonical tokens, license map, and local plugin policy.`);

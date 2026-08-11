@@ -12,6 +12,7 @@
 ## Conflict rules
 
 - Git wins for values, logo geometry, approved wording, evidence status, and versions.
+- SVG paths remain canonical. PNG files are deterministic derivatives governed by `assets/raster/v1/manifest.json`; a PNG edit can never change the logo source.
 - `content/master-board-evidence.json` gates project-specific claims in M03 through M09.
 - Figma may propose layout, spacing, composition, and hierarchy changes.
 - A Figma edit is not authoritative until its handoff package is reviewed and promoted.
