@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schemaVersion": "1.0.0",
+  "status": "review-baseline",
+  "updatedAt": "2026-08-11",
+  "purpose": "Top-down Master Board content that shows the intended final story without promoting targets or proposals to verified facts.",
+  "stateLegend": [
+    { "id": "verified", "label": "VERIFIED", "meaning": "Supported by a reproducible project record." },
+    { "id": "next", "label": "NEXT", "meaning": "The next explicit evidence gate." },
+    { "id": "target", "label": "TARGET", "meaning": "An intended end state, not a current result." },
+    { "id": "pending", "label": "PENDING", "meaning": "Requires a source, decision, or approval." }
+  ],
+  "modules": {
+    "M03": {
+      "status": "pending",
+      "eyebrow": "TARGET ART DIRECTION",
+      "headline": "Robot, terrain, and contact — one engineered scene.",
+      "body": "Use one source-grounded Go2 frame, a terrain profile, and restrained contact overlays. The final visual must distinguish the official replay from future FOOTHOLD-trained policy results.",
+      "sourceNote": "PENDING · Original replay capture and provenance record required before final artwork promotion."
+    },
+    "M04": {
+      "status": "partial",
+      "headline": "From a verified replay to a field-ready policy — one gate at a time.",
+      "stages": [
+        { "label": "Official checkpoint", "state": "verified" },
+        { "label": "Isaac Lab replay", "state": "verified" },
+        { "label": "ONNX / PT export", "state": "verified" },
+        { "label": "100-run baseline", "state": "next" },
+        { "label": "Custom terrain + training", "state": "target" },
+        { "label": "Sim2Sim + Go2", "state": "target" }
+      ]
+    },
+    "M06": {
+      "status": "partial",
+      "headline": "Evidence before performance claims.",
+      "facts": [
+        { "value": "5.1.0.0", "label": "Isaac Sim", "state": "verified" },
+        { "value": "v2.3.2", "label": "Isaac Lab", "state": "verified" },
+        { "value": "4", "label": "Built-in Go2 tasks", "state": "verified" },
+        { "value": "200", "label": "Captured replay steps", "state": "verified" }
+      ],
+      "openMetric": "Terrain success rate · PENDING Q3/Q6 measurement",
+      "disclaimer": "No project-specific training throughput, terrain success rate, improvement, or physical deployment result has been verified."
+    },
+    "M07": {
+      "status": "pending",
+      "headline": "Five people, six connected workstreams.",
+      "workstreams": ["ENV", "POLICY", "SCENE", "TWIN", "VIZ", "DOC"],
+      "body": "Primary and secondary ownership will overlap so no critical path belongs to one person alone.",
+      "approvalNote": "PENDING · Publish names and primary/secondary assignments only after a dated five-person approval record."
+    },
+    "M08": {
+      "status": "partial",
+      "headline": "The roadmap advances by evidence gates, not decorative dates.",
+      "stages": [
+        { "label": "Environment", "state": "verified", "detail": "Q0" },
+        { "label": "Checkpoint replay", "state": "verified", "detail": "Q2" },
+        { "label": "Automated baseline", "state": "next", "detail": "Q3" },
+        { "label": "Terrain + policy", "state": "target", "detail": "Q4–Q8" },
+        { "label": "Sim2Sim + alignment", "state": "target", "detail": "Q9–Q10" },
+        { "label": "Physical Go2", "state": "pending", "detail": "Q11–Q12" },
+        { "label": "Gap report", "state": "target", "detail": "FINAL" }
+      ]
+    },
+    "M09": {
+      "status": "target",
+      "headline": "Designed for places where access is uncertain and human exposure should be reduced.",
+      "contexts": [
+        { "label": "Rough-terrain inspection", "state": "target" },
+        { "label": "Disaster-response access", "state": "target" },
+        { "label": "Industrial site traversal", "state": "target" }
+      ],
+      "disclaimer": "TARGET CONTEXTS · These are intended applications, not deployment records or partner claims."
+    }
+  }
+}

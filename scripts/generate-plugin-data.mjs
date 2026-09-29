@@ -11,17 +11,18 @@ const tokensText = read("tokens/foothold.tokens.json");
 const tokens = JSON.parse(tokensText);
 const version = read("VERSION").trim();
 const evidence = JSON.parse(read("content/master-board-evidence.json"));
+const masterBoardContent = JSON.parse(read("content/master-board-v1.3.json"));
 
 const modules = [
   ["M01", "Brand Core", "ready", "Symbol, wordmark, approved definition", "BRAND_BIBLE.md"],
   ["M02", "Hero Statement", "ready", "Approved English and Korean slogans with precise project scope", "VOICE_AND_MESSAGE.md"],
-  ["M03", "Robot and Terrain Visual", "pending", "Illustration direction only; verified source visual required", "MASTER_BOARD_SPEC.md"],
-  ["M04", "Sim-to-Real Flow", "pending", "Use only verified labels and capabilities", "MASTER_BOARD_SPEC.md"],
+  ["M03", "Robot and Terrain Visual", "pending", "Target art direction with a visible source gate", "content/master-board-v1.3.json"],
+  ["M04", "Sim-to-Real Flow", "partial", "Verified replay and export lead into explicit next and target gates", "content/master-board-v1.3.json"],
   ["M05", "Why FOOTHOLD", "target", "Approved north star; do not present it as a verified field result", "VOICE_AND_MESSAGE.md"],
-  ["M06", "Evidence", "pending", "Metrics, conditions, and source links required", "MASTER_BOARD_SPEC.md"],
-  ["M07", "Team", "pending", "Five names and roles require verified source", "MASTER_BOARD_SPEC.md"],
-  ["M08", "Roadmap", "pending", "Completed, current, and next must be explicit", "MASTER_BOARD_SPEC.md"],
-  ["M09", "Contexts", "pending", "Do not imply formal deployment partners", "MASTER_BOARD_SPEC.md"],
+  ["M06", "Evidence", "partial", "Verified environment facts with an intentionally empty performance metric", "content/master-board-v1.3.json"],
+  ["M07", "Team", "pending", "Five-person structure shown without publishing unapproved assignments", "content/master-board-v1.3.json"],
+  ["M08", "Roadmap", "partial", "Completed, next, target, and blocked gates remain distinct", "content/master-board-v1.3.json"],
+  ["M09", "Contexts", "target", "Intended contexts only; no deployment or partner claim", "content/master-board-v1.3.json"],
   ["M10", "Closing", "ready", "Use only an approved brand sentence", "VOICE_AND_MESSAGE.md"]
 ].map(([id, name, status, guidance, source]) => ({ id, name, status, guidance, source }));
 
@@ -73,6 +74,7 @@ const canonicalFiles = [
   "VOICE_AND_MESSAGE.md",
   "MASTER_BOARD_SPEC.md",
   "content/master-board-evidence.json",
+  "content/master-board-v1.3.json",
   "assets/exports/v1/manifest.json",
   "assets/drafts/v1.2/manifest.json",
   "assets/osmu/v1.2/APPROVAL.json",
@@ -105,6 +107,7 @@ const data = {
   },
   modules,
   evidence: evidence.modules,
+  masterBoardContent,
   approvedWordmarkAspect: assetManifest.approvedWordmarkAspect,
   libraryAssets,
   draftAssets,

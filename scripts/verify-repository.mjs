@@ -14,7 +14,7 @@ const exists = (relative) => fs.existsSync(path.join(root, relative));
 const required = [
   "README.md", "README.ko.md", "LICENSE.md", "LICENSE_SCOPE.md", "TRADEMARKS.md",
   "BRAND_BIBLE.md", "VOICE_AND_MESSAGE.md", "MASTER_BOARD_SPEC.md",
-  "content/master-board-evidence.json", "docs/CONTENT_EVIDENCE_MATRIX.md",
+  "content/master-board-evidence.json", "content/master-board-v1.3.json", "docs/CONTENT_EVIDENCE_MATRIX.md",
   "tokens/foothold.tokens.json", "tokens/foothold.tokens.css",
   "assets/exports/v1/manifest.json", "assets/drafts/v1.2/manifest.json",
   "assets/drafts/v1.2/goods/foothold-sticker-round.svg", "figma/plugin/manifest.template.json",
@@ -96,8 +96,15 @@ const expectedOsmuMedia = "web,github,presentation,poster,social,goods";
 if ((osmuManifest.assets || []).map((item) => item.medium).join(",") !== expectedOsmuMedia) fail("Approved OSMU media order or membership changed");
 
 const evidence = JSON.parse(read("content/master-board-evidence.json"));
+const masterBoardContent = JSON.parse(read("content/master-board-v1.3.json"));
 const evidenceModuleIds = Object.keys(evidence.modules || {});
 if (evidenceModuleIds.join(",") !== "M03,M04,M05,M06,M07,M08,M09") fail("Evidence matrix must gate exactly M03 through M09 in order");
+if (masterBoardContent.status !== "review-baseline") fail("Master Board v1.3 content must remain a review baseline until human approval");
+if ((masterBoardContent.stateLegend || []).map((item) => item.id).join(",") !== "verified,next,target,pending") fail("Master Board state legend must preserve verified, next, target, and pending semantics");
+if (Object.keys(masterBoardContent.modules || {}).join(",") !== "M03,M04,M06,M07,M08,M09") fail("Master Board v1.3 content must define exactly the six evidence-gated modules");
+if (masterBoardContent.modules?.M06?.facts?.length !== 4 || !masterBoardContent.modules?.M06?.openMetric?.includes("PENDING")) fail("M06 must show verified environment facts and an explicitly pending performance metric");
+if (masterBoardContent.modules?.M07?.workstreams?.join(",") !== "ENV,POLICY,SCENE,TWIN,VIZ,DOC") fail("M07 must preserve the six overlapping team workstreams without inventing assignments");
+if (masterBoardContent.modules?.M09?.contexts?.some((item) => item.state !== "target")) fail("M09 application contexts must remain target-only claims");
 if (!evidence.rules?.primaryEvidenceWins || !evidence.rules?.proposalIsNotFact) fail("Evidence authority rules must remain explicit");
 if (evidence.modules?.M05?.status !== "target-vision-approved") fail("M05 must distinguish the approved target vision from verified results");
 if (!evidence.modules?.M05?.prohibitedClaims?.some((claim) => claim.includes("zero-fall"))) fail("M05 must explicitly prohibit treating the target vision as a verified zero-fall result");
@@ -186,6 +193,7 @@ if (dataStart < 0 || dataEnd < 0) {
   if (pluginData.draftAssets?.length !== 1 || pluginData.draftAssets[0]?.status !== "provisional") fail("Figma payload must separate the provisional sticker draft from approved assets");
   if (pluginData.approvedOsmuAssets?.length !== 6) fail("Figma payload must embed all six frozen approved OSMU SVGs");
   if (pluginData.approvedOsmuAssets?.some((asset) => /<text\b|<image\b/i.test(asset.svg))) fail("Figma approved OSMU assets must remain outlined and self-contained");
+  if (pluginData.masterBoardContent?.status !== "review-baseline") fail("Figma payload must embed the evidence-gated Master Board v1.3 review content");
   if (pluginData.approvedWordmarkAspect !== manifest.approvedWordmarkAspect) fail("Figma payload must retain the approved wordmark aspect");
   if (pluginData.messages?.closingEn !== "Find the next foothold.") fail("Figma payload must retain the approved closing statement");
   if (pluginData.messages?.koreanSloganStatus !== "approved") fail("Korean slogan must remain approved");
@@ -223,7 +231,7 @@ if (!pluginSource.includes("variableNames:")) fail("Figma inspection must expose
 if (!/frame\.resize\(1280, 240\);\s*frame\.primaryAxisSizingMode = "AUTO";\s*frame\.minHeight = 240;/.test(pluginSource)) fail("Master Board modules must hug content above their 240px minimum height");
 if (!/board\.resize\(1440, 1000\);\s*board\.primaryAxisSizingMode = "AUTO";\s*board\.minHeight = 1000;/.test(pluginSource)) fail("Visual Master Board must expand beyond its 1000px minimum height");
 if (!pluginSource.includes("safeWidth / artwork.width") || !pluginSource.includes("safeHeight / artwork.height")) fail("Figma asset previews must scale from imported vector bounds with a safe area");
-for (const readyModuleHelper of ["appendBrandCore", "appendHeroHierarchy", "appendWhyNorthStar", "appendClosing"]) {
+for (const readyModuleHelper of ["appendBrandCore", "appendHeroHierarchy", "appendRobotTerrainVision", "appendSimToRealFlow", "appendWhyNorthStar", "appendEvidence", "appendTeam", "appendRoadmap", "appendContexts", "appendClosing"]) {
   if (!pluginSource.includes(`async function ${readyModuleHelper}`)) fail(`Missing approved Master Board helper: ${readyModuleHelper}`);
 }
 if (pluginSource.includes("async function createCandidateStrip") || pluginSource.includes("KOREAN SLOGAN REVIEW · PROVISIONAL")) fail("Approved Korean slogan must replace the provisional candidate review UI");
