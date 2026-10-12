@@ -29,11 +29,11 @@ English: **Find the next foothold.**
 
 <table>
 <tr>
-<td align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./assets/logo/v1/foothold-lockup-primary-dark.svg"><img src="./assets/logo/v1/foothold-lockup-primary-light.svg" width="380" alt="FOOTHOLD Primary 로고 (밝은 바탕)"></picture><br><sub>Primary · 심볼 + 워드마크 + 부제</sub></td>
-<td align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./assets/logo/v1/foothold-lockup-compact-dark.svg"><img src="./assets/logo/v1/foothold-lockup-compact-light.svg" width="300" alt="FOOTHOLD Compact 로고"></picture><br><sub>Compact · 부제 없음 · 작은 자리</sub></td>
+<td align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/foothold-project/foothold-brand/main/assets/logo/v1/foothold-lockup-primary-dark.svg"><img src="./assets/logo/v1/foothold-lockup-primary-light.svg" width="380" alt="FOOTHOLD Primary 로고 (밝은 바탕)"></picture><br><sub>Primary · 심볼 + 워드마크 + 부제</sub></td>
+<td align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/foothold-project/foothold-brand/main/assets/logo/v1/foothold-lockup-compact-dark.svg"><img src="./assets/logo/v1/foothold-lockup-compact-light.svg" width="300" alt="FOOTHOLD Compact 로고"></picture><br><sub>Compact · 부제 없음 · 작은 자리</sub></td>
 </tr>
 <tr>
-<td align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./assets/logo/v1/foothold-lockup-stacked-dark.svg"><img src="./assets/logo/v1/foothold-lockup-stacked-light.svg" width="190" alt="FOOTHOLD Stacked 로고"></picture><br><sub>Stacked · 정사각형 자리</sub></td>
+<td align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/foothold-project/foothold-brand/main/assets/logo/v1/foothold-lockup-stacked-dark.svg"><img src="./assets/logo/v1/foothold-lockup-stacked-light.svg" width="190" alt="FOOTHOLD Stacked 로고"></picture><br><sub>Stacked · 정사각형 자리</sub></td>
 <td align="center"><img src="./assets/logo/v1/foothold-symbol-brand.svg" width="110" alt="FOOTHOLD 심볼"><br><sub>Symbol · 아이콘 · 파비콘 자리</sub></td>
 </tr>
 </table>
