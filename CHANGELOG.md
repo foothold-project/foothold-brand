@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Merged Master Board v1.3 content (`content/master-board-v1.3.json`, M03 M04 M06 M07 M08 M09, status `review-baseline`, content as of 2026-08-11) and the Figma plugin that renders it. It had existed only in Syncthing conflict copies since 2026-08-14 and was rescued on 2026-09-29. Logo and OSMU assets are unchanged.
 - Promoted the six human-approved Figma OSMU compositions to canonical outlined SVGs with reproducible PNG/JPG derivatives and a dedicated download pack.
 - Corrected the Cover descriptor while preserving the formal Canonical Definition, and made the Figma OSMU review consume frozen Git assets after approval.
 - Kept all v1 application proofs explicitly legacy instead of presenting them as current approved exports.
