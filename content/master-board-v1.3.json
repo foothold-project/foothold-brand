@@ -2,8 +2,9 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "schemaVersion": "1.0.0",
   "status": "review-baseline",
-  "updatedAt": "2026-08-11",
+  "updatedAt": "2026-10-12",
   "purpose": "Top-down Master Board content that shows the intended final story without promoting targets or proposals to verified facts.",
+  "sourceBasis": "Every source path below is relative to the private project repository foothold-project/foothold-lab at commit fe2cfe9d80355728ccd846216d52858a99dcba96 (main, 2026-10-12). Line numbers refer to that commit.",
   "stateLegend": [
     { "id": "verified", "label": "VERIFIED", "meaning": "Supported by a reproducible project record." },
     { "id": "next", "label": "NEXT", "meaning": "The next explicit evidence gate." },
@@ -15,62 +16,75 @@
       "status": "pending",
       "eyebrow": "TARGET ART DIRECTION",
       "headline": "Robot, terrain, and contact — one engineered scene.",
-      "body": "Use one source-grounded Go2 frame, a terrain profile, and restrained contact overlays. The final visual must distinguish the official replay from future FOOTHOLD-trained policy results.",
-      "sourceNote": "PENDING · Original replay capture and provenance record required before final artwork promotion."
+      "body": "Use one source-grounded Go2 frame from a recorded evaluation run, a terrain profile, and restrained contact overlays. The caption must name the policy (NVIDIA checkpoint or foothold-v2), the terrain, and the run the frame came from.",
+      "sourceNote": "PENDING · Recorded foothold-v2 terrain clips with capture metadata exist in the private project repository. No frame has been chosen, provenance-recorded in this repository, or cleared for public brand use.",
+      "source": "sim/eval/results/20260928-terrain-shots/<terrain>/flat_army_A_4_topdown.json (policy_sha256 e5c21321..., camera, seed 42)"
     },
     "M04": {
       "status": "partial",
-      "headline": "From a verified replay to a field-ready policy — one gate at a time.",
+      "headline": "Track A closes in simulation. Track B moves the real Go2 on its stock gait.",
       "stages": [
-        { "label": "Official checkpoint", "state": "verified" },
-        { "label": "Isaac Lab replay", "state": "verified" },
-        { "label": "ONNX / PT export", "state": "verified" },
-        { "label": "100-run baseline", "state": "next" },
-        { "label": "Custom terrain + training", "state": "target" },
-        { "label": "Sim2Sim + Go2", "state": "target" }
-      ]
+        { "label": "NVIDIA checkpoint baseline", "state": "verified", "source": "docs/DECISIONS.md:115 (09-02 baseline policy); sim/eval/results/20260928-v2-release-raw/baseline/unseen10/runs/*/run_manifest.json (policy_checkpoint)" },
+        { "label": "foothold-v1 · v2 trained", "state": "verified", "source": "models/foothold-v1.json:4-6 (sha256, released 2026-09-11); models/foothold-v2.json:4-6 (sha256, released 2026-09-29); docs/DECISIONS.md:132-133" },
+        { "label": "Unseen-terrain evaluation", "state": "verified", "source": "deliverables/midterm/generalization-report.md:24-25, 131-144; sim/eval/results/20260928-v2-release-raw/" },
+        { "label": "MVP report", "state": "verified", "source": "deliverables/midterm/mvp-submission.md:1-19 (submitted PDF and HTML with sha256)" },
+        { "label": "Sim · twin · app", "state": "next", "source": "docs/WORKFLOW.md:72 (gate 2026-11-07)" },
+        { "label": "Go2 stock gait + SLAM · Nav2", "state": "target", "source": "docs/WORKFLOW.md:73 (gate 2026-11-30); docs/DECISIONS.md:134" }
+      ],
+      "note": "Decided 2026-10-12: the FOOTHOLD RL policy is not deployed to the physical Go2. Track A is completed in simulation; Track B runs the stock gait with SLAM and Nav2.",
+      "noteSource": "docs/DECISIONS.md:95 (08-19 two tracks), docs/DECISIONS.md:134 (10-12)"
     },
     "M06": {
       "status": "partial",
-      "headline": "Evidence before performance claims.",
+      "headline": "Measured on eight terrains that no policy trained on.",
       "facts": [
-        { "value": "5.1.0.0", "label": "Isaac Sim", "state": "verified" },
-        { "value": "v2.3.2", "label": "Isaac Lab", "state": "verified" },
-        { "value": "4", "label": "Built-in Go2 tasks", "state": "verified" },
-        { "value": "200", "label": "Captured replay steps", "state": "verified" }
+        { "value": "88.46 %", "label": "foothold-v2 · success on 8 unseen terrains × 3 speeds", "state": "verified", "source": "sim/eval/results/20260928-v2-release-raw/foothold-v2/unseen10/runs/v{0.5,1.0,1.5}-d0.5/generalization_raw.csv (24 cells, recomputed 88.458 %); deliverables/midterm/generalization-report.md:167-168" },
+        { "value": "43.88 %", "label": "NVIDIA checkpoint baseline · same harness and cells", "state": "verified", "source": "sim/eval/results/20260928-v2-release-raw/baseline/unseen10/runs/v{0.5,1.0,1.5}-d0.5/generalization_raw.csv (24 cells, recomputed 43.875 %); deliverables/midterm/generalization-report.md:167-168" },
+        { "value": "2,400", "label": "Episodes per policy · 8 terrains × 3 speeds × 100", "state": "verified", "source": "same raw files (2,400 rows per policy); deliverables/midterm/generalization-report.md:131-144" },
+        { "value": "0 to 24 %", "label": "stepping_stones at 1.0 m/s across five seeds · the remaining wall", "state": "verified", "source": "sim/eval/results/20260929-seed-spread/unseen10/s{42,1,2,3,4}/generalization_raw.csv (24 · 1 · 3 · 19 · 0 of 100); deliverables/midterm/generalization-report.md:172-176" }
       ],
-      "openMetric": "Terrain success rate · PENDING Q3/Q6 measurement",
-      "disclaimer": "No project-specific training throughput, terrain success rate, improvement, or physical deployment result has been verified."
+      "openMetric": "Physical Go2 navigation result · PENDING NAV gate 2026-11-30",
+      "openMetricNote": "Track B runs the stock gait with SLAM and Nav2. No FOOTHOLD RL policy result on the physical robot will be measured (decision 2026-10-12).",
+      "openMetricSource": "docs/WORKFLOW.md:73; docs/DECISIONS.md:134",
+      "disclaimer": "SIMULATION ONLY · Isaac Lab · eval spec 2 · difficulty 0.5 · seed 42 · success requires survival, progress, tracking, and direction to all pass. Each terrain's 100 episodes share one terrain tile (100 starts, not 100 terrains). gap and rails are left out of the eight because training touched them. foothold-v2 over foothold-v1 (+1.75 %p) is the same size as seed-to-seed variation and is not claimed.",
+      "disclaimerSource": "deliverables/midterm/generalization-report.md:31-40, 131-151, 167-170"
     },
     "M07": {
       "status": "pending",
-      "headline": "Five people, six connected workstreams.",
-      "workstreams": ["ENV", "POLICY", "SCENE", "TWIN", "VIZ", "DOC"],
-      "body": "Primary and secondary ownership will overlap so no critical path belongs to one person alone.",
-      "approvalNote": "PENDING · Publish names and primary/secondary assignments only after a dated five-person approval record."
+      "headline": "Five people, eight work areas across two tracks.",
+      "workstreams": ["A/POLICY", "A/TERRAIN", "A/EVAL", "A/TWIN", "B/NAV", "B/PERCEPTION", "C/RECORDS", "C/OPS"],
+      "workstreamSource": "docs/ROLES.md:39-52; docs/DECISIONS.md:99 (08-27, eight work areas replace the earlier five)",
+      "body": "Each area has one primary and at least one secondary owner, so no area stops when one person is away.",
+      "bodySource": "docs/ROLES.md:43-55",
+      "approvalNote": "PENDING · The roster is leader-confirmed (2026-08-27), but no dated five-person approval or public-display consent is recorded. Names and assignments stay off this board until both exist.",
+      "approvalSource": "docs/ROLES.md:3-9 (basis: leader confirmation 08-27); no five-person approval record found"
     },
     "M08": {
       "status": "partial",
-      "headline": "The roadmap advances by evidence gates, not decorative dates.",
+      "headline": "Dated gates, confirmed on 2026-10-12. Each gate still closes on evidence.",
       "stages": [
-        { "label": "Environment", "state": "verified", "detail": "Q0" },
-        { "label": "Checkpoint replay", "state": "verified", "detail": "Q2" },
-        { "label": "Automated baseline", "state": "next", "detail": "Q3" },
-        { "label": "Terrain + policy", "state": "target", "detail": "Q4–Q8" },
-        { "label": "Sim2Sim + alignment", "state": "target", "detail": "Q9–Q10" },
-        { "label": "Physical Go2", "state": "pending", "detail": "Q11–Q12" },
-        { "label": "Gap report", "state": "target", "detail": "FINAL" }
-      ]
+        { "label": "Planning", "state": "verified", "detail": "09-04", "source": "docs/WORKFLOW.md:69; deliverables/plan/proposal.md, brainstorming.md, wbs-official.md (status confirmed)" },
+        { "label": "A-Policy", "state": "verified", "detail": "09-12", "source": "docs/WORKFLOW.md:70; models/foothold-v1.json:6 (released 2026-09-11); deliverables/midterm/policy-metrics.md" },
+        { "label": "MVP report", "state": "verified", "detail": "09-30", "source": "docs/WORKFLOW.md:71; deliverables/midterm/mvp-submission.md:1-19; deliverables/midterm/generalization-report.md" },
+        { "label": "SIM · twin · app", "state": "next", "detail": "11-07", "source": "docs/WORKFLOW.md:72; docs/DECISIONS.md:134" },
+        { "label": "NAV · Go2 navigation", "state": "target", "detail": "11-30", "source": "docs/WORKFLOW.md:73; docs/DECISIONS.md:134" },
+        { "label": "FINAL · complete", "state": "target", "detail": "12-07", "source": "docs/WORKFLOW.md:74; docs/DECISIONS.md:134" },
+        { "label": "Final presentation", "state": "pending", "detail": "12-09 or 12-10", "source": "docs/WORKFLOW.md:74 (awaiting the school's confirmation)" }
+      ],
+      "note": "The MVP shipped the report and the generalization table; the twin and render demo moved to a later gate. The final presentation date awaits the school's confirmation. Graduation is 12-11.",
+      "noteSource": "deliverables/midterm/twin-render.md:7-12; docs/WORKFLOW.md:74"
     },
     "M09": {
       "status": "target",
       "headline": "Designed for places where access is uncertain and human exposure should be reduced.",
       "contexts": [
-        { "label": "Rough-terrain inspection", "state": "target" },
-        { "label": "Disaster-response access", "state": "target" },
-        { "label": "Industrial site traversal", "state": "target" }
+        { "label": "Underground utility conduits", "state": "target" },
+        { "label": "Tunnel inspection", "state": "target" },
+        { "label": "Industrial equipment inspection", "state": "target" }
       ],
-      "disclaimer": "TARGET CONTEXTS · These are intended applications, not deployment records or partner claims."
+      "contextSource": "deliverables/plan/proposal.md:502 (application candidates)",
+      "disclaimer": "TARGET CONTEXTS · Application candidates named in the 2026-09-04 proposal. Industrial deployment, disaster response, and explosion-proof operation are outside this project's scope. These are not deployment records or partner claims.",
+      "disclaimerSource": "deliverables/plan/proposal.md:504"
     }
   }
 }

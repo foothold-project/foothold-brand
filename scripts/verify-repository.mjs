@@ -102,14 +102,23 @@ if (evidenceModuleIds.join(",") !== "M03,M04,M05,M06,M07,M08,M09") fail("Evidenc
 if (masterBoardContent.status !== "review-baseline") fail("Master Board v1.3 content must remain a review baseline until human approval");
 if ((masterBoardContent.stateLegend || []).map((item) => item.id).join(",") !== "verified,next,target,pending") fail("Master Board state legend must preserve verified, next, target, and pending semantics");
 if (Object.keys(masterBoardContent.modules || {}).join(",") !== "M03,M04,M06,M07,M08,M09") fail("Master Board v1.3 content must define exactly the six evidence-gated modules");
-if (masterBoardContent.modules?.M06?.facts?.length !== 4 || !masterBoardContent.modules?.M06?.openMetric?.includes("PENDING")) fail("M06 must show verified environment facts and an explicitly pending performance metric");
-if (masterBoardContent.modules?.M07?.workstreams?.join(",") !== "ENV,POLICY,SCENE,TWIN,VIZ,DOC") fail("M07 must preserve the six overlapping team workstreams without inventing assignments");
+if (masterBoardContent.modules?.M06?.facts?.length !== 4 || !masterBoardContent.modules?.M06?.openMetric?.includes("PENDING")) fail("M06 must show four facts and an explicitly pending open metric");
+if (masterBoardContent.modules?.M07?.workstreams?.join(",") !== "A/POLICY,A/TERRAIN,A/EVAL,A/TWIN,B/NAV,B/PERCEPTION,C/RECORDS,C/OPS") fail("M07 must preserve the eight approved work areas (2026-08-27) without inventing assignments");
+for (const key of ["members", "names", "people", "assignments", "owners"]) {
+  if (evidence.modules?.M07?.status?.startsWith("pending") && Object.prototype.hasOwnProperty.call(masterBoardContent.modules?.M07 || {}, key)) fail(`M07 must not carry ${key} while five-person approval is pending`);
+}
+for (const [moduleId, listKey] of [["M04", "stages"], ["M06", "facts"], ["M08", "stages"]]) {
+  for (const item of masterBoardContent.modules?.[moduleId]?.[listKey] || []) {
+    if (typeof item.source !== "string" || !item.source.trim()) fail(`${moduleId} ${listKey} item must cite a source path: ${item.label}`);
+  }
+}
 if (masterBoardContent.modules?.M09?.contexts?.some((item) => item.state !== "target")) fail("M09 application contexts must remain target-only claims");
 if (!evidence.rules?.primaryEvidenceWins || !evidence.rules?.proposalIsNotFact) fail("Evidence authority rules must remain explicit");
 if (evidence.modules?.M05?.status !== "target-vision-approved") fail("M05 must distinguish the approved target vision from verified results");
 if (!evidence.modules?.M05?.prohibitedClaims?.some((claim) => claim.includes("zero-fall"))) fail("M05 must explicitly prohibit treating the target vision as a verified zero-fall result");
 if (!evidence.modules?.M06?.prohibitedClaims?.some((claim) => claim.includes("21,385 steps/s"))) fail("Known training-throughput conflict must remain blocked");
 if (!evidence.modules?.M07?.status?.startsWith("pending")) fail("Team roles must remain pending until five-person approval exists");
+if (!evidence.modules?.M04?.prohibitedClaims?.some((claim) => claim.includes("runs on the physical Go2"))) fail("M04 must prohibit claiming that the FOOTHOLD RL policy runs on the physical Go2 (decision 2026-10-12)");
 
 for (const item of manifest.assets || []) {
   const full = path.join(root, item.path);

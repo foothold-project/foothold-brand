@@ -818,6 +818,7 @@ async function appendSimToRealFlow(frame) {
   row.fills = [];
   for (const stage of content.stages) row.appendChild(await createStateCard(stage.label, "", stage.state, 188, 142));
   frame.appendChild(row);
+  if (content.note) frame.appendChild(await makeWrappedText(content.note, 12, "Regular", light("ink-secondary"), 1208));
 }
 
 async function appendEvidence(frame) {
@@ -832,22 +833,26 @@ async function appendEvidence(frame) {
   row.fills = [];
   for (const fact of content.facts) row.appendChild(await createStateCard(fact.value, fact.label, fact.state, 290, 150));
   frame.appendChild(row);
-  frame.appendChild(await createStateCard(content.openMetric, "Performance remains intentionally blank until measured.", "pending", 1208, 132));
+  frame.appendChild(await createStateCard(content.openMetric, content.openMetricNote || "Performance remains intentionally blank until measured.", "pending", 1208, 132));
   frame.appendChild(await makeWrappedText(content.disclaimer, 12, "Regular", light("ink-secondary"), 1208));
 }
 
 async function appendTeam(frame) {
   const content = FOOTHOLD_DATA.masterBoardContent.modules.M07;
   frame.appendChild(await makeWrappedText(content.headline, 28, "Semi Bold", light("ink"), 1208));
-  const row = figma.createFrame();
-  row.name = "Team workstreams / Assignments pending";
-  row.layoutMode = "HORIZONTAL";
-  row.primaryAxisSizingMode = "AUTO";
-  row.counterAxisSizingMode = "AUTO";
-  row.itemSpacing = 16;
-  row.fills = [];
-  for (const workstream of content.workstreams) row.appendChild(await createStateCard(workstream, "Primary / secondary", "target", 188, 124));
-  frame.appendChild(row);
+  const perRow = content.workstreams.length <= 6 ? content.workstreams.length : Math.ceil(content.workstreams.length / 2);
+  const cardWidth = Math.floor((1208 - (perRow - 1) * 16) / perRow);
+  for (let index = 0; index < content.workstreams.length; index += perRow) {
+    const row = figma.createFrame();
+    row.name = "Team workstreams / Assignments pending";
+    row.layoutMode = "HORIZONTAL";
+    row.primaryAxisSizingMode = "AUTO";
+    row.counterAxisSizingMode = "AUTO";
+    row.itemSpacing = 16;
+    row.fills = [];
+    for (const workstream of content.workstreams.slice(index, index + perRow)) row.appendChild(await createStateCard(workstream, "Primary / secondary", "target", cardWidth, 124));
+    frame.appendChild(row);
+  }
   frame.appendChild(await makeWrappedText(content.body, 16, "Regular", light("ink-secondary"), 1208));
   frame.appendChild(await makeWrappedText(content.approvalNote, 12, "Regular", light("amber-ink-on-soft"), 1208));
 }
@@ -864,6 +869,7 @@ async function appendRoadmap(frame) {
   row.fills = [];
   for (const stage of content.stages) row.appendChild(await createStateCard(stage.label, stage.detail, stage.state, 160, 154));
   frame.appendChild(row);
+  if (content.note) frame.appendChild(await makeWrappedText(content.note, 12, "Regular", light("ink-secondary"), 1208));
 }
 
 async function appendContexts(frame) {
