@@ -15,7 +15,7 @@ FOOTHOLD is the shared visual and verbal system for a terrain-adaptive quadruped
 - `v1.0.2`: approved logo geometry with SVG sources and reproducible PNG derivatives, including the Compact spacing correction
 - `v1.1.0`: public, cross-platform foundation and local Figma synchronization infrastructure
 - `v1.2.0`: approved six-medium OSMU baseline; project-specific M03–M09 evidence remains progressively gated
-- `Master Board v1.3` (merged to main 2026-10-12): board **content** for M03, M04, M06, M07, M08, and M09 ([`content/master-board-v1.3.json`](./content/master-board-v1.3.json)) and the Figma plugin that draws it. Status `review-baseline`; content as of 2026-10-12 (the Figma board shows the 2026-08-11 content until the plugin is re-run). **Logo and medium assets did not change** (logos: `assets/logo/v1`; approved media: `assets/osmu/v1.2`), so `assets/` has no v1.3 folder.
+- `Master Board v1.3` (merged to main 2026-10-12): board **content** for M03, M04, M06, M07, M08, and M09 ([`content/master-board-v1.3.json`](./content/master-board-v1.3.json)) and the Figma plugin that draws it. Status `review-baseline`; content as of 2026-10-12. The Figma board was redrawn from this content on 2026-10-12 (Cover shows `Source 8bab73bfa169`). **Logo and medium assets did not change** (logos: `assets/logo/v1`; approved media: `assets/osmu/v1.2`), so `assets/` has no v1.3 folder.
 
 **Where to view**: [Figma Master Board](https://www.figma.com/design/m5qkVCvqPW76J7pnY3vFEP?node-id=16-70) (Visual Master Board M01–M10, OSMU Review across six media, Foundations). Source files and downloads: [`assets/`](./assets/) and [`assets/ASSET_INDEX.md`](./assets/ASSET_INDEX.md).
 
