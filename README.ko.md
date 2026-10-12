@@ -2,7 +2,7 @@
 
 한국어 · [English](./README.md)
 
-![FOOTHOLD 자산 미리보기](./assets/exports/v1/FOOTHOLD_ASSET_PACK_V1_PREVIEW.svg)
+![FOOTHOLD GitHub 매체 승인본 (OSMU v1.2)](./assets/osmu/v1.2/github/foothold-readme-hero.svg)
 
 FOOTHOLD는 험지 적응형 4족 보행 프로젝트를 위한 공통 시각·언어 시스템입니다. 이 저장소는 브랜드 토큰, 승인된 로고 형상, 메시지, 비율에 종속되지 않는 Visual Master Board와 재사용 가능한 산출물의 공식 원본입니다.
 
@@ -20,6 +20,40 @@ English: **Find the next foothold.**
 - `Master Board v1.3` (2026-10-12 main 반영): M03 · M04 · M06 · M07 · M08 · M09 의 보드 **내용**([`content/master-board-v1.3.json`](./content/master-board-v1.3.json))과 그것을 그리는 Figma 플러그인. 상태는 `review-baseline` 이며 내용은 2026-10-12 시점이다. Figma 보드도 2026-10-12 에 이 내용으로 다시 그렸다 (Cover 에 `Source 8bab73bfa169`). **로고 · 매체 자산은 바뀌지 않았다** (로고는 `assets/logo/v1`, 매체 자산은 `assets/osmu/v1.2` 가 지금 승인본). 그래서 `assets/` 에는 v1.3 폴더가 없다.
 
 **모아 보는 곳**: [Figma Master Board](https://www.figma.com/design/m5qkVCvqPW76J7pnY3vFEP?node-id=16-70) (Visual Master Board M01–M10 · OSMU Review 6 매체 · Foundations). 원본 파일과 내려받기는 [`assets/`](./assets/) 와 [`assets/ASSET_INDEX.md`](./assets/ASSET_INDEX.md).
+
+## 승인 자산 한눈에 보기
+
+아래는 모두 지금 승인본입니다. 새 작업에서는 이 파일을 그대로 가져다 씁니다. 맨 위 그림은 GitHub 매체 승인본 [`assets/osmu/v1.2/github/foothold-readme-hero.svg`](./assets/osmu/v1.2/github/foothold-readme-hero.svg) 입니다.
+
+**로고** · [`assets/logo/v1`](./assets/logo/v1/)
+
+<table>
+<tr>
+<td align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/foothold-project/foothold-brand/main/assets/logo/v1/foothold-lockup-primary-dark.svg"><img src="./assets/logo/v1/foothold-lockup-primary-light.svg" width="380" alt="FOOTHOLD Primary 로고 (밝은 바탕)"></picture><br><sub>Primary · 심볼 + 워드마크 + 부제</sub></td>
+<td align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/foothold-project/foothold-brand/main/assets/logo/v1/foothold-lockup-compact-dark.svg"><img src="./assets/logo/v1/foothold-lockup-compact-light.svg" width="300" alt="FOOTHOLD Compact 로고"></picture><br><sub>Compact · 부제 없음 · 작은 자리</sub></td>
+</tr>
+<tr>
+<td align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/foothold-project/foothold-brand/main/assets/logo/v1/foothold-lockup-stacked-dark.svg"><img src="./assets/logo/v1/foothold-lockup-stacked-light.svg" width="190" alt="FOOTHOLD Stacked 로고"></picture><br><sub>Stacked · 정사각형 자리</sub></td>
+<td align="center"><img src="./assets/logo/v1/foothold-symbol-brand.svg" width="110" alt="FOOTHOLD 심볼"><br><sub>Symbol · 아이콘 · 파비콘 자리</sub></td>
+</tr>
+</table>
+
+**매체별 완성본 (OSMU v1.2)** · [`assets/osmu/v1.2`](./assets/osmu/v1.2/) · 한 번에 받기 [`FOOTHOLD_OSMU_V1_2.zip`](./assets/FOOTHOLD_OSMU_V1_2.zip)
+
+<table>
+<tr>
+<td align="center"><img src="./assets/osmu/v1.2/web/foothold-web-header.svg" width="420" alt="웹 머리 승인본"><br><sub>Web 머리</sub></td>
+<td align="center"><img src="./assets/osmu/v1.2/presentation/foothold-presentation-opener-16x9.svg" width="320" alt="발표 첫 장 16:9 승인본"><br><sub>발표 첫 장 16:9</sub></td>
+</tr>
+<tr>
+<td align="center"><img src="./assets/osmu/v1.2/poster/foothold-poster-header.svg" width="420" alt="포스터 머리 승인본"><br><sub>포스터 머리</sub></td>
+<td align="center"><img src="./assets/osmu/v1.2/social/foothold-social-square.svg" width="170" alt="소셜 정사각형 승인본"> <img src="./assets/osmu/v1.2/goods/foothold-sticker-round.svg" width="170" alt="원형 스티커 승인본"><br><sub>소셜 정사각형 · 원형 스티커</sub></td>
+</tr>
+</table>
+
+색 · 글꼴은 [`tokens/foothold.tokens.css`](./tokens/foothold.tokens.css) 를 불러오면 `var(--brand)` · `var(--paper)` · `var(--ink)` 로 바로 쓸 수 있습니다 (다크 모드 값 포함). 워드마크의 앞으로 3도 기울기는 SVG 에 들어 있으니 글꼴로 다시 치지 않습니다.
+
+`assets/exports/v1/FOOTHOLD_ASSET_PACK_V1_PREVIEW.svg` 는 옛 v1 시안 모음입니다. 같은 폴더의 다른 SVG 파일을 불러와 그리는 파일이라, README 나 브라우저에서 단독으로 열면 로고 칸이 비어 보입니다. 그 모음을 볼 때는 같은 이름의 [`.png`](./assets/exports/v1/FOOTHOLD_ASSET_PACK_V1_PREVIEW.png) 를 여십시오.
 
 v1.1에서는 검증되지 않은 로봇 이미지, 지표, 팀 역할, 적용 실적 또는 로드맵 사실을 임의로 만들지 않습니다.
 

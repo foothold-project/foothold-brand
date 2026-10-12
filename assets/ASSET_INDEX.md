@@ -111,4 +111,4 @@ python scripts/build_asset_pack.py --check
 
 The compatibility script performs read-only verification. It does not regenerate the approved logo from installed fonts. Exact dimensions, purposes, and SHA-256 hashes are recorded in `exports/v1/manifest.json`.
 
-The visual contact sheet is available as `exports/v1/FOOTHOLD_ASSET_PACK_V1_PREVIEW.svg` and `.png`.
+The visual contact sheet is available as `exports/v1/FOOTHOLD_ASSET_PACK_V1_PREVIEW.svg` and `.png`. The SVG sheet references sibling SVG files by relative path, so it renders empty frames when opened on its own (README, browser, image viewers); use the `.png` to view it standalone.
