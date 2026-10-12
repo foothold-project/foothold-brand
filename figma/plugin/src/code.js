@@ -725,6 +725,162 @@ async function appendWhyNorthStar(frame) {
   frame.appendChild(panel);
 }
 
+function stateTheme(state) {
+  if (state === "verified") return { fill: light("teal-soft"), ink: light("teal-ink-on-soft"), accent: light("teal-brand") };
+  if (state === "next" || state === "pending") return { fill: light("amber-soft"), ink: light("amber-ink-on-soft"), accent: light("amber") };
+  return { fill: light("paper-secondary"), ink: light("ink-secondary"), accent: light("ink-secondary") };
+}
+
+async function createStatePill(state) {
+  const theme = stateTheme(state);
+  const pill = figma.createFrame();
+  pill.name = `State / ${state}`;
+  pill.layoutMode = "HORIZONTAL";
+  pill.primaryAxisSizingMode = "AUTO";
+  pill.counterAxisSizingMode = "AUTO";
+  pill.paddingTop = pill.paddingBottom = 6;
+  pill.paddingLeft = pill.paddingRight = 10;
+  pill.cornerRadius = 999;
+  pill.fills = [solidPaint(theme.fill)];
+  pill.appendChild(await makeText(state.toUpperCase(), 10, "Bold", theme.ink));
+  return pill;
+}
+
+async function createStateCard(value, label, state, width, minHeight = 132) {
+  const theme = stateTheme(state);
+  const card = figma.createFrame();
+  card.name = `${state.toUpperCase()} / ${label}`;
+  card.layoutMode = "VERTICAL";
+  card.counterAxisSizingMode = "FIXED";
+  card.resize(width, minHeight);
+  card.primaryAxisSizingMode = "AUTO";
+  card.minHeight = minHeight;
+  card.paddingTop = card.paddingBottom = 18;
+  card.paddingLeft = card.paddingRight = 18;
+  card.itemSpacing = 10;
+  card.cornerRadius = 12;
+  card.fills = [solidPaint(theme.fill)];
+  card.strokes = [solidPaint(theme.accent)];
+  card.strokeWeight = 1;
+  card.appendChild(await createStatePill(state));
+  card.appendChild(await makeWrappedText(value, 20, "Semi Bold", light("ink"), width - 36));
+  if (label) card.appendChild(await makeWrappedText(label, 12, "Regular", light("ink-secondary"), width - 36));
+  return card;
+}
+
+function placeEllipse(frame, x, y, width, height, fill, opacity = 1) {
+  const node = figma.createEllipse();
+  node.resize(width, height);
+  node.x = x;
+  node.y = y;
+  node.fills = [solidPaint(fill)];
+  node.opacity = opacity;
+  frame.appendChild(node);
+  return node;
+}
+
+async function appendRobotTerrainVision(frame) {
+  const content = FOOTHOLD_DATA.masterBoardContent.modules.M03;
+  const visual = figma.createFrame();
+  visual.name = "Robot and terrain / Target art direction";
+  visual.resize(1208, 350);
+  visual.clipsContent = true;
+  visual.cornerRadius = 16;
+  visual.fills = [solidPaint(dark("paper"))];
+  placeRect(visual, 0, 270, 260, 80, dark("paper-secondary"));
+  placeRect(visual, 260, 238, 220, 112, dark("paper-secondary"));
+  placeRect(visual, 480, 196, 228, 154, dark("paper-secondary"));
+  placeRect(visual, 708, 228, 210, 122, dark("paper-secondary"));
+  placeRect(visual, 918, 176, 290, 174, dark("paper-secondary"));
+  placeRect(visual, 0, 340, 1208, 10, dark("teal-brand"), 0, 0.7);
+  placeSvg(visual, FOOTHOLD_DATA.svg.symbolBrand, "FOOTHOLD symbol / Direction marker", 1030, 34, 112, 128, 0.18);
+  await placeText(visual, content.eyebrow, 12, "Bold", dark("teal-brand"), 36, 34, 500);
+  const headline = await placeText(visual, content.headline, 28, "Semi Bold", dark("ink"), 36, 70, 900);
+  await placeText(visual, content.body, 14, "Regular", dark("ink-secondary"), 36, headline.y + headline.height + 16, 760);
+  for (const [x, y] of [[330, 230], [565, 188], [790, 220], [1005, 168]]) {
+    placeEllipse(visual, x, y, 18, 18, dark("teal-brand"));
+    placeEllipse(visual, x + 5, y + 5, 8, 8, dark("paper"));
+  }
+  await placeText(visual, "CONTACT / TERRAIN PROFILE / POLICY RESPONSE", 10, "Semi Bold", dark("ink-secondary"), 36, 306, 520);
+  frame.appendChild(visual);
+  frame.appendChild(await makeWrappedText(content.sourceNote, 12, "Regular", light("amber-ink-on-soft"), 1208));
+}
+
+async function appendSimToRealFlow(frame) {
+  const content = FOOTHOLD_DATA.masterBoardContent.modules.M04;
+  frame.appendChild(await makeWrappedText(content.headline, 28, "Semi Bold", light("ink"), 1208));
+  const row = figma.createFrame();
+  row.name = "Evidence-gated Sim-to-Real flow";
+  row.layoutMode = "HORIZONTAL";
+  row.primaryAxisSizingMode = "AUTO";
+  row.counterAxisSizingMode = "AUTO";
+  row.itemSpacing = 16;
+  row.fills = [];
+  for (const stage of content.stages) row.appendChild(await createStateCard(stage.label, "", stage.state, 188, 142));
+  frame.appendChild(row);
+}
+
+async function appendEvidence(frame) {
+  const content = FOOTHOLD_DATA.masterBoardContent.modules.M06;
+  frame.appendChild(await makeWrappedText(content.headline, 28, "Semi Bold", light("ink"), 1208));
+  const row = figma.createFrame();
+  row.name = "Verified evidence cards";
+  row.layoutMode = "HORIZONTAL";
+  row.primaryAxisSizingMode = "AUTO";
+  row.counterAxisSizingMode = "AUTO";
+  row.itemSpacing = 16;
+  row.fills = [];
+  for (const fact of content.facts) row.appendChild(await createStateCard(fact.value, fact.label, fact.state, 290, 150));
+  frame.appendChild(row);
+  frame.appendChild(await createStateCard(content.openMetric, "Performance remains intentionally blank until measured.", "pending", 1208, 132));
+  frame.appendChild(await makeWrappedText(content.disclaimer, 12, "Regular", light("ink-secondary"), 1208));
+}
+
+async function appendTeam(frame) {
+  const content = FOOTHOLD_DATA.masterBoardContent.modules.M07;
+  frame.appendChild(await makeWrappedText(content.headline, 28, "Semi Bold", light("ink"), 1208));
+  const row = figma.createFrame();
+  row.name = "Team workstreams / Assignments pending";
+  row.layoutMode = "HORIZONTAL";
+  row.primaryAxisSizingMode = "AUTO";
+  row.counterAxisSizingMode = "AUTO";
+  row.itemSpacing = 16;
+  row.fills = [];
+  for (const workstream of content.workstreams) row.appendChild(await createStateCard(workstream, "Primary / secondary", "target", 188, 124));
+  frame.appendChild(row);
+  frame.appendChild(await makeWrappedText(content.body, 16, "Regular", light("ink-secondary"), 1208));
+  frame.appendChild(await makeWrappedText(content.approvalNote, 12, "Regular", light("amber-ink-on-soft"), 1208));
+}
+
+async function appendRoadmap(frame) {
+  const content = FOOTHOLD_DATA.masterBoardContent.modules.M08;
+  frame.appendChild(await makeWrappedText(content.headline, 28, "Semi Bold", light("ink"), 1208));
+  const row = figma.createFrame();
+  row.name = "Evidence-gated roadmap";
+  row.layoutMode = "HORIZONTAL";
+  row.primaryAxisSizingMode = "AUTO";
+  row.counterAxisSizingMode = "AUTO";
+  row.itemSpacing = 14;
+  row.fills = [];
+  for (const stage of content.stages) row.appendChild(await createStateCard(stage.label, stage.detail, stage.state, 160, 154));
+  frame.appendChild(row);
+}
+
+async function appendContexts(frame) {
+  const content = FOOTHOLD_DATA.masterBoardContent.modules.M09;
+  frame.appendChild(await makeWrappedText(content.headline, 28, "Semi Bold", light("ink"), 1208));
+  const row = figma.createFrame();
+  row.name = "Target application contexts";
+  row.layoutMode = "HORIZONTAL";
+  row.primaryAxisSizingMode = "AUTO";
+  row.counterAxisSizingMode = "AUTO";
+  row.itemSpacing = 16;
+  row.fills = [];
+  for (const context of content.contexts) row.appendChild(await createStateCard(context.label, "Intended application", context.state, 392, 128));
+  frame.appendChild(row);
+  frame.appendChild(await makeWrappedText(content.disclaimer, 12, "Regular", light("ink-secondary"), 1208));
+}
+
 async function appendClosing(frame) {
   const panel = figma.createFrame();
   panel.name = "Approved closing panel / Dark";
@@ -840,12 +996,20 @@ async function createModule(module) {
   frame.strokes = [solidPaint(light("rule"))];
   frame.strokeWeight = 1;
   frame.setSharedPluginData("foothold", "description", `${module.guidance} Source: ${module.source}. Status: ${module.status}.`);
-  frame.appendChild(await makeText(`${module.id}  ${module.name.toUpperCase()}`, 14, "Bold", module.status === "ready" ? light("teal-brand") : light("amber")));
-  frame.appendChild(await makeText(module.guidance, 24, "Semi Bold", light("ink")));
+  const moduleState = module.status === "ready" ? "verified" : module.status === "partial" ? "next" : module.status;
+  frame.appendChild(await makeText(`${module.id}  ${module.name.toUpperCase()}`, 14, "Bold", stateTheme(moduleState).accent));
+  const hasStructuredContent = Boolean(FOOTHOLD_DATA.masterBoardContent.modules[module.id]);
+  if (!hasStructuredContent) frame.appendChild(await makeText(module.guidance, 24, "Semi Bold", light("ink")));
   frame.appendChild(await makeText(`${module.status.toUpperCase()} · Source: ${module.source}`, 13, "Regular", light("ink-secondary")));
   if (module.id === "M01") await appendBrandCore(frame);
   if (module.id === "M02") await appendHeroHierarchy(frame);
+  if (module.id === "M03") await appendRobotTerrainVision(frame);
+  if (module.id === "M04") await appendSimToRealFlow(frame);
   if (module.id === "M05") await appendWhyNorthStar(frame);
+  if (module.id === "M06") await appendEvidence(frame);
+  if (module.id === "M07") await appendTeam(frame);
+  if (module.id === "M08") await appendRoadmap(frame);
+  if (module.id === "M09") await appendContexts(frame);
   if (module.id === "M10") await appendClosing(frame);
   return frame;
 }
@@ -886,8 +1050,14 @@ async function buildSkeleton() {
   const foundations = await createFoundations(pages.get("Foundations"));
   const board = await createMasterBoard(pages.get("Master Board"));
   const osmuReview = await createOsmuReview(pages.get("Master Board"), board);
-  figma.viewport.scrollAndZoomIntoView([osmuReview]);
-  return { pages: PAGE_NAMES, nodes: [cover.id, foundations.id, board.id, osmuReview.id], modules: FOOTHOLD_DATA.modules.length, osmuPreviews: 6 };
+  figma.viewport.scrollAndZoomIntoView([board]);
+  return {
+    pages: PAGE_NAMES,
+    nodes: [cover.id, foundations.id, board.id, osmuReview.id],
+    modules: FOOTHOLD_DATA.modules.length,
+    contentBaseline: FOOTHOLD_DATA.masterBoardContent.status,
+    osmuPreviews: 6
+  };
 }
 
 function serializeNode(node) {
