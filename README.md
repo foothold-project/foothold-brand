@@ -27,11 +27,11 @@ Everything below is the current approved version; use these files as they are in
 
 <table>
 <tr>
-<td align="center"><img src="./assets/logo/v1/foothold-lockup-primary-light.svg" width="380" alt="FOOTHOLD primary lockup for light surfaces"><br><sub>Primary · symbol, wordmark, and subtitle</sub></td>
-<td align="center"><img src="./assets/logo/v1/foothold-lockup-compact-light.svg" width="300" alt="FOOTHOLD compact lockup"><br><sub>Compact · no subtitle, small placements</sub></td>
+<td align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./assets/logo/v1/foothold-lockup-primary-dark.svg"><img src="./assets/logo/v1/foothold-lockup-primary-light.svg" width="380" alt="FOOTHOLD primary lockup for light surfaces"></picture><br><sub>Primary · symbol, wordmark, and subtitle</sub></td>
+<td align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./assets/logo/v1/foothold-lockup-compact-dark.svg"><img src="./assets/logo/v1/foothold-lockup-compact-light.svg" width="300" alt="FOOTHOLD compact lockup"></picture><br><sub>Compact · no subtitle, small placements</sub></td>
 </tr>
 <tr>
-<td align="center"><img src="./assets/logo/v1/foothold-lockup-stacked-light.svg" width="190" alt="FOOTHOLD stacked lockup"><br><sub>Stacked · square placements</sub></td>
+<td align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="./assets/logo/v1/foothold-lockup-stacked-dark.svg"><img src="./assets/logo/v1/foothold-lockup-stacked-light.svg" width="190" alt="FOOTHOLD stacked lockup"></picture><br><sub>Stacked · square placements</sub></td>
 <td align="center"><img src="./assets/logo/v1/foothold-symbol-brand.svg" width="110" alt="FOOTHOLD symbol"><br><sub>Symbol · icon and favicon placements</sub></td>
 </tr>
 </table>
