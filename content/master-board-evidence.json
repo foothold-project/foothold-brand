@@ -1,14 +1,32 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "schemaVersion": "1.0.0",
-  "auditedAt": "2026-08-11",
-  "projectWorkspace": "MAI_UNIVERSE/03_PROJECTS/doyak-final",
+  "auditedAt": "2026-10-12",
+  "projectWorkspace": "foothold-project/foothold-lab (private) @ fe2cfe9d80355728ccd846216d52858a99dcba96",
   "authority": [
-    "01_research/mvp-install-log.md",
-    "00_meetings/260806_미팅보고서.md",
-    "04_plan/PLAN.md",
-    "02_team/team-assets-and-roles.md"
+    "docs/DECISIONS.md",
+    "docs/WORKFLOW.md",
+    "docs/ROLES.md",
+    "deliverables/plan/proposal.md",
+    "deliverables/midterm/mvp-submission.md",
+    "deliverables/midterm/generalization-report.md",
+    "models/foothold-v1.json",
+    "models/foothold-v2.json",
+    "sim/eval/results/20260928-v2-release-raw/",
+    "sim/eval/results/20260929-seed-spread/"
   ],
+  "previousAudit": {
+    "auditedAt": "2026-08-11",
+    "projectWorkspace": "MAI_UNIVERSE/03_PROJECTS/doyak-final",
+    "authority": [
+      "01_research/mvp-install-log.md",
+      "00_meetings/260806_미팅보고서.md",
+      "04_plan/PLAN.md",
+      "02_team/team-assets-and-roles.md"
+    ],
+    "stillAppliesTo": ["M05"],
+    "note": "M05 was not re-audited on 2026-10-12; its sources still refer to this workspace. The 2026-08-11 audit of the other modules remains in Git history (main e9bc469)."
+  },
   "rules": {
     "primaryEvidenceWins": true,
     "proposalIsNotFact": true,
@@ -17,33 +35,39 @@
   },
   "modules": {
     "M03": {
-      "status": "blocked-missing-media",
+      "status": "pending-frame-selection",
       "title": "Robot and terrain visual",
       "approvedFacts": [
-        "An official pretrained Unitree Go2 rough-terrain checkpoint was replayed in the team's Isaac Lab environment.",
-        "The primary run log records a 200-step MP4 capture."
+        "Recorded foothold-v2 terrain clips exist with per-clip capture metadata (policy sha256, camera, seed, command speed).",
+        "The NVIDIA checkpoint, foothold-v1, and foothold-v2 are distinct policies and must be captioned as such."
       ],
       "prohibitedClaims": [
-        "The pictured policy was trained by FOOTHOLD.",
+        "A pictured frame shows a physical Go2 running a FOOTHOLD policy.",
+        "A pictured policy is captioned without naming which policy it is.",
         "The pictured terrain is the team's final target terrain."
       ],
       "requiredEvidence": [
-        "Copy the original run capture from AI-WS01 into an approved project-media location.",
-        "Record media provenance, capture date, task name, and license before Figma import."
+        "Choose one frame and copy it, with its capture metadata, into an approved location in this repository.",
+        "Record provenance, capture date, policy, terrain, and the licence status of the rendered robot model before Figma import."
       ],
       "sources": [
-        "01_research/mvp-install-log.md#6-산출물-실재-확인"
+        "sim/eval/results/20260928-terrain-shots/<terrain>/flat_army_A_4_topdown.json",
+        "models/foothold-v2.json:4"
       ]
     },
     "M04": {
       "status": "partial",
       "title": "Sim-to-Real flow",
       "approvedFacts": [
-        "Verified: official checkpoint download, replay, and automatic ONNX/PT export in the recorded environment.",
-        "Planned: custom terrain, automated evaluation, training, sim2sim, alignment checks, and Go2 deployment."
+        "Verified: the NVIDIA Isaac-Velocity-Rough-Unitree-Go2-v0 checkpoint is the baseline policy (decision 2026-09-02).",
+        "Verified: foothold-v1 (released 2026-09-11) and foothold-v2 (released 2026-09-29) were trained from that checkpoint; both files carry sha256 records.",
+        "Verified: the unseen-terrain generalization evaluation and the MVP report were delivered for the 2026-09-30 gate.",
+        "Decided 2026-10-12: the FOOTHOLD RL policy is not deployed to the physical Go2. Track B runs the stock gait with SLAM and Nav2.",
+        "Planned: the SIM gate (2026-11-07) and the NAV gate (2026-11-30)."
       ],
       "prohibitedClaims": [
         "FOOTHOLD has completed sim-to-real deployment.",
+        "The FOOTHOLD RL policy runs on the physical Go2.",
         "The exported ONNX policy has been validated on a physical Go2."
       ],
       "requiredEvidence": [
@@ -51,9 +75,14 @@
         "Promote each planned stage only after a reproducible run record exists."
       ],
       "sources": [
-        "01_research/mvp-install-log.md#4-검증된-사실-조사-문서-교차확인",
-        "01_research/mvp-install-log.md#7-아직-안-해본-것-다음-세션",
-        "04_plan/PLAN.md#3-퀘스트-보드-게임처럼-쉬운-것부터-보스전까지"
+        "docs/DECISIONS.md:95",
+        "docs/DECISIONS.md:115",
+        "docs/DECISIONS.md:132-134",
+        "docs/WORKFLOW.md:67-74",
+        "models/foothold-v1.json:4-6",
+        "models/foothold-v2.json:4-6",
+        "deliverables/midterm/mvp-submission.md:1-19",
+        "deliverables/midterm/generalization-report.md:24-25"
       ]
     },
     "M05": {
@@ -81,33 +110,47 @@
       ]
     },
     "M06": {
-      "status": "partial-no-performance-metric",
+      "status": "partial-simulation-metric-verified",
       "title": "Evidence",
       "approvedFacts": [
-        "Isaac Sim 5.1.0.0 and Isaac Lab v2.3.2 were run on AI-WS01.",
-        "Four built-in Go2 tasks and the official pretrained checkpoint were verified.",
-        "The official checkpoint was replayed and vector deployment formats were exported.",
-        "Training, project-specific success rate, and sim-to-real performance have not been measured."
+        "On eight terrains that no policy trained on (3 speeds, 100 episodes per cell, difficulty 0.5, eval spec 2, seed 42), the NVIDIA checkpoint scores 43.88 % and foothold-v2 scores 88.46 % (recomputed from the per-episode raw files: 43.875 % and 88.458 %, 2,400 episodes each).",
+        "Success requires survival, progress, tracking, and direction to all pass.",
+        "stepping_stones at 1.0 m/s reads 24, 1, 3, 19, and 0 of 100 across five seeds, so it is quoted as 0 to 24 %.",
+        "All results are simulation results. No FOOTHOLD RL policy result on the physical Go2 exists or is planned (decision 2026-10-12)."
       ],
       "prohibitedClaims": [
         "21,385 steps/s is a measured training result.",
         "1,500 training iterations take approximately 113 minutes in the verified setup.",
-        "Any terrain success rate, improvement, or physical deployment result."
+        "Any physical-robot success rate, fall rate, or deployment result for a FOOTHOLD policy.",
+        "foothold-v2 is better than foothold-v1 (the +1.75 %p difference is the same size as seed-to-seed variation).",
+        "stepping_stones reaches 24 % without the 0 to 24 % range.",
+        "Each terrain was tested on 100 different terrain instances (the 100 episodes share one tile).",
+        "gap or rails results count as unseen-terrain generalization."
       ],
       "requiredEvidence": [
-        "Run Q3 automated baseline evaluation and preserve its configuration and raw output.",
+        "Quote every number with its evaluation conditions and raw-file path.",
+        "Recompute a number from the per-episode raw files before promoting it.",
         "Run training before publishing training throughput or duration."
       ],
       "sources": [
-        "01_research/mvp-install-log.md#4-검증된-사실-조사-문서-교차확인",
-        "01_research/mvp-install-log.md#7-아직-안-해본-것-다음-세션",
-        "04_plan/PLAN.md#2-이야기로-풀기---어-되네-그럼-그다음은"
+        "sim/eval/results/20260928-v2-release-raw/baseline/unseen10/runs/",
+        "sim/eval/results/20260928-v2-release-raw/foothold-v2/unseen10/runs/",
+        "sim/eval/results/20260929-seed-spread/unseen10/",
+        "deliverables/midterm/generalization-report.md:31-40",
+        "deliverables/midterm/generalization-report.md:131-151",
+        "deliverables/midterm/generalization-report.md:167-176",
+        "docs/DECISIONS.md:134"
       ],
       "conflicts": [
         {
-          "proposal": "04_plan/PLAN.md presents 21,385 steps/s and 1,500 iterations in approximately 113 minutes as current evidence.",
-          "primaryRecord": "01_research/mvp-install-log.md says training was not run and actual training steps/s was not measured.",
+          "proposal": "04_plan/PLAN.md (2026-08-11 workspace) presents 21,385 steps/s and 1,500 iterations in approximately 113 minutes as current evidence.",
+          "primaryRecord": "01_research/mvp-install-log.md (2026-08-11 workspace) says training was not run and actual training steps/s was not measured.",
           "resolution": "Exclude both numbers until a reproducible training log verifies them."
+        },
+        {
+          "proposal": "deliverables/midterm/generalization-report.md and policy-metrics.md cite sim/eval/results/20260928-v2-gallery-raw/ as their raw source.",
+          "primaryRecord": "That folder is not in foothold-lab main at fe2cfe9d. The same 24-cell numbers recompute exactly from sim/eval/results/20260928-v2-release-raw/ and match sim/eval/results/20260928-v2-sweep/sweep_long.csv.",
+          "resolution": "Cite the release-raw paths until the project repository fixes the reference."
         }
       ]
     },
@@ -116,59 +159,69 @@
       "title": "Team",
       "approvedFacts": [
         "The project has five team members.",
-        "Work should use overlapping primary and secondary ownership rather than isolated silos."
+        "Work is split into eight work areas across Track A, Track B, and common work (decision 2026-08-27).",
+        "Each work area has one primary and at least one secondary owner."
       ],
       "prohibitedClaims": [
-        "The role allocation draft is final.",
-        "A missing team member's role may be inferred from background notes."
+        "The leader-confirmed roster is a five-person approval record.",
+        "Names, photos, or primary and secondary assignments may be published on the brand board.",
+        "A team member's role may be inferred from background notes."
       ],
       "requiredEvidence": [
         "Obtain a dated five-person approval record for names, primary ownership, and secondary ownership.",
         "Record public-display consent for names and profile details."
       ],
       "sources": [
-        "02_team/team-assets-and-roles.md#3-2-배치-초안-확정-아님---워크숍에서-각자-확인",
-        "00_meetings/260806_미팅보고서.md#7-팀-역량---회의에서-드러난-것"
+        "docs/ROLES.md:3-9",
+        "docs/ROLES.md:39-55",
+        "docs/DECISIONS.md:99"
       ]
     },
     "M08": {
-      "status": "partial-proposal",
+      "status": "partial-dated",
       "title": "Roadmap",
       "approvedFacts": [
-        "Completed: Q0 development environment setup and Q2 official checkpoint replay.",
-        "Next proposed gate: Q3 automated baseline evaluation.",
-        "Q4 through the physical-robot boss stage remain planned or equipment-blocked."
+        "Gate dates were confirmed by the team lead on 2026-10-12: SIM 2026-11-07, NAV 2026-11-30, FINAL 2026-12-07.",
+        "The final presentation is on 2026-12-09 or 2026-12-10, awaiting the school's confirmation; graduation is 2026-12-11.",
+        "Completed deliverables: planning submission (09-04), foothold-v1 with its metric set (released 09-11), MVP report and generalization table (09-30).",
+        "The twin and render demo did not ship with the MVP and moved to a later gate."
       ],
       "prohibitedClaims": [
-        "Draft dates and future quests are committed delivery dates.",
-        "Planned training, sim2sim, ROS2, or physical deployment is complete."
+        "Future gates are complete.",
+        "The twin and render demo shipped with the MVP.",
+        "A single final presentation date is confirmed."
       ],
       "requiredEvidence": [
-        "Show completed, next, planned, and blocked states explicitly.",
-        "Confirm the official milestone calendar before publishing dates."
+        "Show completed, next, planned, and pending states explicitly.",
+        "Change a gate to verified only after its deliverable exists in the project repository."
       ],
       "sources": [
-        "04_plan/PLAN.md#1-전체-지도---7단계",
-        "04_plan/PLAN.md#3-퀘스트-보드-게임처럼-쉬운-것부터-보스전까지"
+        "docs/WORKFLOW.md:67-74",
+        "docs/DECISIONS.md:134",
+        "deliverables/plan/proposal.md",
+        "models/foothold-v1.json:6",
+        "deliverables/midterm/mvp-submission.md:1-19",
+        "deliverables/midterm/twin-render.md:7-12"
       ]
     },
     "M09": {
-      "status": "pending-context-approval",
+      "status": "target-candidates-from-proposal",
       "title": "Application contexts",
       "approvedFacts": [
-        "Rough terrain and reduced human exposure are approved narrative themes."
+        "Rough terrain and reduced human exposure are approved narrative themes.",
+        "The 2026-09-04 proposal names underground utility conduits, tunnels, and industrial equipment inspection as application candidates."
       ],
       "prohibitedClaims": [
         "Chosun University or an unnamed commissioning company is a deployment partner.",
-        "FOOTHOLD has completed industrial, disaster-response, inspection, or field deployment."
+        "FOOTHOLD has completed industrial, disaster-response, inspection, or field deployment.",
+        "Industrial deployment, disaster response, or explosion-proof operation is in this project's scope."
       ],
       "requiredEvidence": [
-        "Approve two or three clearly hypothetical application contexts.",
         "Label every context as intended, candidate, or demonstrated."
       ],
       "sources": [
-        "VOICE_AND_MESSAGE.md",
-        "00_meetings/260806_미팅보고서.md#4-발주-기업-조선대-관계---재정의됨"
+        "deliverables/plan/proposal.md:502",
+        "deliverables/plan/proposal.md:504"
       ]
     }
   }

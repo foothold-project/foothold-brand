@@ -17,7 +17,7 @@ English: **Find the next foothold.**
 - `v1.0.2`: Compact 간격 보정을 포함한 승인 로고 형상, SVG 원본 및 재현 가능한 PNG 파생본 기준선
 - `v1.1.0`: 공개·크로스플랫폼 기반과 로컬 Figma 동기화 인프라
 - `v1.2.0`: 6개 매체 OSMU 기준 디자인 승인; 프로젝트별 M03–M09 근거 콘텐츠는 단계적으로 검증 중
-- `Master Board v1.3` (2026-10-12 main 반영): M03 · M04 · M06 · M07 · M08 · M09 의 보드 **내용**([`content/master-board-v1.3.json`](./content/master-board-v1.3.json))과 그것을 그리는 Figma 플러그인. 상태는 `review-baseline` 이며 내용은 2026-08-11 시점이다. **로고 · 매체 자산은 바뀌지 않았다** (로고는 `assets/logo/v1`, 매체 자산은 `assets/osmu/v1.2` 가 지금 승인본). 그래서 `assets/` 에는 v1.3 폴더가 없다.
+- `Master Board v1.3` (2026-10-12 main 반영): M03 · M04 · M06 · M07 · M08 · M09 의 보드 **내용**([`content/master-board-v1.3.json`](./content/master-board-v1.3.json))과 그것을 그리는 Figma 플러그인. 상태는 `review-baseline` 이며 내용은 2026-10-12 시점이다 (Figma 보드는 플러그인을 다시 돌리기 전까지 2026-08-11 내용을 보여 준다). **로고 · 매체 자산은 바뀌지 않았다** (로고는 `assets/logo/v1`, 매체 자산은 `assets/osmu/v1.2` 가 지금 승인본). 그래서 `assets/` 에는 v1.3 폴더가 없다.
 
 **모아 보는 곳**: [Figma Master Board](https://www.figma.com/design/m5qkVCvqPW76J7pnY3vFEP?node-id=16-70) (Visual Master Board M01–M10 · OSMU Review 6 매체 · Foundations). 원본 파일과 내려받기는 [`assets/`](./assets/) 와 [`assets/ASSET_INDEX.md`](./assets/ASSET_INDEX.md).
 

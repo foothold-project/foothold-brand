@@ -11,17 +11,21 @@ This document gates project-specific content before it enters the public FOOTHOL
 
 When sources conflict, the more direct record wins. A proposal never upgrades itself into a fact because it appears in a polished layout.
 
-## Current audit
+## Current audit (2026-10-12)
+
+Sources are paths in the private project repository `foothold-project/foothold-lab` at commit `fe2cfe9d`. Every number on the board was recomputed from the per-episode raw files before it was admitted.
 
 | Module | State | What may appear now | What remains blocked |
 |---|---|---|---|
-| M03 Robot / terrain visual | Blocked: media missing | Captioned statement that the official Go2 checkpoint replay was recorded | The original run capture must be copied from AI-WS01 and provenance-checked |
-| M04 Sim-to-Real flow | Partial | Verified checkpoint → replay → ONNX/PT export, followed by clearly labelled planned stages | Custom terrain, training, sim2sim, alignment, and physical deployment |
-| M05 Why FOOTHOLD | Target vision approved | `시뮬레이터에서 천 번 넘어지고, 현장에서는 넘어지지 않는다.` with an explicit `TARGET VISION` label; approved problem statement and policy scope | Any zero-fall result, concrete public use context, or demonstrated field benefit |
-| M06 Evidence | Partial, no performance metric | Environment versions, built-in task verification, checkpoint replay, exported formats | Training throughput, success rate, improvement, and physical results |
-| M07 Team | Pending approval | Five-person team and overlapping ownership model | Final names-to-role matrix and public-display consent |
-| M08 Roadmap | Partial proposal | Q0 and Q2 completed; Q3 next; later gates visibly planned or blocked | Committed dates and completion claims for future gates |
-| M09 Contexts | Pending approval | Rough terrain and reduced human exposure as narrative themes | Partner, deployment, industry, and field-operation claims |
+| M03 Robot / terrain visual | Pending: frame not chosen | Art direction that names the policy, terrain, and run of any frame | A chosen frame with provenance and licence status recorded in this repository |
+| M04 Sim-to-Real flow | Partial | NVIDIA checkpoint baseline, foothold-v1 and v2 training, unseen-terrain evaluation, and the MVP report as verified; SIM gate next; stock-gait Go2 with SLAM and Nav2 as target | Any claim that the FOOTHOLD RL policy runs on the physical Go2 (decision 2026-10-12) |
+| M05 Why FOOTHOLD | Target vision approved (not re-audited) | `시뮬레이터에서 천 번 넘어지고, 현장에서는 넘어지지 않는다.` with an explicit `TARGET VISION` label; approved problem statement and policy scope | Any zero-fall result, concrete public use context, or demonstrated field benefit |
+| M06 Evidence | Partial: simulation metric verified | 43.88 % to 88.46 % on eight unseen terrains (2,400 episodes per policy), with conditions; stepping_stones as 0 to 24 % | Physical-robot results, a v2-over-v1 claim, or any number quoted without its conditions |
+| M07 Team | Pending approval | Five people and eight work areas without names | Names and assignments until a dated five-person approval and public-display consent exist |
+| M08 Roadmap | Partial, dated | Gates confirmed 2026-10-12: SIM 11-07, NAV 11-30, FINAL 12-07; presentation 12-09 or 12-10 pending | Completion claims for future gates; the twin demo as an MVP deliverable |
+| M09 Contexts | Target candidates | Utility conduits, tunnels, and industrial equipment inspection as proposal candidates | Partner, deployment, disaster-response, and explosion-proof claims |
+
+The 2026-08-11 audit of the same modules remains in Git history.
 
 ## Conflict found during the 2026-08-09 audit
 
