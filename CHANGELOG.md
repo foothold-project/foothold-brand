@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Replaced the Korean brand slogan `불확실한 지형에서도, 다음 걸음을 이어갑니다.` (approved 2026-08-09) with `당신이 디딜 곳을 먼저 딛고, 다음 걸음을 이어갑니다.` (team lead decision 2026-11-26), matching `Find your next foothold.`. Approved OSMU v1.2 media are unchanged and need regeneration in the next media version.
 - Replaced the English brand slogan `Find the next foothold.` (approved 2026-08-09) with `Find your next foothold.` (team lead decision 2026-11-26). Text sources and the Figma plugin payload use the new line. The approved OSMU v1.2 media (README hero and social square SVG and their PNG/JPG companions) still show the previous line and must be regenerated in the next media version. The Korean slogan is unchanged and under review.
 - README hero now uses the approved GitHub medium (`assets/osmu/v1.2/github/foothold-readme-hero.svg`) instead of the legacy v1 preview, and both READMEs show the approved logo lockups and OSMU v1.2 media. The legacy preview SVG references sibling files and rendered as empty frames on GitHub; ASSET_INDEX now says to view it as PNG.
 - Redrew the Figma Master Board from the 2026-10-12 content with the local plugin (Cover shows `Source 8bab73bfa169`); README no longer says the board shows the 2026-08-11 content.

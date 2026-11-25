@@ -206,7 +206,7 @@ if (dataStart < 0 || dataEnd < 0) {
   if (pluginData.approvedWordmarkAspect !== manifest.approvedWordmarkAspect) fail("Figma payload must retain the approved wordmark aspect");
   if (pluginData.messages?.closingEn !== "Find your next foothold.") fail("Figma payload must retain the approved closing statement");
   if (pluginData.messages?.koreanSloganStatus !== "approved") fail("Korean slogan must remain approved");
-  if (pluginData.messages?.sloganKo !== "불확실한 지형에서도, 다음 걸음을 이어갑니다.") fail("Figma payload must retain the approved Korean slogan");
+  if (pluginData.messages?.sloganKo !== "당신이 디딜 곳을 먼저 딛고, 다음 걸음을 이어갑니다.") fail("Figma payload must retain the approved Korean slogan");
   if (pluginData.messages?.whyNorthStarKo !== "시뮬레이터에서 천 번 넘어지고, 현장에서는 넘어지지 않는다.") fail("Figma payload must retain the approved Why FOOTHOLD target vision");
   if (pluginData.messages?.whyNorthStarStatus !== "target-vision") fail("Figma target vision must remain distinct from a verified outcome");
   if (pluginData.messages?.projectDefinitionKo !== "FOOTHOLD는 4족 보행 로봇의 험지 적응을 위한 강화학습 기반 보행 정책을 개발하고 검증하는 프로젝트입니다.") fail("Figma payload must retain the approved Korean project definition");

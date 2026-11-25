@@ -19,7 +19,7 @@ This is a project identity, not a claim that FOOTHOLD is already a deployed navi
 
 **Korean brand slogan — approved**
 
-> 불확실한 지형에서도, 다음 걸음을 이어갑니다.
+> 당신이 디딜 곳을 먼저 딛고, 다음 걸음을 이어갑니다.
 
 This is the Korean counterpart to the English slogan, not a literal translation; see [`VOICE_AND_MESSAGE.md`](./VOICE_AND_MESSAGE.md).
 
