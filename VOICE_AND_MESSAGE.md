@@ -2,7 +2,7 @@
 
 ## Status
 
-The team selected the English logo subtitle **Terrain-Adaptive Locomotion Policy** on 2026-08-07 and approved **Find the next foothold.** as the primary English brand slogan on 2026-08-09, and replaced it with **Find your next foothold.** on 2026-11-26 (team lead decision). The Korean brand slogan **불확실한 지형에서도, 다음 걸음을 이어갑니다.** was approved on 2026-08-09.
+The team selected the English logo subtitle **Terrain-Adaptive Locomotion Policy** on 2026-08-07 and approved **Find the next foothold.** as the primary English brand slogan on 2026-08-09, and replaced it with **Find your next foothold.** on 2026-11-26 (team lead decision). The Korean brand slogan **불확실한 지형에서도, 다음 걸음을 이어갑니다.** was approved on 2026-08-09 and replaced with **당신이 디딜 곳을 먼저 딛고, 다음 걸음을 이어갑니다.** on 2026-11-26 (team lead decision).
 
 ## 1. Canonical project definition
 
@@ -20,7 +20,7 @@ Use this as the primary brand statement and closing line.
 
 ### Korean — approved
 
-> 불확실한 지형에서도, 다음 걸음을 이어갑니다.
+> 당신이 디딜 곳을 먼저 딛고, 다음 걸음을 이어갑니다.
 
 Use this as the primary Korean brand statement. It is a counterpart to the English slogan, not a literal translation.
 
@@ -55,7 +55,7 @@ Use this shorter noun phrase on the `Cover & Guide` page and similarly constrain
 | Layer | Job | Approved text | State |
 |---|---|---|---|
 | Slogan | Express the brand idea | Find your next foothold. | APPROVED |
-| Korean slogan | Express the brand idea for a Korean-first audience | 불확실한 지형에서도, 다음 걸음을 이어갑니다. | APPROVED |
+| Korean slogan | Express the brand idea for a Korean-first audience | 당신이 디딜 곳을 먼저 딛고, 다음 걸음을 이어갑니다. | APPROVED |
 | Why / North Star | Express the intended Sim-to-Real outcome | 시뮬레이터에서 천 번 넘어지고, 현장에서는 넘어지지 않는다. | TARGET VISION |
 | Definition | State the project accurately | FOOTHOLD는 4족 보행 로봇의 험지 적응을 위한 강화학습 기반 보행 정책을 개발하고 검증하는 프로젝트입니다. | APPROVED |
 | Cover descriptor | Introduce the project without an awkward line-end split | 4족 보행 로봇의 험지 적응을 위한 강화학습 기반 보행 정책을 개발하고 검증하는 프로젝트 | APPROVED |
