@@ -8,7 +8,7 @@ FOOTHOLD는 험지 적응형 4족 보행 프로젝트를 위한 공통 시각·�
 
 > 불확실한 지형에서도, 다음 걸음을 이어갑니다.
 
-English: **Find the next foothold.**
+English: **Find your next foothold.**
 
 **TARGET VISION** — `시뮬레이터에서 천 번 넘어지고, 현장에서는 넘어지지 않는다.` 이는 목표로 하는 Sim-to-Real 결과이며, 현재 검증된 현장 무낙상 성과가 아닙니다.
 

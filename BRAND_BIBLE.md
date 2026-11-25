@@ -15,7 +15,7 @@ This is a project identity, not a claim that FOOTHOLD is already a deployed navi
 
 **Primary brand slogan — approved**
 
-> Find the next foothold.
+> Find your next foothold.
 
 **Korean brand slogan — approved**
 
@@ -42,7 +42,7 @@ FOOTHOLD makes the gap between controlled simulation and uneven physical terrain
 
 ## 3. Brand attitude
 
-- **Find the next foothold.** Show progress as an accountable next step, not a grand promise.
+- **Find your next foothold.** Speak to the person who must step in next; show progress as an accountable next step, not a grand promise.
 - **Make uncertainty visible.** Verified, unverified, caution, and failure are different states.
 - **Let information lead.** Hierarchy, evidence, and whitespace come before decoration.
 - **Design for real surfaces.** The identity must remain legible on screens, paper, diagrams, and single-colour applications.

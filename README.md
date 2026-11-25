@@ -6,7 +6,7 @@
 
 FOOTHOLD is the shared visual and verbal system for a terrain-adaptive quadruped locomotion project. This repository is the canonical source for brand tokens, approved logo geometry, messaging, the ratio-independent Visual Master Board, and reusable delivery assets.
 
-> Find the next foothold.
+> Find your next foothold.
 
 **TARGET VISION** — `시뮬레이터에서 천 번 넘어지고, 현장에서는 넘어지지 않는다.` This is the intended Sim-to-Real outcome, not a verified zero-fall field result.
 
