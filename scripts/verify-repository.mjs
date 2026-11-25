@@ -204,7 +204,7 @@ if (dataStart < 0 || dataEnd < 0) {
   if (pluginData.approvedOsmuAssets?.some((asset) => /<text\b|<image\b/i.test(asset.svg))) fail("Figma approved OSMU assets must remain outlined and self-contained");
   if (pluginData.masterBoardContent?.status !== "review-baseline") fail("Figma payload must embed the evidence-gated Master Board v1.3 review content");
   if (pluginData.approvedWordmarkAspect !== manifest.approvedWordmarkAspect) fail("Figma payload must retain the approved wordmark aspect");
-  if (pluginData.messages?.closingEn !== "Find the next foothold.") fail("Figma payload must retain the approved closing statement");
+  if (pluginData.messages?.closingEn !== "Find your next foothold.") fail("Figma payload must retain the approved closing statement");
   if (pluginData.messages?.koreanSloganStatus !== "approved") fail("Korean slogan must remain approved");
   if (pluginData.messages?.sloganKo !== "불확실한 지형에서도, 다음 걸음을 이어갑니다.") fail("Figma payload must retain the approved Korean slogan");
   if (pluginData.messages?.whyNorthStarKo !== "시뮬레이터에서 천 번 넘어지고, 현장에서는 넘어지지 않는다.") fail("Figma payload must retain the approved Why FOOTHOLD target vision");

@@ -99,7 +99,7 @@ const data = {
     coverDescriptorKo: "4족 보행 로봇의 험지 적응을 위한 강화학습 기반 보행 정책을 개발하고 검증하는 프로젝트",
     whatKo: "4족 보행 로봇을 위한 강화학습 기반 험지 적응 보행 정책",
     subtitleEn: "TERRAIN-ADAPTIVE LOCOMOTION POLICY",
-    closingEn: "Find the next foothold.",
+    closingEn: "Find your next foothold.",
     sloganKo: "불확실한 지형에서도, 다음 걸음을 이어갑니다.",
     koreanSloganStatus: "approved",
     whyNorthStarKo: "시뮬레이터에서 천 번 넘어지고, 현장에서는 넘어지지 않는다.",

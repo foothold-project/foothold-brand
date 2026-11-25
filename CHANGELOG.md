@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Replaced the English brand slogan `Find the next foothold.` (approved 2026-08-09) with `Find your next foothold.` (team lead decision 2026-11-26). Text sources and the Figma plugin payload use the new line. The approved OSMU v1.2 media (README hero and social square SVG and their PNG/JPG companions) still show the previous line and must be regenerated in the next media version. The Korean slogan is unchanged and under review.
 - README hero now uses the approved GitHub medium (`assets/osmu/v1.2/github/foothold-readme-hero.svg`) instead of the legacy v1 preview, and both READMEs show the approved logo lockups and OSMU v1.2 media. The legacy preview SVG references sibling files and rendered as empty frames on GitHub; ASSET_INDEX now says to view it as PNG.
 - Redrew the Figma Master Board from the 2026-10-12 content with the local plugin (Cover shows `Source 8bab73bfa169`); README no longer says the board shows the 2026-08-11 content.
 - Updated Master Board v1.3 content (M03 M04 M06 M07 M08 M09) and its evidence audit to the project state of 2026-10-12: two tracks, measured simulation results with source paths, eight work areas without names, and the confirmed gate dates. Status stays `review-baseline`; `updatedAt` is 2026-10-12.
